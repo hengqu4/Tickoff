@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "Accordion",
+  "usingComponents": {
+      "van-collapse": "../../../static/vant/collapse",
+      "van-collapse-item": "../../../static/vant/collapse-item"
+  }
+}
