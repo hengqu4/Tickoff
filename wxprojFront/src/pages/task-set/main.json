@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "Card",
+  "usingComponents": {
+      "wux-card": "../../../static/wux/card",
+      "wux-wing-blank": "../../../static/wux/wing-blank",
+      "wux-avatar": "../../../static/wux/avatar",
+      "wux-divider": "../../../static/wux/divider",
+      "van-button":"../../../static/vant/button"
+  }
+}

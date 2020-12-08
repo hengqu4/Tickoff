@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/view/main",
-    "pages/taskSet/main",
+    "pages/task-set/main",
     "pages/calendar/main",
     "pages/report/main",
-    "pages/createSet/main",
-    "pages/createTask/main"
+    "pages/create-set/main",
+    "pages/create-task/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -27,7 +27,7 @@
       },
       {
         "text": "任务集",
-        "pagePath": "pages/taskSet/main",
+        "pagePath": "pages/task-set/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
@@ -53,7 +53,7 @@
       },
       {
         "name": "任务集",
-        "pagePath": "pages/taskSet/main",
+        "pagePath": "pages/task-set/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },

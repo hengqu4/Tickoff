@@ -15,6 +15,10 @@
         </wux-card>
       </wux-wing-blank>
     </div>
+    <div :style="{height:'80px'}"/>
+    <div class="set-create-button">
+      <van-button round type="info" @click="onClick($event)">+</van-button>
+    </div>
   </div>
 </template>
 
@@ -36,12 +40,34 @@ export default {
           title:'任务集3',
           desc:'3333',
         },
+        {
+          title:'任务集4',
+          desc:'44444',
+        },
+        {
+          title:'任务集5',
+          desc:'55555555',
+        }
       ]
+    }
+  },
+
+  methods:{
+    onClick (event) {
+      console.log(event)
+      // 路由跳转有bug，不对劲
+      const url = '/pages/create-set/main'
+      wx.navigateTo({ url })
     }
   }
 }
 </script>
 
 <style>
-
+.set-create-button{
+  z-index: 1;
+  position: fixed;
+  left: 80%;
+  top:85%
+}
 </style>

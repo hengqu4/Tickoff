@@ -1,0 +1,22 @@
+{
+  "navigationBarTitleText": "Form",
+  "usingComponents": {
+      "wux-cell-group": "../../../static/wux/cell-group",
+      "wux-cell": "../../../static/wux/cell",
+      "wux-form": "../../../static/wux/form",
+      "wux-field": "../../../static/wux/field",
+      "wux-slider": "../../../static/wux/slider",
+      "wux-rater": "../../../static/wux/rater",
+      "wux-input-number": "../../../static/wux/input-number",
+      "wux-textarea": "../../../static/wux/textarea",
+      "wux-input": "../../../static/wux/input",
+      "wux-checkbox-group": "../../../static/wux/checkbox-group",
+      "wux-checkbox": "../../../static/wux/checkbox",
+      "wux-radio-group": "../../../static/wux/radio-group",
+      "wux-radio": "../../../static/wux/radio",
+      "wux-switch": "../../../static/wux/switch",
+      "wux-picker": "../../../static/wux/picker",
+      "wux-date-picker": "../../../static/wux/date-picker",
+      "wux-popup-select": "../../../static/wux/popup-select"
+  }
+}
