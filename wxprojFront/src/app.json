@@ -4,8 +4,8 @@
     "pages/task-set/main",
     "pages/calendar/main",
     "pages/report/main",
-    "pages/create-set/main",
-    "pages/create-task/main"
+    "pages/create-task/main",
+    "pages/create-set/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

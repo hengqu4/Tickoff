@@ -8,18 +8,29 @@
   "appid": "wxdefec0c13005a788",
   "projectname": "wxproj",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
+    "plugin": {
       "list": []
     },
     "game": {
-      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
       "list": []
     },
     "miniprogram": {
-      "list": []
+      "list": [
+        {
+          "name": "pages/create-set/main",
+          "pathName": "pages/create-set/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/create-task/main",
+          "pathName": "pages/create-task/main",
+          "scene": null
+        }
+      ]
     }
   }
 }

@@ -17,7 +17,11 @@
     </div>
     <div :style="{height:'80px'}"/>
     <div class="set-create-button">
-      <van-button round type="info" @click="onClick($event)">+</van-button>
+      <van-button round type="info" @click="onClick">
+        <!-- <navigator url='/pages/create-set/main' open-type="navigate"> -->
+          +
+        <!-- </navigator> -->
+      </van-button>
     </div>
   </div>
 </template>
@@ -53,12 +57,33 @@ export default {
   },
 
   methods:{
-    onClick (event) {
-      console.log(event)
-      // 路由跳转有bug，不对劲
-      const url = '/pages/create-set/main'
-      wx.navigateTo({ url })
-    }
+    // 页面跳转失败。。
+    onClick () {
+      var pages = getCurrentPages()    //获取加载的页面
+      var currentPage = pages[pages.length-1]    //获取当前页面的对象
+      var currentUrl = currentPage.route
+      console.log(currentUrl)
+      const url = 'pages/create-set/main'
+      wx.navigateTo({ 
+        url: url,
+        success: function(res){
+          console.log('跳转到页面成功')// success
+        },
+        fail: function() {
+        console.log('跳转到页面失败')  // fail
+        },
+      })
+    },
+
+    // onClick(){
+    //   this.$router.onClick({
+    //     path:'pages/create-set/main',
+    //     query:{
+    //       name: "lalala",
+    //       age: 89
+    //     }
+    //   })
+    // }
   }
 }
 </script>
