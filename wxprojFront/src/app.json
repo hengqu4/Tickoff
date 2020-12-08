@@ -1,11 +1,14 @@
 {
+  
+  "entryPagePath":"pages/TaskSetDetail/main",
   "pages": [
     "pages/view/main",
     "pages/task-set/main",
     "pages/calendar/main",
     "pages/report/main",
     "pages/create-task/main",
-    "pages/create-set/main"
+    "pages/create-set/main",
+    "pages/TaskSetDetail/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
