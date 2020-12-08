@@ -1,25 +1,29 @@
 <template>
   <div>
-    <wux-form id="wux-form" @change="onChange">
-      <wux-cell-group title="Textarea">
-        <wux-cell hover-class="none">
-          <wux-field name="textarea" initialValue="456">
-            <wux-textarea rows="3" />
-          </wux-field>
-        </wux-cell>
-      </wux-cell-group>
-    </wux-form>
+    <wux-calendar id="wux-calendar" />
+    <wux-cell-group title="Calendar">
+      <wux-cell title="Direction = Vertical" :extra="value" @click="openCalendar"></wux-cell>
+    </wux-cell-group>
   </div>
 </template>
 
 <script>
-
+import { $wuxCalendar } from '../../../static/wux/index'
 export default {
-  computed: {
-
+  data: {
+    value: []
   },
-  methods: {
 
+  methods: {
+    openCalendar() {
+      $wuxCalendar().open({
+        direction: 'vertical',
+        onChange: (values, displayValues) => {
+          console.log('onChange', values, displayValues)
+          this.value = displayValues
+        },
+      })
+    },
   }
 }
 </script>

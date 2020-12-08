@@ -18,6 +18,16 @@
         </wux-cell>
       </wux-cell-group>
 
+      <wux-cell-group title="描述">
+        <wux-cell hover-class="none">
+          <wux-field name="" initialValue="请输入任务描述">
+            <wux-date-picker bind:change="onDatePickerChange">
+              <wux-cell title="DatePicker" is-link @extra="datePicker"></wux-cell>
+            </wux-date-picker>
+          </wux-field>
+        </wux-cell>
+      </wux-cell-group>
+
       <view class="btn-area">
         <button @click="onSubmit">submit</button>
         <button @click="onReset">Reset</button>
@@ -29,15 +39,28 @@
 <script>
 import { $wuxForm } from '../../../static/wux/index'
 export default {
+  data(){
+    return{
+      picker: [],
+      datePicker: [],
+    }
+  },
+
   computed: {
 
   },
+
   methods: {
     onChange(e) {
       const { form, changedValues, allValues } = e.detail
       console.log
       ('onChange \n', changedValues, allValues)
     },
+
+    onDatePickerChange(e) {
+      this.setData({ datePicker: e.detail.value })
+    },
+
     onSubmit() {
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()

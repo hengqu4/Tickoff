@@ -5,6 +5,8 @@
       "wux-wing-blank": "../../../static/wux/wing-blank",
       "wux-avatar": "../../../static/wux/avatar",
       "wux-divider": "../../../static/wux/divider",
+      "wux-segmented-control": "../../../static/wux/segmented-control",
+      "wux-date-picker-view": "../../../static/wux/date-picker-view",
       "van-button":"../../../static/vant/button"
   }
 }
