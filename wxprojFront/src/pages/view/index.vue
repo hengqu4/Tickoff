@@ -1,14 +1,8 @@
 <template>
   <div>
-    <van-collapse :value="activeNames" @change="onChange($event)">
-      <van-collapse-item title="任务集1" name="1">
-        任务1
-      </van-collapse-item>
-      <van-collapse-item title="任务集2" name="2">
-        任务2任务2
-      </van-collapse-item>
-      <van-collapse-item title="任务集3" name="3">
-        任务3任务3任务3
+    <van-collapse :value="activeNames" @change="onChange($event)" v-for="(item,index) in dataList" :key='index'>
+      <van-collapse-item :title="item.title" :name="index">
+        {{item.desc}}
       </van-collapse-item>
     </van-collapse>
   </div>
@@ -18,7 +12,21 @@
 export default {
   data(){
     return{
-      activeNames: ["1"],
+      activeNames: [],
+      dataList:[
+        {
+          title:'任务集1',
+          desc:'任务1任务1任务1'
+        },
+        {
+          title:'任务集2',
+          desc:'任务2222222'
+        },
+        {
+          title:'任务集3',
+          desc:'任务33333333'
+        }
+      ]
     }
   },
 
