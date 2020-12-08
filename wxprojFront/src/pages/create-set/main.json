@@ -17,8 +17,6 @@
       "wux-switch": "../../../static/wux/switch",
       "wux-picker": "../../../static/wux/picker",
       "wux-date-picker": "../../../static/wux/date-picker",
-      "wux-date-picker-view": "../../../static/wux/date-picker-view",
-      "wux-popup-select": "../../../static/wux/popup-select",
-      "wux-segmented-control":"../../../static/wux/segmented-control"
+      "wux-popup-select": "../../../static/wux/popup-select"
   }
 }
