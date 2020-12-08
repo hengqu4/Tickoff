@@ -18,19 +18,29 @@
         </wux-cell>
       </wux-cell-group>
 
-      <wux-cell-group title="描述">
+      <wux-cell-group title="开始时间">
         <wux-cell hover-class="none">
-          <wux-field name="" initialValue="请输入任务描述">
-            <wux-date-picker bind:change="onDatePickerChange">
-              <wux-cell title="DatePicker" is-link @extra="datePicker"></wux-cell>
+          <wux-field >
+            <wux-date-picker @confirm="onConfirmStartDatePicker($event)" @value="startDate">
+              <wux-cell title="请选择开始时间" is-link @extra="startDatePicker"></wux-cell>
+            </wux-date-picker>
+          </wux-field>
+        </wux-cell>
+      </wux-cell-group>
+      
+      <wux-cell-group title="结束时间">
+        <wux-cell hover-class="none">
+          <wux-field name="" initValue="endDatePicker">
+            <wux-date-picker @confirm="onConfirmEndDatePicker($event)" @value="endDate">
+              <wux-cell title="请选择结束时间" is-link @extra="endDatePicker"></wux-cell>
             </wux-date-picker>
           </wux-field>
         </wux-cell>
       </wux-cell-group>
 
       <view class="btn-area">
-        <button @click="onSubmit">submit</button>
-        <button @click="onReset">Reset</button>
+        <button @click="onSubmit($event)">submit</button>
+        <button @click="onReset($event)">Reset</button>
       </view>
     </wux-form>
   </div>
@@ -41,8 +51,10 @@ import { $wuxForm } from '../../../static/wux/index'
 export default {
   data(){
     return{
-      picker: [],
-      datePicker: [],
+      startDate:[ ],
+      startDatePicker: " ",
+      endDate:[ ],
+      endDatePicker: " ",
     }
   },
 
@@ -51,20 +63,28 @@ export default {
   },
 
   methods: {
-    onChange(e) {
-      const { form, changedValues, allValues } = e.detail
-      console.log
-      ('onChange \n', changedValues, allValues)
+    onChange(event) {
+      const { form, changedValues, allValues } = event.mp.detail
+      console.log('onChange \n', changedValues, allValues)
     },
 
-    onDatePickerChange(e) {
-      this.setData({ datePicker: e.detail.value })
+    onConfirmStartDatePicker(event) {
+      console.log(event.mp.detail.value)
+      console.log(event.mp.detail.label)
+      this.startDate=event.mp.detail.value
+      this.startDatePicker=event.mp.detail.label
+    },
+
+    onConfirmEndDatePicker(event) {
+      console.log(event.mp.detail.value)
+      console.log(event.mp.detail.label)
+      this.endDate=event.mp.detail.value
+      this.endDatePicker=event.mp.detail.label
     },
 
     onSubmit() {
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()
-
       console.log('Wux Form Submit \n', value)
     },
 
