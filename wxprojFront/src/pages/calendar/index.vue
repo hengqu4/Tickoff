@@ -6,12 +6,14 @@
     <p class="userName">{{userInfo.nickName}}</p>
     </div>
     <div class="btnNav">
+    <wux-button class="monthView" type="royal" @click="swapCalendar">选择日期</wux-button>
     <wux-button class="addListBtn" type="royal">新建任务集合</wux-button>
-    <wux-button type="royal" @swapcalendar="swapCalendar">查看月视图</wux-button>
     </div>
+    <div class="blank"></div>
     <Calendar :events="events" v-if="isCalendarShow"/>
-    <van-collapse class="taskList" :value="activeNames" @change="onChange($event)" v-for="(item,index) in dataList" :key='index'>
+    <van-collapse :value="activeNames" @change="onChange($event)" v-for="(item,index) in dataList" :key='index'>
       <van-collapse-item :title="item.title" :name="index">
+        {{item.desc}}
         <wux-button type="calm">新建任务</wux-button>
       </van-collapse-item>
     </van-collapse>
@@ -27,7 +29,7 @@ export default {
     value:[],
     userInfo:{},
     isShow:false,
-    isCalendarShow:true,
+    isCalendarShow:false,
     activeNames: [],
       dataList:[
         {
@@ -80,6 +82,10 @@ export default {
       else{
         this.isCalendarShow=true;
       }
+    },
+    onChange (event) {
+    console.log(event.mp)
+    this.activeNames = event.mp.detail
     }
   }
 }
@@ -118,9 +124,17 @@ export default {
 }
 
 .btnNav{
-  margin-bottom:3%; 
 }
-/deep/.addListBtn wux-button{
-  margin:20px;
+.blank{
+  clear:both;
+}
+.addListBtn{
+  float:right;
+  margin-right:5%;
+  margin-bottom:10px;
+}
+.monthView{
+  float:left;
+  margin-bottom:10px;
 }
 </style>
