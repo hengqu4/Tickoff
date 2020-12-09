@@ -26,6 +26,7 @@
     "@vant/weapp": "^1.6.2",
     "iview-mpvue": "^1.0.6",
     "mpvue": "^2.0.0",
+    "mpvue-calendar": "^2.3.7",
     "mpvue-router-patch": "^2.0.0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.0",
