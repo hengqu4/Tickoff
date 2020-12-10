@@ -1,7 +1,6 @@
 <template>
   <div>
     <wux-form id="wux-form" @change="onChange">
-      <div v-if="isLoading">
         <wux-cell-group title="任务标题">
           <wux-cell hover-class="none">
             <wux-field name="title" initialValue="任务标题1">
@@ -19,7 +18,7 @@
         </wux-cell-group>
 
 
-        <wux-field name="taskSet" initialValue="">
+        <wux-field name="taskSet" :initialValue="listNumber">
           <wux-radio-group title="选择任务集">
             <div v-for="(item,index) in list" :key="index">
               <wux-radio :title="item" :value="index" />
@@ -59,25 +58,91 @@
             </wux-field>
           </wux-cell>
         </wux-cell-group>
-      </div>
 
 
       <div v-if="isAdvanced">
-        <wux-field name="Loop" initialValue="-1">
-          <wux-radio-group title="是否循环">
-            <div v-for="(item,index) in isLoop" :key="index">
-              <wux-radio :title="item" :value="index" />
-            </div>
-          </wux-radio-group>
-        </wux-field>
 
-        <wux-field name="switch" initialValue="false">
-          <wux-cell-group title="Switch">
-            <wux-cell>
-                <wux-switch name="switch" slot="footer" @change="onSwitchChange" />
-            </wux-cell>
-          </wux-cell-group>
-        </wux-field>
+        <p>高级选项</p>
+
+
+        <wux-cell-group title="是否需要结算">
+          <wux-cell>
+              <wux-field name="require" :initialValue="isRequire" valuePropName="inputChecked" slot="footer">
+                <wux-switch  @change="onRequireChange"/>
+              </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+
+        <wux-cell-group title="工作量">
+          <wux-cell hover-class="none">
+            <wux-field name="workLoad" :initialValue="workLoad">
+              <wux-slider showValue step="1" min="1" max="10" />
+            </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+
+
+        <wux-cell-group title="是否循环">
+          <wux-field name="Loop" :initialValue="loopCode">
+            <wux-radio-group>
+              <div v-for="(item,index) in isLoop" :key="index">
+                <wux-radio :title="item" :value="index" />
+              </div>
+            </wux-radio-group>
+          </wux-field>
+        </wux-cell-group>
+
+        
+        <wux-cell-group title="是否提醒">
+          <wux-cell>
+              <wux-field name="needNotice" :initialValue="isNeedNotice" valuePropName="inputChecked" slot="footer">
+                <wux-switch  @change="onNoticeChange"/>
+              </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+        <div v-if="isNeedNotice">
+          <wux-cell-group title="提醒时间">
+          <wux-cell hover-class="none">
+            <wux-field name="noticeTime" :initValue="noticeDatePicker">
+              <wux-date-picker 
+                @confirm="onConfirmNoticeDatePicker($event)" 
+                @value="noticeDate"
+                minDate="00:00"
+                >
+                <wux-cell is-link @extra="noticeDatePicker">
+                  {{noticeDatePicker}}
+                </wux-cell>
+              </wux-date-picker>
+            </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+        </div>
+
+
+        <wux-cell-group title="是否允许拖延">
+          <wux-cell>
+              <wux-field name="delay" :initialValue="isDelay" valuePropName="inputChecked" slot="footer">
+                <wux-switch  @change="onDelayChange"/>
+              </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+        <div v-if="isDelay">
+          <wux-cell-group title="最晚延后日期">
+          <wux-cell hover-class="none">
+            <wux-field name="delayTime" :initValue="delayDatePicker">
+              <wux-date-picker 
+                @confirm="onConfirmDelayDatePicker($event)" 
+                @value="delayDate"
+                minDate="2020-01-01 00:00"
+                >
+                <wux-cell is-link @extra="delayDatePicker">
+                  {{delayDatePicker}}
+                </wux-cell>
+              </wux-date-picker>
+            </wux-field>
+          </wux-cell>
+        </wux-cell-group>
+        </div>
 
       </div>
       <view class="btn-area">
@@ -98,18 +163,44 @@ export default {
     return {
       startDate: [],
       startDatePicker: "选择开始时间",
+
       endDate: [],
       endDatePicker: "选择结束时间",
+
+      delayDate:[],
+      delayDatePicker:"选择延后时间",
+
+      isNeedNotice:false,
+      noticeDate:[],
+      noticeDatePicker:"选择提醒时间",
+
       isAdvanced: false,
+
       isLoading: false,
       radio: '',
       isLoop:["每日循环","每周循环","每月循环"],
-      switch: false,
-      list:["php","java"]
+      list:["php","java"],
+      listNumber:"-1",
+      loopCode:"-1",
+      isDelay:false,
+      isRequire:true,
+      workLoad:[1],
     };
   },
   onLoad() {},
   beforeMount() {
+
+    this.$httpWX.get({
+      url: '/api/get_taskset',
+      data: {
+        "1":"java",
+        "2":"ppp"
+      }
+    }).then(res => {
+      console.log(res)
+    })
+
+
     var tempDate=[]
     this.startDatePicker=moment().format('YYYY-MM-DD HH:mm')
     tempDate[0]=parseInt(moment().format('YYYY')) 
@@ -129,8 +220,16 @@ export default {
     tempEndDate[3]=parseInt(moment().add(1,'h').format('HH'))
     tempEndDate[4]=parseInt(moment().add(1,'h').format('mm'))
     this.endDate=tempEndDate
-    console.log('end date:::'+this.endDate)
 
+
+    this.delayDate=tempEndDate
+    this.delayDatePicker=moment().add(1,'h').format('YYYY-MM-DD HH:mm')
+
+    this.noticeDate=tempEndDate
+    this.noticeDatePicker="00:00"
+
+
+    console.log('end date:::'+this.endDate)
     
     wx.getUserInfo({
       withCredentials: false,
@@ -154,6 +253,31 @@ export default {
       console.log("onChange \n", changedValues, allValues);
     },
 
+    onSubmit(event) {
+
+      const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
+      const value = getFieldsValue()
+      console.log('Wux Form Submit \n', value)
+
+
+      var subData={}
+      subData.title=value.title
+      subData.description=value.description
+      subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
+      subData.startDate=this.startDatePicker
+      subData.endDate=this.endDatePicker
+      subData.routine='00-00-01'
+      subData.isDelay=this.isDelay
+      subData.delayEnd=this.delayDatePicker
+      subData.workLoad=this.workLoad
+      subData.isRequire=this.isRequire
+      subData.isNeedNotice=this.isNeedNotice
+      subData.noticeBefore=this.noticeDatePicker
+
+
+      console.log(subData)
+    },
+
     onConfirmStartDatePicker(event) {
       console.log(event.mp.detail);
       this.startDate = event.mp.detail.value;
@@ -166,11 +290,29 @@ export default {
       this.endDate = event.mp.detail.value;
       this.endDatePicker = event.mp.detail.label;
     },
+    onConfirmDelayDatePicker(event) {
+      console.log(event.mp.detail.value);
+      console.log(event.mp.detail.label);
+      this.delayDate = event.mp.detail.value;
+      this.delayDatePicker = event.mp.detail.label;
+    },
+    onConfirmNoticeDatePicker(event) {
+      console.log(event.mp.detail.value);
+      console.log(event.mp.detail.label);
+      this.noticeDate = event.mp.detail.value;
+      this.noticeDatePicker = event.mp.detail.label;
+    },
     onRadioChange(e) {
         this.setData({ radio: e.detail.value })
     },
-     onSwitchChange(e) {
-       this.switch=!this.switch
+     onDelayChange(e) {
+       this.isDelay=!this.isDelay
+    },
+    onRequireChange(e){
+      this.isRequire=!this.isRequire
+    },
+    onNoticeChange(e){
+      this.isNeedNotice=!this.isNeedNotice
     },
 
     onAdvancedOptions() {
@@ -180,25 +322,7 @@ export default {
       const url = '../create-set/main'
       wx.navigateTo({ url })    
     },
-    onSubmit() {
-      const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm();
-      const value = getFieldsValue();
 
-      var createData=value;
-      if(createData.startTime===null){
-        createData.startTime=this.startDate
-      }
-      else{
-        createData.startTime[1]++
-      }
-      if(createData.endTime===null){
-        createData.endTime=this.endDate
-      }
-      else{
-        createData.endTime[1]++
-      }
-      console.log("createData is:\n", createData)
-    },
 
     onReset() {
       const { getFieldsValue, setFieldsValue } = $wuxForm();
