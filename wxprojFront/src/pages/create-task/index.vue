@@ -1,5 +1,9 @@
 <template>
   <div>
+    <toast message="请选择任务集" :visible.sync="visible1"></toast>
+    <toast message="结束时间不能早于开始时间" :visible.sync="visible2"></toast>
+    <toast message="推迟时间不能早于结束时间" :visible.sync="visible3"></toast>
+
     <wux-form id="wux-form" @change="onChange">
         <wux-cell-group title="任务标题">
           <wux-cell hover-class="none">
@@ -104,16 +108,16 @@
           <wux-cell-group title="提醒时间">
           <wux-cell hover-class="none">
             <wux-field name="noticeTime" :initValue="noticeDatePicker">
-              <wux-date-picker 
-                @confirm="onConfirmNoticeDatePicker($event)" 
-                @value="noticeDate"
-                minDate="00:00"
-                >
-                <wux-cell is-link @extra="noticeDatePicker">
-                  {{noticeDatePicker}}
-                </wux-cell>
+                <wux-date-picker 
+                  mode="time" 
+                  @confirm="onConfirmNoticeDatePicker($event)"
+                  @value="noticeDate" 
+                  data-mode="time">
+                  <wux-cell is-link @extra="noticeDatePicker">
+                      {{noticeDatePicker}}
+                  </wux-cell>
               </wux-date-picker>
-            </wux-field>
+              </wux-field>
           </wux-cell>
         </wux-cell-group>
         </div>
@@ -152,15 +156,25 @@
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
     </wux-form>
+
+
   </div>
 </template>
 
 <script>
-import { $wuxForm } from "../../../static/wux/index";
+import { $wuxForm, $wuxToast } from "../../../static/wux/index";
 import moment from 'moment';
+import toast from 'mpvue-toast'
+
+
 export default {
   data() {
     return {
+
+     visible1: false,
+     visible2: false,
+     visible3: false,
+
       startDate: [],
       startDatePicker: "选择开始时间",
 
@@ -179,7 +193,7 @@ export default {
       isLoading: false,
       radio: '',
       isLoop:["每日循环","每周循环","每月循环"],
-      list:["php","java"],
+      list:[],
       listNumber:"-1",
       loopCode:"-1",
       isDelay:false,
@@ -187,19 +201,26 @@ export default {
       workLoad:[1],
     };
   },
+  components: {
+    toast
+  },
+
   onLoad() {},
-  beforeMount() {
+  created(){
 
-    this.$httpWX.get({
-      url: '/api/get_taskset',
-      data: {
-        "1":"java",
-        "2":"ppp"
-      }
+    this.$fly.request({
+      method: 'get', // post/get 请求方式
+      url: 'api/get_taskset',
     }).then(res => {
-      console.log(res)
-    })
-
+      console.log(res.taskSetList)
+      this.list=res.taskSetList
+      console.log(this.list)
+    }).catch(function (error) {
+        console.log(error);
+    });
+   
+  },
+  beforeMount() {
 
     var tempDate=[]
     this.startDatePicker=moment().format('YYYY-MM-DD HH:mm')
@@ -209,7 +230,6 @@ export default {
     tempDate[3]=parseInt(moment().format('HH'))
     tempDate[4]=parseInt(moment().format('mm'))
     this.startDate=tempDate
-    console.log('start date:::'+this.startDate)
 
 
     var tempEndDate=[]
@@ -228,13 +248,10 @@ export default {
     this.noticeDate=tempEndDate
     this.noticeDatePicker="00:00"
 
-
-    console.log('end date:::'+this.endDate)
-    
     wx.getUserInfo({
       withCredentials: false,
       success: (res) => {
-        console.log(res);
+        console.log(res.rawData);
       },
       fail: () => {
         console.log("shibai");
@@ -248,34 +265,101 @@ export default {
   computed: {},
 
   methods: {
+      
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
       console.log("onChange \n", changedValues, allValues);
     },
 
     onSubmit(event) {
-
+      //事前处理
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()
-      console.log('Wux Form Submit \n', value)
-
-
+      console.log(value)
       var subData={}
+      console.log()
+      var rou=''
+      if(this.loopCode==0){
+        rou='00-00-01'
+      }
+      else if(this.loopCode==1){
+        rou='00-01-00'
+      }
+      else if(this.loopCode==2){
+        rou='01-00-00'
+      }
+      else{
+        rou='00-00-00'
+      }
+
+//赋值
       subData.title=value.title
       subData.description=value.description
       subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
       subData.startDate=this.startDatePicker
       subData.endDate=this.endDatePicker
-      subData.routine='00-00-01'
+      subData.routine=rou
+      subData.listNumber=value.taskSet
       subData.isDelay=this.isDelay
-      subData.delayEnd=this.delayDatePicker
-      subData.workLoad=this.workLoad
+      subData.delayDate=this.delayDatePicker
+      subData.workLoad=this.workLoad[0]
       subData.isRequire=this.isRequire
       subData.isNeedNotice=this.isNeedNotice
       subData.noticeBefore=this.noticeDatePicker
 
-
       console.log(subData)
+
+      if(subData.listNumber==-1){
+        this.setVisible1()
+        return
+      }
+      else if(!moment(subData.startDate).isBefore(subData.endDate)){
+        this.setVisible2()
+        return 
+      }
+      else if(subData.isDelay &&moment(subData.delayDate).isBefore(subData.endDate)){
+        this.setVisible3()
+        return 
+      }
+      else{
+        this.$fly.request({
+        method:"post", //post/get 请求方式
+        url:"api/createTask",
+        body:{
+          "userId":"123",
+          "title":subData.title,
+          "description":subData.description,
+          "createDate":subData.createDate,
+          "startDate":subData.startDate,
+          "endDate":subData.endDate,
+          "routine":subData.routine,
+          "listNumber":subData.listNumber,
+          "isDelay":subData.isDelay,
+          "delayDate":subData.delayDate,
+          "workLoad":subData.workLoad,
+          "isRequire":subData.isRequire,
+          "isNeedNotice":subData.isNeedNotice,
+          "noticeBefore":subData.noticeBefore
+        }
+      }).then(res =>{
+        console.log(res)
+        wx.navigateBack({
+          delta: 1
+        })
+      })
+      }
+
+
+
+    },
+    showToastErr() {
+      $wuxToast().show({
+        type: 'forbidden',
+        duration: 1500,
+        color: '#fff',
+        text: '禁止操作',
+        success: () => console.log('禁止操作')
+      })
     },
 
     onConfirmStartDatePicker(event) {
@@ -322,6 +406,16 @@ export default {
       const url = '../create-set/main'
       wx.navigateTo({ url })    
     },
+    setVisible1() {
+      this.visible1 = !this.visible1
+    },
+    setVisible2() {
+      this.visible2 = !this.visible2
+    },
+    setVisible3() {
+      this.visible3 = !this.visible3
+    },
+
 
 
     onReset() {
