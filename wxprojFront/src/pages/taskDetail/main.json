@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "查看任务",
+    "usingComponents": {
+      "wux-card": "../../../static/wux/card/index",
+      "wux-wing-blank": "../../../static/wux/wing-blank/index"
+    }
+  }

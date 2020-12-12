@@ -208,17 +208,6 @@ export default {
   onLoad() {},
   created(){
 
-    this.$fly.request({
-      method: 'get', // post/get 请求方式
-      url: 'api/get_taskset',
-    }).then(res => {
-      console.log(res.taskSetList)
-      this.list=res.taskSetList
-      console.log(this.list)
-    }).catch(function (error) {
-        console.log(error);
-    });
-   
   },
   beforeMount() {
 
@@ -260,7 +249,20 @@ export default {
     });
     this.isLoading=!this.isLoading;
   },
-  mounted() {},
+  mounted() {
+    
+    this.$fly.request({
+      method: 'get', // post/get 请求方式
+      url: 'api/get_taskset',
+    }).then(res => {
+      console.log(res.taskSetList)
+      this.list=res.taskSetList
+      console.log(this.list)
+    }).catch(function (error) {
+        console.log(error);
+    });
+   
+  },
 
   computed: {},
 
