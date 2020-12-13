@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/taskDetail/main",
+  "entryPagePath":"pages/create-task/main",
 
   "pages": [
     "pages/view/main",
@@ -9,7 +9,8 @@
     "pages/report/main",
     "pages/create-task/main",
     "pages/create-set/main",
-    "pages/taskDetail/main"
+    "pages/taskDetail/main",
+    "pages/changeTask/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
