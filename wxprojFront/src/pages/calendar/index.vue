@@ -39,7 +39,6 @@ import Calendar from 'mpvue-calendar'
 /*下为测试数据*/
 var todayEvents={'2020-12-9': '4/10','2020-12-10': '2/10'}
 var dataList=[]
-var that;//规定指向当前页面
 /*用来组件传值，不知道能用来干啥先放着*/
 props:{
 
@@ -50,6 +49,7 @@ export default {
     value:[],
     userInfo:{},
     isShow:false,
+    userID:1,
     date:[],
     isCalendarShow:false,
     taskSetList:[],
@@ -76,10 +76,11 @@ export default {
   },
   mounted(){
     this.$fly.request({
-      method: 'get', // post/get 请求方式
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID=1&date=1',
+      method: 'get',
+      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date=1',
     }).then(res => {
       console.log(res)
+      this.taskSetList=res
     }).catch(function (error) {
         console.log(error);
     });
@@ -117,23 +118,16 @@ export default {
       this.date[1]=val[1];
       this.date[2]=val[2];
       console.log(this.date);
-      that=this;
       /*需要回调任务集列表生成函数*/
-      wx.request({  
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData', 
-      data: {
-      UserID:1,
-      date:1,
-      }, 
+      this.$fly.request({
       method: 'get',
-      success: function(res){  
-        console.log("返回成功的数据:" + res.data )
-        that.taskSetList=res.data;
-      },  
-      fail: function(fail){  
-        console.log("获取数据失败")
-      }
-      })  
+      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date=1',
+    }).then(res => {
+      console.log(res)
+      this.taskSetList=res
+    }).catch(function (error) {
+        console.log(error);
+    });
     },
 
     /*新建任务*/
@@ -152,6 +146,18 @@ export default {
     },
     completeTask(event){
       console.log(event.currentTarget.id);
+      this.$fly.request({
+        method:"post",
+        url:"http://mock-api.com/5g7AeqKe.mock/completeTask",
+        body:{
+          "userID":this.userID,
+          "taskID":event.currentTarget.id
+        }
+      }).then(res =>{
+        console.log(res)
+      }).catch(function (error) {
+        console.log(error);
+    });
     }
   }
 }
