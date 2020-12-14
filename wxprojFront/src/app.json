@@ -1,11 +1,16 @@
 {
+  
+  "entryPagePath":"pages/create-task/main",
+
   "pages": [
     "pages/view/main",
     "pages/task-set/main",
     "pages/calendar/main",
     "pages/report/main",
     "pages/create-task/main",
-    "pages/create-set/main"
+    "pages/create-set/main",
+    "pages/taskDetail/main",
+    "pages/changeTask/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -73,3 +78,5 @@
     "position": "bottom"
   }
 }
+
+

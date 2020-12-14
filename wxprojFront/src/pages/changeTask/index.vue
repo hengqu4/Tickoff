@@ -7,7 +7,7 @@
     <wux-form id="wux-form" @change="onChange">
         <wux-cell-group title="任务标题">
           <wux-cell hover-class="none">
-            <wux-field name="title" initialValue="任务标题1">
+            <wux-field name="title" :initialValue="title">
               <wux-textarea rows="1" />
             </wux-field>
           </wux-cell>
@@ -15,7 +15,7 @@
 
         <wux-cell-group title="任务描述">
           <wux-cell hover-class="none">
-            <wux-field name="description" initialValue="任务描述">
+            <wux-field name="description" :initialValue="description">
               <wux-textarea rows="2" />
             </wux-field>
           </wux-cell>
@@ -28,7 +28,6 @@
               <wux-radio :title="item" :value="index" />
             </div>
           </wux-radio-group>
-          <wux-button block outline type="balanced" @click="newTaskSet">新建任务集</wux-button>
         </wux-field>
  
         <wux-cell-group title="开始时间">
@@ -150,7 +149,7 @@
 
       </div>
       <view class="btn-area">
-        <button @click="onSubmit($event)">创建</button>
+        <button @click="onSubmit($event)">修改</button>
         <button v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</button>
         <button v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</button>
         <!-- <button @click="onReset($event)">重设属性</button> -->
@@ -170,25 +169,28 @@ import toast from 'mpvue-toast'
 export default {
   data() {
     return {
-
-     userId:'',
+     userId:'',      
+     taskId:'',
 
      visible1: false,
      visible2: false,
      visible3: false,
 
+     title:'',
+     description:'',
+
       startDate: [],
-      startDatePicker: "选择开始时间",
+      startDatePicker: "",
 
       endDate: [],
-      endDatePicker: "选择结束时间",
+      endDatePicker: "",
 
       delayDate:[],
-      delayDatePicker:"选择延后时间",
+      delayDatePicker:"",
 
       isNeedNotice:false,
       noticeDate:[],
-      noticeDatePicker:"选择提醒时间",
+      noticeDatePicker:"",
 
       isAdvanced: false,
 
@@ -208,40 +210,14 @@ export default {
   },
 
   onLoad:function(options) {
+    console.log(options)
+    this.taskId=options.tId
     this.userId=options.uId
-    this.userId=1
   },
   created(){
 
   },
   beforeMount() {
-
-    var tempDate=[]
-    this.startDatePicker=moment().format('YYYY-MM-DD HH:mm')
-    tempDate[0]=parseInt(moment().format('YYYY')) 
-    tempDate[1]=parseInt(moment().format('MM'))
-    tempDate[2]=parseInt(moment().format('DD'))
-    tempDate[3]=parseInt(moment().format('HH'))
-    tempDate[4]=parseInt(moment().format('mm'))
-    this.startDate=tempDate
-
-
-    var tempEndDate=[]
-    this.endDatePicker=moment().add(1,'h').format('YYYY-MM-DD HH:mm')
-    tempEndDate[0]=parseInt(moment().add(1,'h').format('YYYY')) 
-    tempEndDate[1]=parseInt(moment().add(1,'h').format('MM'))
-    tempEndDate[2]=parseInt(moment().add(1,'h').format('DD'))
-    tempEndDate[3]=parseInt(moment().add(1,'h').format('HH'))
-    tempEndDate[4]=parseInt(moment().add(1,'h').format('mm'))
-    this.endDate=tempEndDate
-
-
-    this.delayDate=tempEndDate
-    this.delayDatePicker=moment().add(1,'h').format('YYYY-MM-DD HH:mm')
-
-    this.noticeDate=tempEndDate
-    this.noticeDatePicker="00:00"
-
     wx.getUserInfo({
       withCredentials: false,
       success: (res) => {
@@ -265,7 +241,64 @@ export default {
     }).catch(function (error) {
         console.log(error);
     });
-   
+
+    this.$fly.request({
+      method: 'get', // post/get 请求方式
+      url: 'api/getTask?taskId='+this.taskId,
+    }).then(res => {
+      console.log("changeTask 的获取")
+      console.log(res)
+      this.title=res.title
+      this.description=res.description
+      this.startDatePicker=res.startDate
+      this.endDatePicker=res.endDate
+      this.routine=res.routine
+      this.listNumber=res.listNumber
+      this.isDelay=res.isDelay
+      this.delayDatePicker=res.delayDate
+      this.workLoad=[res.workLoad]
+      this.isRequire=res.isRequire
+      this.isNeedNotice=res.isNeedNotice
+      this.noticeDatePicker=res.noticeBefore
+      this.description=res.description
+
+      var str=this.routine.split("-")
+      if(str[0]=="01"){
+        this.loopText="每月循环"
+      }
+      else if(str[1]=="01"){
+        this.loopText="每周循环"
+      }
+      else if( str[2]=="01"){
+        this.loopText="每日循环"
+      }
+      else{
+        this.loopText="不循环"
+      }
+
+      if(this.isNeedNotice){
+        this.noticeText="提前"+this.noticeBefore
+      }
+      else{
+        this.noticeText="不需要提醒"
+      }
+
+      if(this.isDelay){
+        this.delayText=this.delayDate
+      }
+      else{
+        this.delayText="不需要延期"
+      }
+      
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+
+
+
+
+
   },
 
   computed: {},
@@ -299,6 +332,7 @@ export default {
       }
 
 //赋值
+      subData.userId=this.userId
       subData.title=value.title
       subData.description=value.description
       subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
@@ -312,7 +346,6 @@ export default {
       subData.isRequire=this.isRequire
       subData.isNeedNotice=this.isNeedNotice
       subData.noticeBefore=this.noticeDatePicker
-      subData.userId=this.userId
 
       console.log(subData)
 
@@ -331,7 +364,7 @@ export default {
       else{
         this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"api/changeTask",
         body:{
           "userId":subData.userId,
           "title":subData.title,
@@ -349,7 +382,7 @@ export default {
           "noticeBefore":subData.noticeBefore
         }
       }).then(res =>{
-        this.gotoDetail(1)
+
       })
     }
 
@@ -449,7 +482,7 @@ export default {
     },
 
     gotoDetail(id) {
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+'&uId='+this.userId})
+      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id})
     }
   },
 };
