@@ -3,7 +3,6 @@
   "entryPagePath":"pages/view/main",
 
   "pages": [
-    "pages/calendar/main",
     "pages/me/main",
     "pages/view/main",
     "pages/task-set/main",
@@ -39,12 +38,6 @@
         "selectedIconPath": "static/tabs/orders-active.png"
       },
       {
-        "text": "日历",
-        "pagePath": "pages/calendar/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
-      },
-      {
         "text": "我",
         "pagePath": "pages/me/main",
         "iconPath": "static/tabs/home.png",
@@ -63,12 +56,6 @@
         "pagePath": "pages/view/main",
         "icon": "static/tabs/orders.png",
         "activeIcon": "static/tabs/orders-active.png"
-      },
-      {
-        "name": "日历",
-        "pagePath": "pages/calendar/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
       },
       {
         "name": "我",
