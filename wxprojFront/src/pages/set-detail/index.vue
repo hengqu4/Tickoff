@@ -1,9 +1,25 @@
 <template>
-  <div>
-    <wux-cell-group title="任务集信息">
-      <wux-cell title="标题" :extra="title"></wux-cell>
-      <wux-cell title="描述" :extra="description"></wux-cell>
-      <wux-cell title="成员">
+  <div class="set-detail">
+    <wux-cell-group title="任务集信息"></wux-cell-group>
+
+    <wux-cell-group title="标题">
+      <wux-cell hover-class="none">
+        <wux-field name="title" initialValue="标题标题">
+          <wux-textarea disabled rows="1" />
+        </wux-field>
+      </wux-cell>
+    </wux-cell-group>
+
+    <wux-cell-group title="描述">
+      <wux-cell hover-class="none">
+        <wux-field name="description" value="任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦">
+          <wux-textarea disabled rows="3" />
+        </wux-field>
+      </wux-cell>
+    </wux-cell-group>
+
+    <wux-cell-group title="成员">
+      <wux-cell hover-class="none">
         <div v-for="(item, index) in memberList" :key="index" :style="{marginBottom: '5px'}">
           <view>
             <wux-avatar :src="item.avater" />
@@ -12,7 +28,7 @@
         </div>
       </wux-cell>
     </wux-cell-group>
-    
+
     <div :style="{height:'80px'}"/>
     <div class="set-edit-button">
       <van-button round type="info" @click="gotoChange(setId)">
@@ -108,4 +124,5 @@ export default {
   left: 80%;
   top:85%
 }
+
 </style>

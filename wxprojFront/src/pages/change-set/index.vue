@@ -21,7 +21,7 @@
       <wux-cell-group title="成员">
         <wux-cell hover-class="none">
           <div>
-            <wux-button clear type="positive" open-type="share" @click="onAddmember">
+            <wux-button clear type="positive" open-type="share">
               邀请好友
             </wux-button>
           </div>
@@ -117,13 +117,6 @@ export default {
   },
 
   methods:{
-    onAddmember(){
-      wx.showShareMenu({
-        withShareTicket: true,
-        menus: ['shareAppMessage', 'shareTimeline']
-      })
-    },
-
     onSubmit() {
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()
