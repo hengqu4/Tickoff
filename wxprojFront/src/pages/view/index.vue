@@ -1,14 +1,21 @@
 <template>
   <div>
-    <van-collapse :value="activeNames" @change="onChange($event)" v-for="(item,index) in dataList" :key='index'>
-      <van-collapse-item :title="item.title" :name="index">
-        {{item.desc}}
-      </van-collapse-item>
-    </van-collapse>
+    <div name="calendar">
+      <xl-calendar1>
+      </xl-calendar1>
+    </div>
   </div>
 </template>
 
 <script>
+// import plugin from '../../../static/wx_calendar/plugins'
+// import selectable from '../../../static/wx_calendar/plugins/selectable.js'
+// import time-range from '../../../static/wx_calendar/plugins/time-range.js'
+
+// plugin
+//   .use(selectable)
+//   .use(time-range)
+
 export default {
   data(){
     return{

@@ -34,13 +34,13 @@
       },
       {
         "text": "日历",
-        "pagePath": "pages/view/main",
+        "pagePath": "pages/calendar/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
       {
         "text": "任务",
-        "pagePath": "pages/calendar/main",
+        "pagePath": "pages/view/main",
         "iconPath": "static/tabs/orders.png",
         "selectedIconPath": "static/tabs/orders-active.png"
       },
@@ -60,13 +60,13 @@
       },
       {
         "name": "日历",
-        "pagePath": "pages/view/main",
+        "pagePath": "pages/calendar/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },
       {
         "name": "任务",
-        "pagePath": "pages/calendar/main",
+        "pagePath": "pages/view/main",
         "icon": "static/tabs/orders.png",
         "activeIcon": "static/tabs/orders-active.png"
       },
