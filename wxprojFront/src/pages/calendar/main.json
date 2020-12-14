@@ -1,12 +1,9 @@
 {
-  "navigationBarTitleText": "Form",
+  "navigationBarTitleText": "Accordion",
   "usingComponents": {
-    "wux-cell-group": "../../../static/wux/cell-group",
-    "wux-cell": "../../../static/wux/cell",
-    "wux-calendar": "../../../static/wux/calendar",
-    "wux-button":"../../../static/wux/button",
-    "wux-avatar":"../../../static/wux/avatar",
-    "van-collapse":"../../../static/vant/collapse",
-    "van-collapse-item":"../../../static/vant/collapse-item"
+      "van-collapse": "../../../static/vant/collapse",
+      "van-collapse-item": "../../../static/vant/collapse-item",
+      "xl-calendar1":"../../../static/xl_calendar/v1",
+      "xl-calendar2":"../../../static/xl_calendar/v2"
   }
 }
