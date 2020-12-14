@@ -60,6 +60,24 @@
         {
           "name": "pages/create-task/main",
           "pathName": "pages/create-task/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/changeTask/main",
+          "pathName": "pages/view/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/set-detail/main",
+          "pathName": "pages/set-detail/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/change-set/main",
+          "pathName": "pages/change-set/main",
           "scene": null
         }
       ]

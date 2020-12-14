@@ -7,8 +7,10 @@
     "pages/task-set/main",
     "pages/calendar/main",
     "pages/report/main",
-    "pages/create-task/main",
     "pages/create-set/main",
+    "pages/set-detail/main",
+    "pages/change-set/main",
+    "pages/create-task/main",
     "pages/taskDetail/main",
     "pages/changeTask/main"
   ],

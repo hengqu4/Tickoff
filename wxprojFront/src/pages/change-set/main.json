@@ -1,0 +1,29 @@
+{
+    "navigationBarTitleText": "修改任务信息",
+    "usingComponents": {
+        "wux-cell-group": "../../../static/wux/cell-group",
+        "wux-cell": "../../../static/wux/cell",
+        "wux-form": "../../../static/wux/form",
+        "wux-field": "../../../static/wux/field",
+        "wux-slider": "../../../static/wux/slider",
+        "wux-rater": "../../../static/wux/rater",
+        "wux-input-number": "../../../static/wux/input-number",
+        "wux-textarea": "../../../static/wux/textarea",
+        "wux-input": "../../../static/wux/input",
+        "wux-checkbox-group": "../../../static/wux/checkbox-group",
+        "wux-checkbox": "../../../static/wux/checkbox",
+        "wux-radio-group": "../../../static/wux/radio-group",
+        "wux-radio": "../../../static/wux/radio",
+        "wux-switch": "../../../static/wux/switch",
+        "wux-picker": "../../../static/wux/picker",
+        "wux-date-picker": "../../../static/wux/date-picker",
+        "wux-date-picker-view": "../../../static/wux/date-picker-view",
+        "wux-popup-select": "../../../static/wux/popup-select",
+        "wux-segmented-control":"../../../static/wux/segmented-control",
+        "wux-icon": "../../../static/wux/icon/index",
+        "wux-button": "../../../static/wux/button/index",
+        "wux-toast": "../../../static/wux/toast/index",
+        "wux-avatar": "../../../static/wux/avatar",
+        "van-button":"../../../static/vant/button"
+    }
+  }
