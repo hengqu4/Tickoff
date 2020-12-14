@@ -2,15 +2,22 @@
   <div>
     <div v-for="(item, index) in dataList" :key="index" :style="{marginBottom: '5px'}">
       <wux-wing-blank size="default"  :key="index">
-        <wux-card :title="item.title" extra="额外内容">
-          <view slot="body">{{item.desc}}</view>
+        <!-- <i-card :title="item.title" extra="额外内容">
+          <view slot="content">{{item.desc}}</view>
           <view slot="footer">
-            <view>
               <p>成员</p>
-              <wux-avatar src="../../../static/images/user.png" />
-              <wux-avatar src="../../../static/images/user.png" />
-              <wux-avatar src="../../../static/images/user.png" />
-            </view>
+              <div v-for="(mem, aid) in item.member" :key="aid">
+                <wux-avatar :src="mem.avater" />
+              </div>
+          </view>
+        </i-card> -->
+        <wux-card prefixCls="set-card" :title="item.title" extra="额外内容">
+          <view slot="body" wux-class='viewbody'>{{item.desc}}</view>
+          <view slot="footer">
+              <p>成员</p>
+              <span v-for="(mem, aid) in item.member" :key="aid">
+                <wux-avatar :src="mem.avater" />
+              </span>
           </view>
         </wux-card>
       </wux-wing-blank>
@@ -33,22 +40,20 @@ export default {
         {
           title:'任务集1',
           desc:'1111',
+          member:[
+            {avater:'http://cdn.skyvow.cn/logo.png'},
+            {avater:'http://cdn.skyvow.cn/logo.png'},
+            {avater:'http://cdn.skyvow.cn/logo.png'}
+          ]
         },
         {
           title:'任务集2',
           desc:'2222',
-        },
-        {
-          title:'任务集3',
-          desc:'3333',
-        },
-        {
-          title:'任务集4',
-          desc:'44444',
-        },
-        {
-          title:'任务集5',
-          desc:'55555555',
+          member:[
+            {avater:'../../../static/images/user.png'},
+            {avater:'../../../static/images/user.png'},
+            {avater:'http://cdn.skyvow.cn/logo.png'}
+          ]
         }
       ]
     }
@@ -72,25 +77,22 @@ export default {
         },
       })
     },
-
-    // onClick(){
-    //   this.$router.onClick({
-    //     path:'pages/create-set/main',
-    //     query:{
-    //       name: "lalala",
-    //       age: 89
-    //     }
-    //   })
-    // }
   }
 }
 </script>
 
-<style>
+<style lang="less">
+
+@import "../../../static/wux/styles/mixins/index.less";
+@import "../../../static/wux/styles/themes/index.less";
+@import "./style.less";
+
 .set-create-button{
   z-index: 1;
   position: fixed;
   left: 80%;
   top:85%
 }
+
+
 </style>

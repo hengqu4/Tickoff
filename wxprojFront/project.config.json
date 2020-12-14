@@ -54,6 +54,18 @@
         {
           "name": "pages/view/main",
           "pathName": "pages/view/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/invite/main",
+          "pathName": "pages/invite/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/task-set/main",
+          "pathName": "pages/task-set/main",
           "scene": null
         }
       ]

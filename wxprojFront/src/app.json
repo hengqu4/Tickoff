@@ -11,7 +11,8 @@
     "pages/change-set/main",
     "pages/create-task/main",
     "pages/taskDetail/main",
-    "pages/changeTask/main"
+    "pages/changeTask/main",
+    "pages/invite/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
