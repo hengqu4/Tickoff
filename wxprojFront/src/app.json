@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/task-set/main",
+  "entryPagePath":"pages/view/main",
 
   "pages": [
     "pages/calendar/main",
@@ -27,22 +27,22 @@
     "borderStyle": "white",
     "list": [
       {
-        "text": "组",
+        "text": "组集",
         "pagePath": "pages/task-set/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
       {
-        "text": "日历",
-        "pagePath": "pages/view/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
-      },
-      {
         "text": "任务",
-        "pagePath": "pages/calendar/main",
+        "pagePath": "pages/view/main",
         "iconPath": "static/tabs/orders.png",
         "selectedIconPath": "static/tabs/orders-active.png"
+      },
+      {
+        "text": "日历",
+        "pagePath": "pages/calendar/main",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
       },
       {
         "text": "我",
@@ -53,22 +53,22 @@
     ],
     "items": [
       {
-        "name": "组",
+        "name": "组集",
         "pagePath": "pages/task-set/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },
       {
-        "name": "日历",
-        "pagePath": "pages/view/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
-      },
-      {
         "name": "任务",
-        "pagePath": "pages/calendar/main",
+        "pagePath": "pages/view/main",
         "icon": "static/tabs/orders.png",
         "activeIcon": "static/tabs/orders-active.png"
+      },
+      {
+        "name": "日历",
+        "pagePath": "pages/calendar/main",
+        "icon": "static/tabs/home.png",
+        "activeIcon": "static/tabs/home-active.png"
       },
       {
         "name": "我",
