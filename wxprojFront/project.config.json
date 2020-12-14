@@ -1,11 +1,7 @@
 {
   "description": "项目配置文件。",
   "setting": {
-<<<<<<< HEAD
-    "urlCheck": false,
-=======
     "urlCheck": true,
->>>>>>> origin/MonthView
     "es6": true,
     "enhance": false,
     "postcss": true,
@@ -29,20 +25,11 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-<<<<<<< HEAD
-    "enableEngineNative": false,
-=======
->>>>>>> origin/MonthView
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-<<<<<<< HEAD
-    "packNpmRelationList": [],
-    "minifyWXSS": true
-=======
     "packNpmRelationList": []
->>>>>>> origin/MonthView
   },
   "miniprogramRoot": "dist/wx/",
   "compileType": "miniprogram",

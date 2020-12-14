@@ -1,12 +1,12 @@
 {
   
-  "entryPagePath":"pages/create-task/main",
+  "entryPagePath":"pages/task-set/main",
 
   "pages": [
     "pages/calendar/main",
+    "pages/me/main",
     "pages/view/main",
     "pages/task-set/main",
-    "pages/report/main",
     "pages/create-set/main",
     "pages/set-detail/main",
     "pages/change-set/main",
@@ -27,52 +27,52 @@
     "borderStyle": "white",
     "list": [
       {
-        "text": "视图",
-        "pagePath": "pages/view/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
-      },
-      {
-        "text": "任务集",
+        "text": "组",
         "pagePath": "pages/task-set/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
       {
         "text": "日历",
+        "pagePath": "pages/view/main",
+        "iconPath": "static/tabs/home.png",
+        "selectedIconPath": "static/tabs/home-active.png"
+      },
+      {
+        "text": "任务",
         "pagePath": "pages/calendar/main",
         "iconPath": "static/tabs/orders.png",
         "selectedIconPath": "static/tabs/orders-active.png"
       },
       {
-        "text": "报表",
-        "pagePath": "pages/report/main",
+        "text": "我",
+        "pagePath": "pages/me/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       }
     ],
     "items": [
       {
-        "name": "视图",
-        "pagePath": "pages/view/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
-      },
-      {
-        "name": "任务集",
+        "name": "组",
         "pagePath": "pages/task-set/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },
       {
         "name": "日历",
+        "pagePath": "pages/view/main",
+        "icon": "static/tabs/home.png",
+        "activeIcon": "static/tabs/home-active.png"
+      },
+      {
+        "name": "任务",
         "pagePath": "pages/calendar/main",
         "icon": "static/tabs/orders.png",
         "activeIcon": "static/tabs/orders-active.png"
       },
       {
-        "name": "报表",
-        "pagePath": "pages/report/main",
+        "name": "我",
+        "pagePath": "pages/me/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       }
