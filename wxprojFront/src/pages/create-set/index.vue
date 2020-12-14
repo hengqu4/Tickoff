@@ -12,15 +12,20 @@
 
       <wux-cell-group title="描述">
         <wux-cell hover-class="none">
-          <wux-field name="" initialValue="请输入任务集描述">
+          <wux-field name="description" initialValue="请输入任务集描述">
             <wux-textarea rows="3" />
           </wux-field>
         </wux-cell>
       </wux-cell-group>
 
-      <view class="btn-area">
-        <button @click="onSubmit">submit</button>
-        <button @click="onReset">Reset</button>
+      <view class="create-set-submit-button">
+        <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)" @click="onSubmit">
+          创建
+        </van-button>
+        <div/>
+        <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)" @click="onReset">
+          重置
+        </van-button>
       </view>
     </wux-form>
   </div>
@@ -33,16 +38,44 @@ export default {
 
   },
   methods: {
-    onChange(e) {
-      const { form, changedValues, allValues } = e.detail
-      console.log
-      ('onChange \n', changedValues, allValues)
+    onChange(event) {
+      const { form, changedValues, allValues } = event.mp.detail;
+      console.log("onChange \n", changedValues, allValues);
     },
+
     onSubmit() {
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()
-
       console.log('Wux Form Submit \n', value)
+
+      var subData={}
+      subData.title=value.title
+      subData.description=value.description
+
+      this.$fly.request({
+        method:"post", //post/get 请求方式
+        url:"api/createTask",
+        body:{
+          "title":subData.title,
+          "description":subData.description,
+        }
+      }).then(res =>{
+        this.gotoDetail(1)
+      })
+    },
+
+    gotoDetail(id) {
+      // const url = '/pages/set-detail/main?tId='+id+'&uId='+this.userId
+      const url = '../set-detail/main'
+      wx.navigateTo({ 
+        url: url,
+        success: function(res){
+          console.log('跳转到页面成功')// success
+        },
+        fail: function() {
+        console.log('跳转到页面失败')  // fail
+        },
+      })
     },
 
     onReset() {
@@ -74,3 +107,9 @@ export default {
 }
 </script>
 
+<style>
+.create-set-submit-button{
+  padding-bottom: 10px;
+  text-align: center;
+}
+</style>

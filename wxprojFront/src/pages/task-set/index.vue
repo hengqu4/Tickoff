@@ -18,9 +18,7 @@
     <div :style="{height:'80px'}"/>
     <div class="set-create-button">
       <van-button round type="info" @click="onClick">
-        <!-- <navigator url='/pages/create-set/main' open-type="navigate"> -->
           +
-        <!-- </navigator> -->
       </van-button>
     </div>
   </div>
@@ -63,7 +61,7 @@ export default {
       var currentPage = pages[pages.length-1]    //获取当前页面的对象
       var currentUrl = currentPage.route
       console.log(currentUrl)
-      const url = 'pages/create-set/main'
+      const url = '../create-set/main'
       wx.navigateTo({ 
         url: url,
         success: function(res){

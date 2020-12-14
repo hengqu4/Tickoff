@@ -17,6 +17,7 @@
       "wux-switch": "../../../static/wux/switch",
       "wux-picker": "../../../static/wux/picker",
       "wux-date-picker": "../../../static/wux/date-picker",
-      "wux-popup-select": "../../../static/wux/popup-select"
+      "wux-popup-select": "../../../static/wux/popup-select",
+      "van-button":"../../../static/vant/button"
   }
 }
