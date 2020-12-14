@@ -3,9 +3,9 @@
   "entryPagePath":"pages/create-task/main",
 
   "pages": [
+    "pages/calendar/main",
     "pages/view/main",
     "pages/task-set/main",
-    "pages/calendar/main",
     "pages/report/main",
     "pages/create-set/main",
     "pages/set-detail/main",
