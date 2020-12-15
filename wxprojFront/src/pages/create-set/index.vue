@@ -40,7 +40,7 @@ export default {
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
-      console.log("onChange \n", changedValues, allValues);
+      // console.log("onChange \n", changedValues, allValues);
     },
 
     onSubmit() {
@@ -54,14 +54,18 @@ export default {
 
       this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"api/createSet",
         body:{
           "title":subData.title,
           "description":subData.description,
         }
       }).then(res =>{
-        this.gotoDetail(1)
-      })
+        console.log(subData.title)
+        console.log(subData.description)
+        // this.gotoDetail(1)
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
 
     gotoDetail(id) {

@@ -4,7 +4,7 @@
 
     <wux-cell-group title="标题">
       <wux-cell hover-class="none">
-        <wux-field name="title" initialValue="标题标题">
+        <wux-field name="title" :initialValue="title">
           <wux-textarea disabled rows="1" />
         </wux-field>
       </wux-cell>
@@ -12,7 +12,7 @@
 
     <wux-cell-group title="描述">
       <wux-cell hover-class="none">
-        <wux-field name="description" value="任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦任务集描述啦啦啦啦啦啦啦啦">
+        <wux-field name="description" :value="description"
           <wux-textarea disabled rows="3" />
         </wux-field>
       </wux-cell>
@@ -20,7 +20,7 @@
 
     <wux-cell-group title="成员">
       <wux-cell hover-class="none">
-        <div v-for="(item, index) in memberList" :key="index" :style="{marginBottom: '5px'}">
+        <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
           <view>
             <wux-avatar :src="item.avater" />
             <span>{{item.name}}</span>
@@ -47,24 +47,14 @@ export default {
       setId:'',
       title: "",
       description: "",
-      memberNum:1,
-      memberList:[
-        {
-          name:'github',
-          avater:"../../../static/images/user.png",
-        },
-        {
-          name:'hq',
-          avater:"http://cdn.skyvow.cn/logo.png",
-        }
-        
-      ]
+      memberNum:'',
+      member:[]
     };
   },
 
   onLoad:function(options) {
     console.log(options)
-    this.setId=options.setId
+    this.setId=options.sId
     this.userId=options.uId
   },
 
@@ -74,7 +64,7 @@ export default {
       success: (res) => {
       },
       fail: () => {
-        console.log("获取信息失败");
+        console.log("获取失败");
       },
       complete: () => {},
     });

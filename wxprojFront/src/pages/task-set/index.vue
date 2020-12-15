@@ -34,30 +34,81 @@
 <script>
 
 export default {
+  
   data(){
     return{
-      dataList:[
-        {
-          title:'任务集1',
-          desc:'1111',
-          member:[
-            {avater:'http://cdn.skyvow.cn/logo.png'},
-            {avater:'http://cdn.skyvow.cn/logo.png'},
-            {avater:'http://cdn.skyvow.cn/logo.png'}
-          ]
-        },
-        {
-          title:'任务集2',
-          desc:'2222',
-          member:[
-            {avater:'../../../static/images/user.png'},
-            {avater:'../../../static/images/user.png'},
-            {avater:'http://cdn.skyvow.cn/logo.png'}
-          ]
-        }
-      ]
-    }
+      dataList:[]
+      // dataList:[
+      //   {
+      //     title:"标题1啊标题1",
+      //     description:"任务集的描述啊描述啊1111",
+      //     memberNum:3,
+      //     member:[
+      //       {
+      //         name:"hq",
+      //         avater:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      //       },
+      //       {
+      //         name:"xj",
+      //         avater:"http://cdn.skyvow.cn/logo.png"
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     title:"标题2啊标题2",
+      //     description:"任务集的描述啊描述啊22222",
+      //     memberNum:3,
+      //     member:[
+      //       {
+      //         name:"hq",
+      //         avater:"https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      //       },
+      //       {
+      //         name:"xj",
+      //         avater:"http://cdn.skyvow.cn/logo.png"
+      //       }
+      //     ]
+      //   }
+      // ]
+    },
+    console.log(this.dataList)
   },
+
+  beforeMount() {
+    wx.getUserInfo({
+      withCredentials: false,
+      success: (res) => {
+      },
+      fail: () => {
+        console.log("获取失败");
+      },
+      complete: () => {},
+    });
+  },
+
+   mounted(){
+    this.$fly.request({
+      method: 'get',
+      url: 'http://mock-api.com/6KLpmWKk.mock/api/getSetList',
+    }).then(res => {
+      console.log(res)
+      this.dataList=res.dataList
+    }).catch(function (error) {
+        console.log(error);
+    });
+  },
+
+  // mounted(){
+  //   this.$fly.request({
+  //     method: 'get',
+  //     url:  'api/getSetList',
+  //   }).then(res => {
+  //     console.log(res)
+  //     this.dataList=res.dataList
+  //   }).catch(function (error) {
+  //       console.log(error);
+  //   });
+  // },
 
   methods:{
     // 页面跳转失败。。

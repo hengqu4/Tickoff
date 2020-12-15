@@ -21,7 +21,7 @@ fly.interceptors.request.use((request) => {
     'categoryType': 'SaleGoodsType@sim',
     'streamNo': 'wxapp153570682909641893',
     'reqSource': 'MALL_H5',
-    'appid': 'string',
+    'appid': 'wxdefec0c13005a788',
     'timestamp': new Date().getTime(),
     'sign': 'string'
   }
