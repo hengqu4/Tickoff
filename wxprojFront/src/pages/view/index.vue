@@ -1,34 +1,42 @@
 <template>
   <div>
+  	<movable-area>
+  	  <movable-view direction="all"  x=300 y=50>
+		    <van-button round type="info" @click="plusBtnClick">+</van-button>
+	    </movable-view>
+    </movable-area>
   <div class="userInfo">
     <wux-avatar v-if="isShow" class="userAvatar" :src="userInfo.avatarUrl" alt="Error Pic" size="large"/>
     <wux-button class="showUsrAvatar" v-else open-type="getUserInfo" @getuserinfo="getUserInfo">点击获取用户登录信息</wux-button>
     <p class="userName">{{userInfo.nickName}}</p>
     </div>
     <div class="btnNav">
-    <wux-button class="monthView" type="calm" @click="swapCalendar">选择日期</wux-button>
-    <wux-button class="addTaskSetBtn" type="calm">新建任务集合</wux-button>
+    <wux-button class="monthView" type="calm" @click="swapCalendar" size="small">选择日期</wux-button>
     </div>
-    <div class="blank"></div>
     <Calendar :events="events" v-if="isCalendarShow" @select="selectDay"/>
     <div class="taskSetListView">
-    <van-collapse class="taskSetList" :value="activeNames" @change="onChange($event)" v-for="(item,index) in taskSetList" :key='index'>
-      <wux-button  type="calm" size="small" :id='item.id' @click="viewTaskSet($event)">查看任务集</wux-button>
-      <wux-button class="addTaskBtn" type="calm" size="small" :id='item.id' @click="addTask($event)">新建任务</wux-button>
-      <van-collapse-item :title="item.title" :name="index" >
-        <p class="taskListDesc">{{item.desc}}</p>
-        <div class="taskListView">
-        <swiper class="cont" @change="switchItem('switchItem',$event)" :current="currentTab" circular="true" skip-hidden-item-layout="true">
-        <swiper-item  v-for="(task,i) in item.task" :key="i" :id="i">
-        <div class="card"><navigator class="taskName" url="../../pages/view/main">{{task.name}}</navigator><p class="taskDesc">{{task.task_desc}}</p>
-        <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn">任务打卡</wux-button>
-        </div>
-        </swiper-item>
-      </swiper>
-        </div>
-      </van-collapse-item>
-    </van-collapse>
+
+<!--单人任务集合-->
+    <ul class="defaultSetCards">
+      <li class="card_unfold" v-for=" (task,i) in defaultTask" :key="i" :id="task.id">
+        <h1>{{task.name}}</h1>  
+        <p>{{task.task_desc}}</p>
+        <van-button  type="info" size="small" :id='task.id' @click="completeTask($event)"
+        class="completeTaskBtn" :disabled="!defaultTask[i].complete">任务打卡</van-button>
+      </li>
+    </ul>
+
+  <ul class="cards" v-for="(item,index) in taskSetList" :key='index' :id='index'>
+  <p class="taskSetDesc">{{item.title}}</p>
+  <van-button round type="info" @click="plusTaskBtnClick" size="mini" :id='item.id'>+</van-button>
+  <van-button round type="info" @click="foldCards($event)" size="mini" :id='index'>change</van-button>
+    <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.task" :key="i" :id="task.id">
+      <h1>{{task.name}}</h1>  
+      <p>{{task.task_desc}}</p>
+      <van-button  type="info" size="small" :id='task.id' @click="completeTask($event)"
+        class="completeTaskBtn" :disabled="!taskSetList[index].task[i].complete">任务打卡</van-button>
+    </li>
+  </ul>
     </div>
   </div>
 </template>
@@ -51,12 +59,13 @@ export default {
     userID:1,
     date:[],
     isCalendarShow:false,
+    defaultTask:[],
     taskSetList:[],
+    taskSetListFold:[],/*卡片样式*/
     activeNames: [],
     /*测试任务集列表随日期切换*/
     events:todayEvents,
     }
-    console.log(this.taskSetList)
   },
   components:{
     Calendar
@@ -74,15 +83,39 @@ export default {
     })
   },
   mounted(){
+    var timestamp = Date.parse(new Date());
+    var date = new Date(timestamp);
+    //获取年份  
+    var Y =date.getFullYear();
+    //获取月份  
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    //获取当日日期 
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+    this.date[0]=Y
+    this.date[1]=M
+    this.date[2]=D
     this.$fly.request({
       method: 'get',
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date=1',
+      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date='+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
+      for(var i=0;i<res.length;i++){
+        /*此处替换为默认任务集的id*/
+        if(res[i].id==0){
+          this.defaultTask=res[i].task;
+          res.splice(i,1)
+          break;
+        }
+      }
       this.taskSetList=res
+      /*初始化卡片堆折叠信息*/
+      var foldArray=Array(this.taskSetList.length).fill(true);
+      this.taskSetListFold=foldArray;
     }).catch(function (error) {
         console.log(error);
     });
+  },
+  computed:{
   },
   methods: {
     handleGetUserInfo(){
@@ -103,6 +136,7 @@ export default {
         this.handleGetUserInfo();
       }
     },
+    /*切换日历*/
     swapCalendar(){
       if(this.isCalendarShow==true){
         this.isCalendarShow=false;
@@ -111,40 +145,71 @@ export default {
         this.isCalendarShow=true;
       }
     },
+
+    /*浮动按钮点击事件*/
+    plusBtnClick(){
+      const url = '../create-set/main'
+      wx.navigateTo({ 
+        url: url,
+        success: function(res){
+          console.log('跳转到页面成功')
+        },
+        fail: function() {
+        console.log('跳转到页面失败')
+        },
+      })
+    },
+
+    /*任务集下增加任务按钮事件*/
+    plusTaskBtnClick(){
+      const url = '../create-task/main'
+      wx.navigateTo({ 
+        url: url,
+        success: function(res){
+          console.log('跳转到页面成功')
+        },
+        fail: function() {
+        console.log('跳转到页面失败')
+        },
+      })
+    },
+
     /*选择当前日期并得到日期值*/
     selectDay(val){
       this.date[0]=val[0];
       this.date[1]=val[1];
       this.date[2]=val[2];
-      console.log(this.date);
       /*需要回调任务集列表生成函数*/
       this.$fly.request({
       method: 'get',
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date=1',
+      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date='+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
+      this.defaultTask=new Array();
+      for(var i=0;i<res.length;i++){
+        /*此处替换为默认任务集的id*/
+        if(res[i].id==0){
+          this.defaultTask=res[i].task;
+          res.splice(i,1)
+          break;
+        }
+      }
       this.taskSetList=res
+      /*初始化卡片堆折叠信息*/
+      var foldArray=Array(this.taskSetList.length).fill(true);
+      this.taskSetListFold=foldArray;
     }).catch(function (error) {
         console.log(error);
     });
     },
-    /*新建任务*/
-    addTask(event){
-      console.log(event.currentTarget.id);
-    },
-    viewTaskSet(event){
-      console.log(event.currentTarget.id);
-    },
-    onChange (event) {
-    this.activeNames = event.mp.detail
-    console.log(event.currentTarget)
-    },
-    switchItem: function (prompt,res) {
-      //console.log(res.mp);
+    /*处理任务卡展开效果*/
+    foldCards(event){
+      console.log(event.currentTarget.id)
+      this.taskSetListFold.splice(event.currentTarget.id, 1,!this.taskSetListFold[event.currentTarget.id])
     },
     completeTask(event){
-      console.log(event.currentTarget.id);
-      this.$fly.request({
+      console.log(event);
+      /*this.$fly.request({
         method:"post",
         url:"http://mock-api.com/5g7AeqKe.mock/completeTask",
         body:{
@@ -155,7 +220,7 @@ export default {
         console.log(res)
       }).catch(function (error) {
         console.log(error);
-    });
+    });*/
     }
   }
 }
@@ -165,11 +230,32 @@ export default {
 page{
   background-color:rgb(245,245,245);
 }
+
+/*浮动按钮组件*/
+movable-area{
+  pointer-events: none;
+  height: 90%;
+  width: 100%;
+  position:fixed;
+  left:0px;
+  top:50px;
+  z-index:100;
+}
+movable-view{
+  pointer-events: auto;
+  height: 50px; 
+  width: 50px;
+  position:relative;
+}
+li{
+  pointer-events:none;
+}
+
 .userInfo{
   height:50px;
   display:flex;
   align-items: center;
-  background:rgb(245,245,245);
+  background:lightcyan;
 }
 .userAvatar{
   height:auto;
@@ -180,18 +266,10 @@ page{
   margin-left:20px;
 }
 .btnNav{
-   height:70px;
+  height:45px;
    pedding:10px;
    background:rgb(245,245,245);
    margin-bottom:10px;
-}
-.blank{
-  clear:both;
-}
-.addTaskSetBtn{
-  float:right;
-  margin-bottom:10px;
-  margin-top:10px;
 }
 /*月视图样式*/
 .mpvue-calendar{
@@ -215,37 +293,71 @@ page{
   margin-top:10px;
 }
 /*任务集合列表*/
-.taskSetList{
-  background:rgb(245,245,245)
-}
-.taskListSetView{
+.taskSetListView{
   height:auto;
 }
-.card{
-  background:rgb(245,245,245);;
-  height:120px;
-  border:1px solid;
-  border-radius:25px;
+/*任务卡片堆*/
+.cards {
+  position: relative;  
+  padding: 5px;
+  min-height:300px;
+  height:auto;
+  background-color:lightcyan;
+  margin-top:10px;
+  margin-botton:10px;
+  width:80%;
+  margin-left:10%;
+  z-index:1
 }
-.taskName{
-  font-size:30px;
-  margin-left:10px;
-  color:black;
+.defaultSetCards{
+  position: relative;  
+  padding: 5px;
+  min-height:300px;
+  height:auto;
+  margin-top:10px;
+  margin-botton:10px;
+  width:80%;
+  margin-left:10%;
+  z-index:1
 }
-.taskListDesc{
-  font-size:15px;
-  margin-left:10px;
+
+.card_fold {
+  height:80px;
+  margin-bottom:-75px;
+  width:200px;
+  left:20px;
+  background: #fff;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 4px #000;
+  transform: translateY(0) translateX(25px) scale(1);
+  transform-origin: 0 0;
+  transition: transform 0.6s cubic-bezier(.8,.2,.1,0.8) 0.1s,
+  background 0.4s linear;
+  cursor: pointer;
+  user-select: none;
+  z-index:5;
+}
+.card_unfold {
+  height:80px;
   margin-bottom:10px;
+  width:200px;
+  left:20px;
+  background: #fff;
+  border-radius: 30px;
+  padding: 20px;
+  box-shadow: 0 0 4px #000;
+  transform: translateY(0) translateX(25px) scale(1);
+  transform-origin: 0 0;
+  transition: transform 0.6s cubic-bezier(.8,.2,.1,0.8) 0.1s,
+    background 0.4s linear;
+  cursor: pointer;
+  user-select: none;
+  z-index:5;
 }
-.taskDesc{
-  font-size:12px;
-  margin-left:10px;
-}
-.addTaskBtn{
-  margin-left:10px;
-}
+
 .completeTaskBtn{
-  float:right;
-  margin-right:10px;
+  pointer-events:auto;
+  z-index:10;
 }
 </style>
