@@ -121,7 +121,7 @@ export default {
     // console.log("vuex global test:"+store.state.nickname+store.state.id)  //vuex 读取全局变量
     this.handleGetUserInfo();
     console.log("vuex global test1:"+store.state.isShow)
-    store.commit(mutationtypes.ISSHOW_MUTATION,true);
+    // store.commit(mutationtypes.ISSHOW_MUTATION,true);
     console.log("vuex global test2:"+store.state.isShow)
   },
   methods: {
