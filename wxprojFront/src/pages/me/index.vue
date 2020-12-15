@@ -6,19 +6,19 @@
           v-if="isShow"
           class="userAvatar"
           :src="userInfo.avatarUrl"
-          alt="Error Pic"
+          alt="登陆失败"
           size="large"
           shape="square"
           scale="true"
         />
-        <wux-button
+        <!-- <wux-button
           class="showUsrAvatar"
           v-else
           open-type="getUserInfo"
           @getuserinfo="getUserInfo"
           >点击获取用户登录信息</wux-button
         >
-        <wux-white-space size="small" />
+        <wux-white-space size="small" /> -->
         <p class="userName">微信名:{{ userInfo.nickName }}</p>
     </view>
     </view>
@@ -107,6 +107,8 @@
 </template>
 
 <script>
+import store from "../../store" //vuex 读取全局变量
+import * as mutationtypes from '../../mutation-types'
 export default {
   data() {
     return {
@@ -115,36 +117,17 @@ export default {
     };
   },
   beforeMount() {
+    console.log("IbeforeMount");
+    // console.log("vuex global test:"+store.state.nickname+store.state.id)  //vuex 读取全局变量
     this.handleGetUserInfo();
-    wx.login({
-      success: function (res) {
-        console.log(res); //这里的返回值里面便包含code
-      },
-      fail: function (res) {
-        console.log("登陆失败");
-      },
-      complete: function (res) {},
-    });
+    console.log("vuex global test1:"+store.state.isShow)
+    store.commit(mutationtypes.ISSHOW_MUTATION,true);
+    console.log("vuex global test2:"+store.state.isShow)
   },
-
   methods: {
     handleGetUserInfo() {
-      wx.getUserInfo({
-        success: (data) => {
-          console.log(data);
-          this.userInfo = data.userInfo;
-          this.isShow = true;
-        },
-        fail: () => {
-          console.log("获取用户登录信息失败");
-        },
-      });
-    },
-    getUserInfo(data) {
-      console.log(data);
-      if (data.mp.detail.rawData) {
-        this.handleGetUserInfo();
-      }
+      this.userInfo = store.state.userInfo;
+      this.isShow = store.state.isShow;
     },
   },
 };

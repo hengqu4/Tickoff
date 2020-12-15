@@ -66,6 +66,12 @@
         {
           "name": "pages/task-set/main",
           "pathName": "pages/task-set/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/me/main",
+          "pathName": "pages/me/main",
           "scene": null
         }
       ]
