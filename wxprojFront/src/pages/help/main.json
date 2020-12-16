@@ -1,0 +1,19 @@
+{
+  "navigationBarTitleText": "帮助",
+  "usingComponents": {
+    "wux-cell-group": "../../../static/wux/cell-group",
+    "wux-cell": "../../../static/wux/cell",
+    "wux-calendar": "../../../static/wux/calendar",
+    "wux-button":"../../../static/wux/button",
+    "wux-avatar":"../../../static/wux/avatar",
+    "van-collapse":"../../../static/vant/collapse",
+    "van-collapse-item":"../../../static/vant/collapse-item",
+    "wux-row": "../../../static/wux/row/index",
+    "wux-col": "../../../static/wux/col/index",
+    "wux-grids": "../../../static/wux/grids/index",
+    "wux-grid": "../../../static/wux/grid/index",
+    "wux-icon": "../../../static/wux/icon/index",
+    "wux-white-space": "../../../static/wux/white-space/index",
+    "wux-image": "../../../static/wux/image/index"
+  }
+}

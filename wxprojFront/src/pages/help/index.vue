@@ -20,14 +20,14 @@
     <wux-white-space size="large" />
     <wux-grids wux-class="grid-box" col="2">
       <wux-grid>
-        <view class="grid-title">{{activeDays}}</view>
+        <view class="grid-title">232</view>
         <view class="grid-desc">
           <wux-icon wux-class="grid-icon" type="ios-happy" size="22" />
           <view>活跃天数</view>
         </view>
       </wux-grid>
       <wux-grid>
-        <view class="grid-title">{{likes}}</view>
+        <view class="grid-title">23,423</view>
         <view class="grid-desc">
           <wux-icon wux-class="grid-icon" type="ios-thumbs-up" size="22" />
           <view>收到的赞</view>
@@ -41,7 +41,8 @@
       <wux-cell
         title="历史记录"
         is-link
-        @click="viewHistory"
+        data-clipboard="https://github.com/skyvow"
+        bind:click="clipboard"
       >
         <wux-icon wux-class="icon" slot="header" type="ios-trending-up" size="22" />
       </wux-cell>
@@ -67,7 +68,8 @@
       <wux-cell
         title="帮助"
         is-link
-        @click="viewHelp"
+        data-url="http://cdn.skyvow.cn/wxpay.jpg"
+        bind:click="onPreview"
       >
         <wux-icon wux-class="icon" slot="header" type="ios-paper" size="22" />
       </wux-cell>
@@ -98,8 +100,7 @@ export default {
   data() {
     return {
       userInfo: {},
-      likes:100,
-      activeDays:100
+      isShow: false,
     };
   },
   beforeMount() {
@@ -113,24 +114,6 @@ export default {
   onShow(){
     this.handleGetUserInfo();
     //console.log("onShow",this.userInfo);
-    // this.$fly.request({
-    //   method: 'get',
-    //   url: 'http://mock-api.com/5g7AeqKe.mock/likes?UserID='+store.state.openId,
-    // }).then(res => {
-    //   console.log(res)
-    //   this.likes=res
-    // }).catch(function (error) {
-    //     console.log(error);
-    // });
-    // this.$fly.request({
-    //   method: 'get',
-    //   url: 'http://mock-api.com/5g7AeqKe.mock/activeDays?UserID='+store.state.openId,
-    // }).then(res => {
-    //   console.log(res)
-    //   this.activeDays=res
-    // }).catch(function (error) {
-    //     console.log(error);
-    // });
   },
   methods: {
     handleGetUserInfo() {
@@ -141,12 +124,6 @@ export default {
           urls: [e.currentTarget.dataset.url],
       })
     },
-    viewHistory () {
-      mpvue.navigateTo({url:"../history/main"})
-    },
-    viewHelp () {
-      mpvue.navigateTo({url:"../help/main"})
-    }
   },
 };
 </script>
