@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 
 @Data
@@ -16,15 +18,16 @@ public class Mission implements Serializable {
     private String setId;
     private String name;
     private String description;
-    private Date createDate;
-    private Date start;
-    private Date end;
-    private String routine;
+    private Timestamp createDate;
+    private Timestamp start;
+    private Timestamp end;
+    private int routine;
     private boolean isDelay;
-    private Date delay;
     private int workLoad;
     private boolean isRequire;
     private boolean isNeedNotice;
-    private Date notice;
+    private Timestamp notice;
     private boolean done;
+    private Timestamp delay;
+
 }
