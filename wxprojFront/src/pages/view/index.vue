@@ -2,7 +2,7 @@
   <div>
   	<movable-area>
   	  <movable-view direction="all"  x=300 y=50>
-		    <van-button round type="info" @click="plusBtnClick">+</van-button>
+		    <wux-button type="calm" icon="plus" @click="plusBtnClick"><wux-icon type="ios-add" size="40"/></wux-button>
 	    </movable-view>
     </movable-area>
   <div class="userInfo">
@@ -11,9 +11,9 @@
     <p class="userName">{{userInfo.nickName}}</p>
     </div>
     <div class="btnNav">
-    <wux-button class="monthView" type="calm" @click="swapCalendar" size="small">选择日期</wux-button>
+    <wux-button class="monthView" type="calm" @click="swapCalendar" size="small"><wux-icon type="ios-calendar" size="16"/></wux-button>
     </div>
-    <Calendar :events="events" v-if="isCalendarShow" @select="selectDay"/>
+    <Calendar v-if="isCalendarShow" @select="selectDay"/>
     <div class="taskSetListView">
 
 <!--单人任务集合-->
@@ -21,21 +21,23 @@
       <li class="card_unfold" v-for=" (task,i) in defaultTask" :key="i" :id="task.id">
         <h1>{{task.name}}</h1>  
         <p>{{task.task_desc}}</p>
-        <van-button  type="info" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn" :disabled="!defaultTask[i].complete">任务打卡</van-button>
+        <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
+        class="completeTaskBtn" :disabled="!defaultTask[i].complete"><wux-icon type="ios-checkmark." size="16"/></wux-button>
       </li>
     </ul>
 
   <ul class="cards" v-for="(item,index) in taskSetList" :key='index' :id='index'>
   <p class="taskSetDesc">{{item.title}}</p>
-  <van-button round type="info" @click="plusTaskBtnClick" size="mini" :id='item.id'>+</van-button>
-  <van-button round type="info" @click="foldCards($event)" size="mini" :id='index'>change</van-button>
+  <wux-button type="calm" @click="foldCards($event)" size="small" :id='index'><wux-icon :type="taskSetListFoldIcon[index]" size="16"/></wux-button>
+  <wux-button class="addTaskInSetBtn" type="calm" @click="plusTaskBtnClick" size="small" :id='item.id'><wux-icon type="ios-add" size="16"/></wux-button>
+  <div class="cardList">
     <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.task" :key="i" :id="task.id">
       <h1>{{task.name}}</h1>  
       <p>{{task.task_desc}}</p>
-      <van-button  type="info" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn" :disabled="!taskSetList[index].task[i].complete">任务打卡</van-button>
+      <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
+        class="completeTaskBtn" :disabled="!taskSetList[index].task[i].complete"><wux-icon type="ios-checkmark." size="16"/></wux-button>
     </li>
+    </div>
   </ul>
     </div>
   </div>
@@ -43,10 +45,6 @@
 
 <script>
 import Calendar from 'mpvue-calendar'
-/*此处用来写从后端get数据*/
-/*下为测试数据*/
-var todayEvents={'2020-12-9': '4/10','2020-12-10': '2/10'}
-var dataList=[]
 /*用来组件传值，不知道能用来干啥先放着*/
 props:{
 }
@@ -56,15 +54,14 @@ export default {
     value:[],
     userInfo:{},
     isShow:false,
-    userID:1,
+    userID:'abc123456',
     date:[],
     isCalendarShow:false,
     defaultTask:[],
     taskSetList:[],
-    taskSetListFold:[],/*卡片样式*/
+    taskSetListFold:[],/*卡片堆叠样式*/
+    taskSetListFoldIcon:[],
     activeNames: [],
-    /*测试任务集列表随日期切换*/
-    events:todayEvents,
     }
   },
   components:{
@@ -111,6 +108,8 @@ export default {
       /*初始化卡片堆折叠信息*/
       var foldArray=Array(this.taskSetList.length).fill(true);
       this.taskSetListFold=foldArray;
+      var foldArrayIcon=Array(this.taskSetList.length).fill("ios-arrow-down");
+      this.taskSetListFoldIcon=foldArrayIcon;
     }).catch(function (error) {
         console.log(error);
     });
@@ -198,6 +197,8 @@ export default {
       /*初始化卡片堆折叠信息*/
       var foldArray=Array(this.taskSetList.length).fill(true);
       this.taskSetListFold=foldArray;
+      var foldArrayIcon=Array(this.taskSetList.length).fill("ios-arrow-down");
+      this.taskSetListFoldIcon=foldArrayIcon;
     }).catch(function (error) {
         console.log(error);
     });
@@ -206,10 +207,16 @@ export default {
     foldCards(event){
       console.log(event.currentTarget.id)
       this.taskSetListFold.splice(event.currentTarget.id, 1,!this.taskSetListFold[event.currentTarget.id])
+      if(this.taskSetListFoldIcon[event.currentTarget.id]==="ios-arrow-up"){
+        this.taskSetListFoldIcon.splice(event.currentTarget.id, 1,"ios-arrow-down")
+      }
+      else{
+        this.taskSetListFoldIcon.splice(event.currentTarget.id, 1,"ios-arrow-up")
+      }
     },
     completeTask(event){
-      console.log(event);
-      /*this.$fly.request({
+      console.log(typeof(this.userID));
+      this.$fly.request({
         method:"post",
         url:"http://mock-api.com/5g7AeqKe.mock/completeTask",
         body:{
@@ -220,7 +227,7 @@ export default {
         console.log(res)
       }).catch(function (error) {
         console.log(error);
-    });*/
+    });
     }
   }
 }
@@ -249,6 +256,9 @@ movable-view{
 }
 li{
   pointer-events:none;
+}
+wux-button{
+  border-radius:30%;
 }
 
 .userInfo{
@@ -290,6 +300,7 @@ li{
 .monthView{
   float:left;
   margin-bottom:10px;
+  margin-left:10px;
   margin-top:10px;
 }
 /*任务集合列表*/
@@ -299,15 +310,18 @@ li{
 /*任务卡片堆*/
 .cards {
   position: relative;  
-  padding: 5px;
+  padding: 20px;
   min-height:300px;
   height:auto;
   background-color:lightcyan;
   margin-top:10px;
   margin-botton:10px;
   width:80%;
-  margin-left:10%;
-  z-index:1
+  margin-left:5%;
+  z-index:1;
+  border:2px solid;
+  border-color:blue;
+  border-radius:30px;
 }
 .defaultSetCards{
   position: relative;  
@@ -325,7 +339,6 @@ li{
   height:80px;
   margin-bottom:-75px;
   width:200px;
-  left:20px;
   background: #fff;
   border-radius: 30px;
   padding: 20px;
@@ -342,7 +355,6 @@ li{
   height:80px;
   margin-bottom:10px;
   width:200px;
-  left:20px;
   background: #fff;
   border-radius: 30px;
   padding: 20px;
@@ -350,13 +362,24 @@ li{
   transform: translateY(0) translateX(25px) scale(1);
   transform-origin: 0 0;
   transition: transform 0.6s cubic-bezier(.8,.2,.1,0.8) 0.1s,
-    background 0.4s linear;
+  background 0.4s linear;
   cursor: pointer;
   user-select: none;
   z-index:5;
 }
 
+.addTaskInSetBtn{
+  float:right;
+}
+.taskSetDesc{
+  float:left;
+}
+.cardList{
+  margin-top:15px;
+  margin-left:5px;
+}
 .completeTaskBtn{
+  float:right;
   pointer-events:auto;
   z-index:10;
 }
