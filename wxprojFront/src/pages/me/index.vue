@@ -3,7 +3,6 @@
     <view class="container">
       <view class="userinfo">
       <wux-avatar
-          v-if="isShow"
           class="userAvatar"
           :src="userInfo.avatarUrl"
           alt="登陆失败"
@@ -11,14 +10,7 @@
           shape="square"
           scale="true"
         />
-        <!-- <wux-button
-          class="showUsrAvatar"
-          v-else
-          open-type="getUserInfo"
-          @getuserinfo="getUserInfo"
-          >点击获取用户登录信息</wux-button
-        >
-        <wux-white-space size="small" /> -->
+        <wux-white-space size="small" />
         <p class="userName">微信名:{{ userInfo.nickName }}</p>
     </view>
     </view>
@@ -117,17 +109,20 @@ export default {
     };
   },
   beforeMount() {
-    console.log("IbeforeMount");
+    //console.log("IbeforeMount");
     // console.log("vuex global test:"+store.state.nickname+store.state.id)  //vuex 读取全局变量
-    this.handleGetUserInfo();
-    console.log("vuex global test1:"+store.state.isShow)
+    //console.log("beforeMount",this.userInfo);
+    //console.log("vuex global test1:"+store.state.isShow)
     // store.commit(mutationtypes.ISSHOW_MUTATION,true);
-    console.log("vuex global test2:"+store.state.isShow)
+    //console.log("vuex global test2:"+store.state.isShow)
+  },
+  onShow(){
+    this.handleGetUserInfo();
+    //console.log("onShow",this.userInfo);
   },
   methods: {
     handleGetUserInfo() {
       this.userInfo = store.state.userInfo;
-      this.isShow = store.state.isShow;
     },
   },
 };

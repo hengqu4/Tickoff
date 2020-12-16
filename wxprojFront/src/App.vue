@@ -81,8 +81,6 @@ export default {
         success: (data) => {
           console.log("getUserInfo()::",data);
           store.commit(mutationtypes.USERINFO_MUTATION,data.userInfo);
-          store.commit(mutationtypes.ISSHOW_MUTATION,true);
-          console.log("commit",store.state.isShow);
         },
         fail: () => {
           console.log("getUserInfo()失败");
