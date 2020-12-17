@@ -5,8 +5,10 @@
     "wux-cell": "../../../static/wux/cell",
     "wux-calendar": "../../../static/wux/calendar",
     "wux-button":"../../../static/wux/button",
+    "wux-icon":"../../../static/wux/icon",
     "wux-avatar":"../../../static/wux/avatar",
     "van-collapse":"../../../static/vant/collapse",
-    "van-collapse-item":"../../../static/vant/collapse-item"
+    "van-collapse-item":"../../../static/vant/collapse-item",
+    "van-button":"../../../static/vant/button"
   }
 }
