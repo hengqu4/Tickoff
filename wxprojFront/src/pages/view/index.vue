@@ -2,7 +2,7 @@
   <div>
   	<movable-area>
   	  <movable-view direction="all"  x=300 y=50>
-		    <wux-button type="calm" icon="plus" @click="plusBtnClick"><wux-icon type="ios-add" size="40"/></wux-button>
+		    <van-button class="floatBtn" round type="info" size="large" @click="plusBtnClick"><wux-icon class="floatBtnIcon"  type="ios-add" size="30"/></van-button>
 	    </movable-view>
     </movable-area>
   <div class="userInfo">
@@ -28,7 +28,7 @@
 
   <ul class="cards" v-for="(item,index) in taskSetList" :key='index' :id='index'>
   <p class="taskSetDesc">{{item.title}}</p>
-  <wux-button type="calm" @click="foldCards($event)" size="small" :id='index'><wux-icon :type="taskSetListFoldIcon[index]" size="16"/></wux-button>
+  <wux-button class="foldCard" type="calm" @click="foldCards($event)" size="small" :id='index'><wux-icon :type="taskSetListFoldIcon[index]" size="16"/></wux-button>
   <wux-button class="addTaskInSetBtn" type="calm" @click="plusTaskBtnClick" size="small" :id='item.id'><wux-icon type="ios-add" size="16"/></wux-button>
   <div class="cardList">
     <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.task" :key="i" :id="task.id">
@@ -262,17 +262,19 @@ wux-button{
 }
 
 .userInfo{
-  height:50px;
+  height:80px;
   display:flex;
   align-items: center;
-  background:lightcyan;
+  background:rgb(135,206,250);
 }
 .userAvatar{
   height:auto;
   margin-left:10px;
+  box-shadow: 0 0 2px #fff;
+  border-radius:50%;
 }
 .userName{
-  color:orange;
+  color:white;
   margin-left:20px;
 }
 .btnNav{
@@ -280,6 +282,17 @@ wux-button{
    pedding:10px;
    background:rgb(245,245,245);
    margin-bottom:10px;
+}
+.floatBtn{
+  position: relative;
+}
+.floatBtnIcon{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 /*月视图样式*/
 .mpvue-calendar{
@@ -313,15 +326,12 @@ wux-button{
   padding: 20px;
   min-height:300px;
   height:auto;
-  background-color:lightcyan;
   margin-top:10px;
   margin-botton:10px;
   width:80%;
   margin-left:5%;
   z-index:1;
-  border:2px solid;
-  border-color:blue;
-  border-radius:30px;
+  border-radius:10px;
 }
 .defaultSetCards{
   position: relative;  
@@ -340,7 +350,7 @@ wux-button{
   margin-bottom:-75px;
   width:200px;
   background: #fff;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 20px;
   box-shadow: 0 0 4px #000;
   transform: translateY(0) translateX(25px) scale(1);
@@ -356,7 +366,7 @@ wux-button{
   margin-bottom:10px;
   width:200px;
   background: #fff;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 20px;
   box-shadow: 0 0 4px #000;
   transform: translateY(0) translateX(25px) scale(1);
@@ -370,6 +380,9 @@ wux-button{
 
 .addTaskInSetBtn{
   float:right;
+}
+.foldCard{
+  margin-left:10px;
 }
 .taskSetDesc{
   float:left;
