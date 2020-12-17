@@ -40,7 +40,7 @@ export default {
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
-      // console.log("onChange \n", changedValues, allValues);
+      console.log("onChange \n", changedValues, allValues);
     },
 
     onSubmit() {
@@ -62,7 +62,7 @@ export default {
       }).then(res =>{
         console.log(subData.title)
         console.log(subData.description)
-        // this.gotoDetail(1)
+        this.gotoDetail(1)
       }).catch(function (error) {
         console.log(error);
       });

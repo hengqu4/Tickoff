@@ -5,7 +5,7 @@
   "pages": [
     "pages/me/main",
     "pages/view/main",
-    "pages/task-set/main",
+    "pages/set-view/main",
     "pages/create-set/main",
     "pages/set-detail/main",
     "pages/change-set/main",
@@ -28,7 +28,7 @@
     "list": [
       {
         "text": "组集",
-        "pagePath": "pages/task-set/main",
+        "pagePath": "pages/set-view/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
@@ -48,7 +48,7 @@
     "items": [
       {
         "name": "组集",
-        "pagePath": "pages/task-set/main",
+        "pagePath": "pages/set-view/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },

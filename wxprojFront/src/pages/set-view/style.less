@@ -37,7 +37,7 @@
     &__hd {
         position: relative;
         display: flex;
-        font-size: '25px';
+        font-size: 20px;
         padding: @card-hd-padding;
         align-items: center;
         background-color:color(#c5def7);
@@ -49,7 +49,6 @@
     &__content {
         flex: 1;
         text-align: left;
-        font-size: '20px';
         color: @black;
     }
 
@@ -74,9 +73,9 @@
     &__bd {
         position: relative;
         padding: @card-bd-padding;
-        font-size: 15px;
         color: @heading-color;
-        min-height: 40px;
+        font-size: 18px;
+        min-height: 30px;
     }
 
     &__ft {
@@ -89,10 +88,11 @@
     &__actions {
         position: relative;
         display: flex;
-        line-height: 50px;
-        margin-top: 6px;
+        line-height: 35px;
+        margin-top: 2px;
         justify-content: center;
         align-items: center;
+        font-size: 15px;
 
         &::before {
             .setTopLine(@border-color-split);

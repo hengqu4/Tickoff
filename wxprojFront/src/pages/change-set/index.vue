@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="set-detail">
     <wux-form id="wux-form" @change="onChange">
+      <wux-cell-group title="任务集信息"></wux-cell-group>
 
       <wux-cell-group title="标题">
         <wux-cell hover-class="none">
-          <wux-field name="title" initialValue="请输入任务集标题">
+          <wux-field name="title" :initialValue="title">
             <wux-textarea rows="1" />
           </wux-field>
         </wux-cell>
@@ -12,7 +13,7 @@
 
       <wux-cell-group title="描述">
         <wux-cell hover-class="none">
-          <wux-field name="description" initialValue="请输入任务集描述">
+          <wux-field name="description" :initialValue="description">
             <wux-textarea rows="3" />
           </wux-field>
         </wux-cell>
@@ -25,7 +26,7 @@
               邀请好友
             </wux-button>
           </div>
-          <div v-for="(item, index) in memberList" :key="index" :style="{marginBottom: '5px'}">
+          <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
             <view>
               <wux-avatar :src="item.avater" />
               <span>{{item.name}}</span>
@@ -34,13 +35,14 @@
         </wux-cell>
       </wux-cell-group>
 
-      <view class="btn-area">
-        <van-button round type="info" @click="onSubmit">
-          保存
-        </van-button>
-      </view>
-    </wux-form>
+      <div :style="{height:'80px'}"/>
 
+      <div class="set-edit-button">
+        <van-button round type="info" @click="onSubmit">
+            保存
+        </van-button>
+      </div>
+    </wux-form>
   </div>
 </template>
 
@@ -54,22 +56,11 @@ export default {
   data() {
     return {
       userId:'',
-      taskId:'',
-      title:'',
-      description:'',
+      setId:'',
+      title: "",
+      description: "",
       memberNum:'',
-      member: [],
-      memberList:[
-        {
-          name:'github',
-          avater:"../../../static/images/user.png",
-        },
-        {
-          name:'hq',
-          avater:"http://cdn.skyvow.cn/logo.png",
-        }
-        
-      ]
+      member:[]
     };
   },
   components: {
@@ -78,45 +69,45 @@ export default {
 
   onLoad:function(options) {
     console.log(options)
-    this.setId=options.sId
+    this.setId=options.setId
     this.userId=options.uId
   },
 
-  created(){
-
-  },
   beforeMount() {
     wx.getUserInfo({
       withCredentials: false,
       success: (res) => {
-        console.log(res.rawData);
       },
       fail: () => {
-        console.log("shibai");
+        console.log("获取失败");
       },
       complete: () => {},
     });
-    this.isLoading=!this.isLoading;
   },
 
   mounted() {
     this.$fly.request({
-      method: 'get', // post/get 请求方式
-      // url: 'api/getSet?setId='+this.setId,
-      url: 'api/getSet?setId=1',
+      method: 'get',
+      url: 'api/getSet?setId='+this.setId,
     }).then(res => {
+      console.log("res")
       console.log(res)
       this.title=res.title
       this.description=res.description
       this.memberNum=res.memberNum
       this.member=res.member
-      
     }).catch(function (error) {
-        console.log(error);
+      console.log("error")
+      console.log(error);
     });
   },
 
   methods:{
+    onChange(event) {
+      const { form, changedValues, allValues } = event.mp.detail;
+      console.log("onChange \n", changedValues, allValues);
+    },
+
     onSubmit() {
       const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
       const value = getFieldsValue()
@@ -125,13 +116,15 @@ export default {
       var subData={}
       subData.title=value.title
       subData.description=value.description
+      subData.member=value.member
 
       this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"api/changeSet?setId=1",
         body:{
           "title":subData.title,
           "description":subData.description,
+          "member":subData.member,
         }
       }).then(res =>{
         this.gotoDetail(1)
@@ -154,3 +147,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.set-edit-button{
+  z-index: 1;
+  position: fixed;
+  left: 80%;
+  top:85%
+}
+
+</style>

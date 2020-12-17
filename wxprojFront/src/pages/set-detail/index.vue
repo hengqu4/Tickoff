@@ -12,7 +12,7 @@
 
     <wux-cell-group title="描述">
       <wux-cell hover-class="none">
-        <wux-field name="description" :value="description"
+        <wux-field name="description" :initialValue="description">
           <wux-textarea disabled rows="3" />
         </wux-field>
       </wux-cell>
@@ -54,7 +54,7 @@ export default {
 
   onLoad:function(options) {
     console.log(options)
-    this.setId=options.sId
+    this.setId=options.setId
     this.userId=options.uId
   },
 
@@ -72,20 +72,19 @@ export default {
 
   mounted() {
     this.$fly.request({
-      method: 'get', // post/get 请求方式
-      // url: 'api/getSet?setId='+this.setId,
-      url: 'api/getSet?setId=1',
+      method: 'get', 
+      url: 'api/getSet?setId='+this.setId,
     }).then(res => {
+      console.log("res")
       console.log(res)
       this.title=res.title
       this.description=res.description
       this.memberNum=res.memberNum
       this.member=res.member
-      
     }).catch(function (error) {
-        console.log(error);
+      console.log("error")
+      console.log(error);
     });
-
   },
 
   methods:{
