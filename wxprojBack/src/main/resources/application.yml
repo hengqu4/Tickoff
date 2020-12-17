@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/seprotest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: Cl991203
+    driverClassName: com.mysql.jdbc.Driver
