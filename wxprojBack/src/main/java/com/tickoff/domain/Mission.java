@@ -3,31 +3,36 @@ package com.tickoff.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
+import lombok.experimental.Tolerate;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 
 
-@Data
 @ToString
 @Builder
+@Data
 public class Mission implements Serializable {
     private String missionId;
     private String setId;
     private String name;
     private String description;
-    private Timestamp createDate;
-    private Timestamp start;
-    private Timestamp end;
+    private String createDate;
+    private String startDate;
+    private String endDate;
     private int routine;
-    private boolean isDelay;
+    private boolean delay;
     private int workLoad;
-    private boolean isRequire;
-    private boolean isNeedNotice;
-    private Timestamp notice;
+    private boolean requireCheck;
+    private boolean needNotice;
+    private String noticeTime;
     private boolean done;
-    private Timestamp delay;
+    private String delayDate;
 
+    @Tolerate
+    public Mission(){
+
+    }
 }
