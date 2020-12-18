@@ -13,23 +13,23 @@ public interface MissionDao {
     Boolean deleteMissionById(String missionId);
 
     @Insert({"insert into mission" +
-            "(missionId, setId, name, description, createDate, " +
+            "(missionId, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workLoad, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
-            "values(#{missionId}, #{setId}, #{name}, #{description}, #{createDate}, " +
+            "values(#{missionId}, #{mset_id}, #{name}, #{description}, #{createDate}, " +
             "#{startDate}, #{endDate}, #{routine}, #{delay}, #{workLoad}, " +
             "#{requireCheck}, #{needNotice}, #{noticeTime}, #{done}, #{delayDate})" })
     Boolean saveMission(Mission mission);
 
     @Update("INSERT INTO mission" +
-            "(missionId, setId, name, description, createDate, " +
+            "(missionId, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workLoad, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
-            "VALUE(#{missionId},#{setId},#{name}, #{description}, #{createDate}, " +
+            "VALUE(#{missionId},#{mset_id},#{name}, #{description}, #{createDate}, " +
             "#{startDate},#{endDate},#{routine}, #{delay}, #{workLoad}, " +
             "#{requireCheck},#{needNotice},#{noticeTime}, #{done}, #{delayDate}) " +
             "ON DUPLICATE KEY UPDATE " +
-            "setId=#{setId},name=#{name},description=#{description},createDate=#{createDate}," +
+            "mset_id=#{mset_id},name=#{name},description=#{description},createDate=#{createDate}," +
             "startDate=#{startDate},endDate=#{endDate},routine=#{routine},delay=#{delay},workLoad=#{workLoad}," +
             "requireCheck=#{requireCheck},needNotice=#{needNotice},noticeTime=#{noticeTime},done=#{done},delayDate=#{delayDate}" )
     Boolean modifyMission(Mission mission);

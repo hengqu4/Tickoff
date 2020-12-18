@@ -25,7 +25,7 @@
         <wux-field name="taskSet" :initialValue="listNumber">
           <wux-radio-group title="选择任务集">
             <div v-for="(item,index) in list" :key="index">
-              <wux-radio :title="item" :value="index" />
+              <wux-radio :title="item.name" :value="index" />
             </div>
           </wux-radio-group>
           <wux-button block outline type="balanced" @click="newTaskSet">新建任务集</wux-button>
@@ -192,6 +192,8 @@ export default {
 
       isAdvanced: false,
 
+      todayweekday:'',
+
       isLoading: false,
       radio: '',
       isLoop:["每日循环","每周循环","每月循环"],
@@ -209,7 +211,6 @@ export default {
 
   onLoad:function(options) {
     this.userId=options.uId
-    this.userId=1
   },
   created(){
 
@@ -257,12 +258,16 @@ export default {
   mounted() {
     this.$fly.request({
       method: 'get', // post/get 请求方式
-      url: 'api/get_taskset?uId='+this.userId,
+      url: 'tickoff/api/mission_set/openid/'+this.userId,
     }).then(res => {
-      console.log(res.taskSetList)
-      this.list=res.taskSetList
+      console.log("正在通过后端请求list")
+      console.log(res.data)
+      this.list=res.data
+
       console.log(this.list)
     }).catch(function (error) {
+        console.log("正在通过后端请求list，请求失败")
+
         console.log(error);
     });
    
@@ -286,33 +291,39 @@ export default {
       console.log()
       var rou=''
       if(this.loopCode==0){
-        rou='00-00-01'
+        rou=1
       }
       else if(this.loopCode==1){
-        rou='00-01-00'
+        var temp=this.startDatePicker
+        temp=temp.split(" ")[0]
+        temp=temp.split("-")
+        var da=new Date(temp[0],temp[1]-1,temp[2])
+        rou=da.getDay()*10;
       }
       else if(this.loopCode==2){
-        rou='01-00-00'
+        rou=100
       }
       else{
-        rou='00-00-00'
+        rou=0
       }
 
 //赋值
       subData.title=value.title
       subData.description=value.description
       subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
-      subData.startDate=this.startDatePicker
-      subData.endDate=this.endDatePicker
+      subData.startDate=this.startDatePicker+":00"
+      subData.endDate=this.endDatePicker+":00"
       subData.routine=rou
       subData.listNumber=value.taskSet
       subData.isDelay=this.isDelay
-      subData.delayDate=this.delayDatePicker
+      subData.delayDate=this.delayDatePicker+":00"
       subData.workLoad=this.workLoad[0]
       subData.isRequire=this.isRequire
       subData.isNeedNotice=this.isNeedNotice
-      subData.noticeBefore=this.noticeDatePicker
+      subData.noticeBefore=this.noticeDatePicker+":00"
       subData.userId=this.userId
+      subData.setId=this.list[subData.listNumber].mset_id
+      subData.done=false
 
       console.log(subData)
 
@@ -331,22 +342,22 @@ export default {
       else{
         this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"tickoff/api/missions",
         body:{
-          "userId":subData.userId,
-          "title":subData.title,
-          "description":subData.description,
-          "createDate":subData.createDate,
-          "startDate":subData.startDate,
-          "endDate":subData.endDate,
-          "routine":subData.routine,
-          "listNumber":subData.listNumber,
-          "isDelay":subData.isDelay,
-          "delayDate":subData.delayDate,
-          "workLoad":subData.workLoad,
-          "isRequire":subData.isRequire,
-          "isNeedNotice":subData.isNeedNotice,
-          "noticeBefore":subData.noticeBefore
+          "setId": subData.setId,
+          "name": subData.title,
+          "description": subData.description,
+          "createDate": subData.createDate,
+          "startDate": subData.startDate,
+          "endDate": subData.endDate,
+          "routine": subData.routine,
+          "delay": subData.isDelay,
+          "workLoad": subData.workLoad,
+          "requireCheck": subData.isRequire,
+          "needNotice": subData.isNeedNotice,
+          "noticeTime": subData.noticeBefore,
+          "done": subData.done,
+          "delayDate": subData.delayDate
         }
       }).then(res =>{
         this.gotoDetail(1)
@@ -370,6 +381,12 @@ export default {
       console.log(event.mp.detail);
       this.startDate = event.mp.detail.value;
       this.startDatePicker = event.mp.detail.label;
+      var temp=this.startDatePicker
+      temp=temp.split(" ")[0]
+      temp=temp.split("-")
+      var da=new Date(temp[0],temp[1]-1,temp[2])
+      // console.log(da.getDay())
+      // this.routine=da.getDay()*10;
     },
 
     onConfirmEndDatePicker(event) {

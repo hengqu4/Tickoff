@@ -6,7 +6,6 @@
             <wux-cell title="任务名称" :extra="title"></wux-cell>
             <wux-cell title="任务详情"></wux-cell>
             <wux-cell :title="description" disabled></wux-cell>
-            <wux-cell title="任务集" :extra='list[listNumber]'></wux-cell>
             <wux-cell title="开始时间" :extra='startDate'></wux-cell>
             <wux-cell title="结束时间" :extra='endDate'></wux-cell>
 
@@ -50,6 +49,8 @@ export default {
       title: "",
       workLoad: 1,
       list:[],
+      mset_id:'',
+      taskSet:'',
 
       loopText:'',
       noticeText:'',
@@ -83,35 +84,54 @@ export default {
   mounted() {
     this.$fly.request({
       method: 'get', // post/get 请求方式
-      url: 'api/getTask?taskId='+this.taskId,
-    }).then(res => {
-      console.log(res)
-      this.title=res.title
+      // url: 'tickoff/api/missions/'+"0dbaff90-98ee-44e1-8265-1310252e5a59",
+      url: 'tickoff/api/missions/'+this.taskId,
+
+    }).then(ress => {
+      console.log(ress)
+      var res=ress.data
+      this.title=res.name
       this.description=res.description
       this.startDate=res.startDate
       this.endDate=res.endDate
       this.routine=res.routine
       this.listNumber=res.listNumber
-      this.isDelay=res.isDelay
+      this.isDelay=res.delay
       this.delayDate=res.delayDate
       this.workLoad=res.workLoad
-      this.isRequire=res.isRequire
-      this.isNeedNotice=res.isNeedNotice
-      this.noticeBefore=res.noticeBefore
-      this.description='获取用户信息获取用户信息获取用户信息获取用户信息获取用户信息获取用户信息获取用户信息'
+      this.isRequire=res.requireCheck
+      this.isNeedNotice=res.needNotice
+      this.noticeBefore=res.noticeTime
+      this.mset_id=res.mset_id
+      
 
-      var str=this.routine.split("-")
-      if(str[0]=="01"){
-        this.loopText="每月循环"
+      var temp=this.startDate.split(":")
+      temp=temp[0]+":"+temp[1]
+      this.startDate=temp
+
+      var temp=this.endDate.split(":")
+      temp=temp[0]+":"+temp[1]
+      this.endDate=temp
+
+      var temp=this.delayDate.split(":")
+      temp=temp[0]+":"+temp[1]
+      this.delayDate=temp
+
+      var temp=this.noticeBefore.split(":")
+      temp=temp[0]+":"+temp[1]
+      this.noticeTime=temp
+
+      if(this.routine==1){
+          this.loopText="每日循环"
       }
-      else if(str[1]=="01"){
-        this.loopText="每周循环"
+      else if(this.routine==0){
+          this.loopText='不循环'
       }
-      else if( str[2]=="01"){
-        this.loopText="每日循环"
+      else if(this.routine==100){
+          this.loopText='每月循环'
       }
       else{
-        this.loopText="不循环"
+          this.loopText='每周'+this.routine/10+"循环"
       }
 
       if(this.isNeedNotice){
@@ -131,18 +151,6 @@ export default {
     }).catch(function (error) {
         console.log(error);
     });
-
-    this.$fly.request({
-      method: 'get', // post/get 请求方式
-      url: 'api/get_taskset?uId='+this.userId,
-    }).then(res => {
-      console.log(res.taskSetList)
-      this.list=res.taskSetList
-      console.log(this.list)
-    }).catch(function (error) {
-        console.log(error);
-    });
-
 
   },
 

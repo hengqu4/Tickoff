@@ -25,7 +25,7 @@ public class JSONtoObject {
 
         return Mission.builder()
                 .missionId(json.getString("missionId"))
-                .setId(json.getString("setId"))
+                .mset_id(json.getString("mset_id"))
                 .name(json.getString("name"))
                 .description(json.getString("description"))
                 .createDate(createDate)
