@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的",
+  "navigationBarTitleText": "帮助",
   "usingComponents": {
     "wux-cell-group": "../../../static/wux/cell-group",
     "wux-cell": "../../../static/wux/cell",
