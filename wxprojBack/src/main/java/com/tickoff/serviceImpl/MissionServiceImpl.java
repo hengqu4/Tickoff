@@ -3,6 +3,7 @@ package com.tickoff.serviceImpl;
 import com.tickoff.dao.MissionDao;
 import com.tickoff.domain.Mission;
 import com.tickoff.service.MissionService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +26,16 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     public boolean addMission(Mission mission) {
-        return false;
+        return missionDao.saveMission(mission);
     }
 
     @Override
     public boolean modifyMission(Mission mission) {
-        return false;
+        return missionDao.modifyMission(mission);
     }
 
     @Override
     public boolean deleteMission(String missionId) {
-        return false;
+        return missionDao.deleteMissionById(missionId);
     }
 }
