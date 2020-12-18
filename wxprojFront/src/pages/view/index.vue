@@ -20,22 +20,22 @@
     <ul class="defaultSetCards">
       <li class="card_unfold" v-for=" (task,i) in defaultTask" :key="i" :id="task.id">
         <h1>{{task.name}}</h1>  
-        <p>{{task.task_desc}}</p>
+        <p>{{task.description}}</p>
         <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn" :disabled="!defaultTask[i].complete"><wux-icon type="ios-checkmark." size="16"/></wux-button>
+        class="completeTaskBtn" :disabled="!defaultTask[i].done"><wux-icon type="ios-checkmark." size="16"/></wux-button>
       </li>
     </ul>
 
   <ul class="cards" v-for="(item,index) in taskSetList" :key='index' :id='index'>
-  <p class="taskSetDesc">{{item.title}}</p>
+  <p class="taskSetDesc">{{item.setName}}</p>
   <wux-button class="foldCard" type="calm" @click="foldCards($event)" size="small" :id='index'><wux-icon :type="taskSetListFoldIcon[index]" size="16"/></wux-button>
   <wux-button class="addTaskInSetBtn" type="calm" @click="plusTaskBtnClick" size="small" :id='item.id'><wux-icon type="ios-add" size="16"/></wux-button>
   <div class="cardList">
-    <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.task" :key="i" :id="task.id">
+    <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.missions" :key="i" :id="task.id">
       <h1>{{task.name}}</h1>  
-      <p>{{task.task_desc}}</p>
+      <p>{{task.description}}</p>
       <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn" :disabled="!taskSetList[index].task[i].complete"><wux-icon type="ios-checkmark." size="16"/></wux-button>
+        class="completeTaskBtn" :disabled="taskSetList[index].missions[i].done"><wux-icon type="ios-checkmark." size="16"/></wux-button>
     </li>
     </div>
   </ul>
@@ -54,7 +54,7 @@ export default {
     value:[],
     userInfo:{},
     isShow:false,
-    userID:'abc123456',
+    userID:'aaaas123456',
     date:[],
     isCalendarShow:false,
     defaultTask:[],
@@ -93,7 +93,7 @@ export default {
     this.date[2]=D
     this.$fly.request({
       method: 'get',
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date='+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
+      url: 'http://localhost:8080/tickoff/api/indexMsetTest/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
       for(var i=0;i<res.length;i++){
@@ -104,7 +104,6 @@ export default {
           break;
         }
       }
-      this.taskSetList=res
       /*初始化卡片堆折叠信息*/
       var foldArray=Array(this.taskSetList.length).fill(true);
       this.taskSetListFold=foldArray;
@@ -147,7 +146,7 @@ export default {
 
     /*浮动按钮点击事件*/
     plusBtnClick(){
-      const url = '../create-set/main'
+      const url = '../create-task/main'
       wx.navigateTo({ 
         url: url,
         success: function(res){
@@ -181,14 +180,14 @@ export default {
       /*需要回调任务集列表生成函数*/
       this.$fly.request({
       method: 'get',
-      url: 'http://mock-api.com/5g7AeqKe.mock/taskData?UserID='+this.userID+'&date='+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
+      url: 'http://localhost:8080/tickoff/api/indexMsetTest/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
       this.defaultTask=new Array();
       for(var i=0;i<res.length;i++){
         /*此处替换为默认任务集的id*/
-        if(res[i].id==0){
-          this.defaultTask=res[i].task;
+        if(res[i].setName=="默认任务集"){
+          this.defaultTask=res[i].missions;
           res.splice(i,1)
           break;
         }
@@ -206,7 +205,7 @@ export default {
     /*处理任务卡展开效果*/
     foldCards(event){
       console.log(event.currentTarget.id)
-      this.taskSetListFold.splice(event.currentTarget.id, 1,!this.taskSetListFold[event.currentTarget.id])
+      this.taskSetListFold.splice(event.currentTarget.id,1,!this.taskSetListFold[event.currentTarget.id])
       if(this.taskSetListFoldIcon[event.currentTarget.id]==="ios-arrow-up"){
         this.taskSetListFoldIcon.splice(event.currentTarget.id, 1,"ios-arrow-down")
       }
