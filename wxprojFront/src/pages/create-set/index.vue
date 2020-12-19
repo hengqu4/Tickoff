@@ -54,14 +54,18 @@ export default {
 
       this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"api/createSet",
         body:{
           "title":subData.title,
           "description":subData.description,
         }
       }).then(res =>{
+        console.log(subData.title)
+        console.log(subData.description)
         this.gotoDetail(1)
-      })
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
 
     gotoDetail(id) {

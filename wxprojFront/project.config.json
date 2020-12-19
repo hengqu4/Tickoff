@@ -1,7 +1,39 @@
 {
   "description": "项目配置文件。",
   "setting": {
-    "urlCheck": false
+    "useMultiFrameRuntime": false,
+    "urlCheck": false,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "enableEngineNative": false,
+    "bundle": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true
   },
   "miniprogramRoot": "dist/wx/",
   "compileType": "miniprogram",
@@ -35,7 +67,7 @@
         },
         {
           "name": "pages/changeTask/main",
-          "pathName": "pages/view/main",
+          "pathName": "pages/changeTask/main",
           "query": "",
           "scene": null
         },
@@ -54,6 +86,43 @@
         {
           "name": "pages/view/main",
           "pathName": "pages/view/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/invite/main",
+          "pathName": "pages/invite/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/set-view/main",
+          "pathName": "pages/set-view/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/task-set/main",
+          "pathName": "pages/task-set/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/taskDetail/main",
+          "pathName": "pages/taskDetail/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/me/main",
+          "pathName": "pages/me/main",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/history/main",
+          "pathName": "pages/history/main",
+          "query": "",
           "scene": null
         }
       ]

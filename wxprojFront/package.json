@@ -26,6 +26,8 @@
     "@vant/weapp": "^1.6.2",
     "flyio": "^0.6.14",
     "iview-mpvue": "^1.0.6",
+    "less": "^3.13.0",
+    "less-loader": "^4.1.0",
     "miment": "0.0.9",
     "moment": "^2.29.1",
     "mpvue": "^2.0.0",

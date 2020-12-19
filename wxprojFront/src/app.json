@@ -3,16 +3,18 @@
   "entryPagePath":"pages/taskDetail/main",
 
   "pages": [
-    "pages/calendar/main",
     "pages/me/main",
     "pages/view/main",
-    "pages/task-set/main",
+    "pages/set-view/main",
     "pages/create-set/main",
     "pages/set-detail/main",
     "pages/change-set/main",
     "pages/create-task/main",
     "pages/taskDetail/main",
-    "pages/changeTask/main"
+    "pages/changeTask/main",
+    "pages/invite/main",
+    "pages/history/main",
+    "pages/help/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,7 +30,7 @@
     "list": [
       {
         "text": "组集",
-        "pagePath": "pages/task-set/main",
+        "pagePath": "pages/set-view/main",
         "iconPath": "static/tabs/home.png",
         "selectedIconPath": "static/tabs/home-active.png"
       },
@@ -37,12 +39,6 @@
         "pagePath": "pages/view/main",
         "iconPath": "static/tabs/orders.png",
         "selectedIconPath": "static/tabs/orders-active.png"
-      },
-      {
-        "text": "日历",
-        "pagePath": "pages/calendar/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
       },
       {
         "text": "我",
@@ -54,7 +50,7 @@
     "items": [
       {
         "name": "组集",
-        "pagePath": "pages/task-set/main",
+        "pagePath": "pages/set-view/main",
         "icon": "static/tabs/home.png",
         "activeIcon": "static/tabs/home-active.png"
       },
@@ -63,12 +59,6 @@
         "pagePath": "pages/view/main",
         "icon": "static/tabs/orders.png",
         "activeIcon": "static/tabs/orders-active.png"
-      },
-      {
-        "name": "日历",
-        "pagePath": "pages/calendar/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
       },
       {
         "name": "我",
