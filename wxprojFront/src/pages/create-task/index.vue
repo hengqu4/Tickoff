@@ -165,6 +165,7 @@
 import { $wuxForm, $wuxToast } from "../../../static/wux/index";
 import moment from 'moment';
 import toast from 'mpvue-toast'
+import store from '../../store';
 
 
 export default {
@@ -256,8 +257,11 @@ export default {
     this.isLoading=!this.isLoading;
   },
   mounted() {
-    // this.userId='open91cd84d64333821d73e2751f'
+    console.log(store)
 
+    this.userId=store.state.openId
+
+    console.log(this.userId)
 
     this.$fly.request({
       method: 'get', // post/get 请求方式
