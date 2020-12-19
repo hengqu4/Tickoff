@@ -29,9 +29,9 @@ public class IndexController {
         JSONObject json = JSONObject.parseObject(requestJson);
         String missionId = jsontoObject.JSONtoMissionId(json);
         if (indexService.tickOffMission(missionId)) {
-            return "success";
+            return "任务打卡成功";
         } else {
-            return "fail";
+            return "打卡失败";
         }
     }
 
