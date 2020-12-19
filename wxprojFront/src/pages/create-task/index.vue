@@ -28,7 +28,9 @@
               <wux-radio :title="item.name" :value="index" />
             </div>
           </wux-radio-group>
-          <wux-button block outline type="balanced" @click="newTaskSet">新建任务集</wux-button>
+          <div class="buttonObject">
+            <wux-button block outline type="dark" @click="newTaskSet">新建任务集</wux-button>
+          </div>
         </wux-field>
  
         <wux-cell-group title="开始时间">
@@ -63,96 +65,107 @@
           </wux-cell>
         </wux-cell-group>
 
-
       <div v-if="isAdvanced">
+        <wux-sticky scrollTop="scrollTop">
+       <wux-sticky-item>
 
-        <p>高级选项</p>
+        <view slot="title">高级选项</view>
+
+            
+          <view slot="content">
+
+            <wux-cell-group title="是否需要结算">
+              <wux-cell>
+                  <wux-field name="require" :initialValue="isRequire" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onRequireChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+
+            <wux-cell-group title="工作量">
+              <wux-cell hover-class="none">
+                <wux-field name="workLoad" :initialValue="workLoad">
+                  <wux-slider showValue step="1" min="1" max="10" />
+                </wux-field>
+              </wux-cell>
+            </wux-cell-group>
 
 
-        <wux-cell-group title="是否需要结算">
-          <wux-cell>
-              <wux-field name="require" :initialValue="isRequire" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onRequireChange"/>
+            <wux-cell-group title="是否循环">
+              <wux-field name="Loop" :initialValue="loopCode">
+                <wux-radio-group>
+                  <div v-for="(item,index) in isLoop" :key="index">
+                    <wux-radio :title="item" :value="index" />
+                  </div>
+                </wux-radio-group>
               </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-
-        <wux-cell-group title="工作量">
-          <wux-cell hover-class="none">
-            <wux-field name="workLoad" :initialValue="workLoad">
-              <wux-slider showValue step="1" min="1" max="10" />
-            </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-
-
-        <wux-cell-group title="是否循环">
-          <wux-field name="Loop" :initialValue="loopCode">
-            <wux-radio-group>
-              <div v-for="(item,index) in isLoop" :key="index">
-                <wux-radio :title="item" :value="index" />
-              </div>
-            </wux-radio-group>
-          </wux-field>
-        </wux-cell-group>
-
+            </wux-cell-group>
+            <wux-cell-group title="是否提醒">
+              <wux-cell>
+                  <wux-field name="needNotice" :initialValue="isNeedNotice" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onNoticeChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            <div v-if="isNeedNotice">
+              <wux-cell-group title="提醒时间">
+              <wux-cell hover-class="none">
+                <wux-field name="noticeTime" :initValue="noticeDatePicker">
+                    <wux-date-picker 
+                      mode="time" 
+                      @confirm="onConfirmNoticeDatePicker($event)"
+                      @value="noticeDate" 
+                      data-mode="time">
+                      <wux-cell is-link @extra="noticeDatePicker">
+                          {{noticeDatePicker}}
+                      </wux-cell>
+                  </wux-date-picker>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            </div>
+            <wux-cell-group title="是否允许拖延">
+              <wux-cell>
+                  <wux-field name="delay" :initialValue="isDelay" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onDelayChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            <div v-if="isDelay">
+              <wux-cell-group title="最晚延后日期">
+              <wux-cell hover-class="none">
+                <wux-field name="delayTime" :initValue="delayDatePicker">
+                  <wux-date-picker 
+                    @confirm="onConfirmDelayDatePicker($event)" 
+                    @value="delayDate"
+                    minDate="2020-01-01 00:00"
+                    >
+                    <wux-cell is-link @extra="delayDatePicker">
+                      {{delayDatePicker}}
+                    </wux-cell>
+                  </wux-date-picker>
+                </wux-field>
+              </wux-cell>
+            </wux-cell-group>
         
-        <wux-cell-group title="是否提醒">
-          <wux-cell>
-              <wux-field name="needNotice" :initialValue="isNeedNotice" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onNoticeChange"/>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        <div v-if="isNeedNotice">
-          <wux-cell-group title="提醒时间">
-          <wux-cell hover-class="none">
-            <wux-field name="noticeTime" :initValue="noticeDatePicker">
-                <wux-date-picker 
-                  mode="time" 
-                  @confirm="onConfirmNoticeDatePicker($event)"
-                  @value="noticeDate" 
-                  data-mode="time">
-                  <wux-cell is-link @extra="noticeDatePicker">
-                      {{noticeDatePicker}}
-                  </wux-cell>
-              </wux-date-picker>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        </div>
-
-
-        <wux-cell-group title="是否允许拖延">
-          <wux-cell>
-              <wux-field name="delay" :initialValue="isDelay" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onDelayChange"/>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        <div v-if="isDelay">
-          <wux-cell-group title="最晚延后日期">
-          <wux-cell hover-class="none">
-            <wux-field name="delayTime" :initValue="delayDatePicker">
-              <wux-date-picker 
-                @confirm="onConfirmDelayDatePicker($event)" 
-                @value="delayDate"
-                minDate="2020-01-01 00:00"
-                >
-                <wux-cell is-link @extra="delayDatePicker">
-                  {{delayDatePicker}}
-                </wux-cell>
-              </wux-date-picker>
-            </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        </div>
-
+        
+       
+       
+            </div>
+          </view>
+       </wux-sticky-item>
+        </wux-sticky>
       </div>
       <view class="btn-area">
-        <button @click="onSubmit($event)">创建</button>
-        <button v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</button>
-        <button v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</button>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+        </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
     </wux-form>
@@ -171,6 +184,9 @@ import store from '../../store';
 export default {
   data() {
     return {
+
+     scrollTop: 0,
+
 
      userId:'',
 
@@ -204,6 +220,7 @@ export default {
       isDelay:false,
       isRequire:true,
       workLoad:[1],
+
     };
   },
   components: {
@@ -283,6 +300,13 @@ export default {
   computed: {},
 
   methods: {
+
+    onPageScroll(e){
+        console.log('onPageScroll', e.scrollTop)
+        this.setData({
+            scrollTop: e.scrollTop,
+        })
+    },
       
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
@@ -481,3 +505,11 @@ export default {
 };
 </script>
 
+<style scoped>
+    .buttonObject {
+        margin: auto;
+        width: 70%;
+        padding: 5rpx;
+    }
+
+</style>

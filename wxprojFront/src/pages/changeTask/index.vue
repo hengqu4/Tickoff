@@ -65,7 +65,13 @@
 
       <div v-if="isAdvanced">
 
-        <p>高级选项</p>
+      <wux-sticky scrollTop="scrollTop">
+       <wux-sticky-item>
+
+        <view slot="title">高级选项</view>
+
+            
+          <view slot="content">
 
 
         <wux-cell-group title="是否需要结算">
@@ -146,12 +152,25 @@
           </wux-cell>
         </wux-cell-group>
         </div>
+          </view>
+       </wux-sticky-item>
+      </wux-sticky>
+
+
 
       </div>
       <view class="btn-area">
-        <button @click="onSubmit($event)">修改</button>
-        <button v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</button>
-        <button v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</button>
+
+
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+        </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
     </wux-form>
@@ -169,6 +188,9 @@ import toast from 'mpvue-toast'
 export default {
   data() {
     return {
+
+           scrollTop: 0,
+
      userId:'',      
      taskId:'',
 
@@ -313,6 +335,12 @@ export default {
   computed: {},
 
   methods: {
+    onPageScroll(e){
+        console.log('onPageScroll', e.scrollTop)
+        this.setData({
+            scrollTop: e.scrollTop,
+        })
+    },
       
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
@@ -481,3 +509,12 @@ export default {
 };
 </script>
 
+
+<style scoped>
+    .buttonObject {
+        margin: auto;
+        width: 70%;
+        padding: 5rpx;
+    }
+
+</style>
