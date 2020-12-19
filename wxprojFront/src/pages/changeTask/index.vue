@@ -398,7 +398,7 @@ export default {
           "delayDate": subData.delayDate
         }
       }).then(res =>{
-
+          this.gotoDetail()
       })
     }
 
@@ -474,8 +474,9 @@ export default {
 
 
     gotoDetail(id) {
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id})
-    }
+      // wx.navigateTo({url: '/pages/taskDetail/main?tId='+id})
+    wx.navigateBack()
+  }
   },
 };
 </script>

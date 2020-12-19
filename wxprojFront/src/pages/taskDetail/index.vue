@@ -82,6 +82,11 @@ export default {
     });
   },
   mounted() {
+    
+    this.taskId='1d6cb51e63cf407bb5203ef2ac19ec47'
+    this.userId='open91cd84d64333821d73e2751f'
+
+
     this.$fly.request({
       method: 'get', // post/get 请求方式
       // url: 'tickoff/api/missions/'+"0dbaff90-98ee-44e1-8265-1310252e5a59",

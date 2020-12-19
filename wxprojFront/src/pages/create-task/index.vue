@@ -256,6 +256,9 @@ export default {
     this.isLoading=!this.isLoading;
   },
   mounted() {
+    this.userId='open91cd84d64333821d73e2751f'
+
+
     this.$fly.request({
       method: 'get', // post/get 请求方式
       url: 'tickoff/api/mission_set/openid/'+this.userId,
@@ -344,7 +347,7 @@ export default {
         method:"post", //post/get 请求方式
         url:"tickoff/api/missions",
         body:{
-          "setId": subData.setId,
+          "mset_id": subData.setId,
           "name": subData.title,
           "description": subData.description,
           "createDate": subData.createDate,

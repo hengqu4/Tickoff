@@ -6,14 +6,14 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MissionDao {
-    @Select("select * from " + MissionConstants.MissionTable + " where missionId = #{missionId}")
+    @Select("select * from " + MissionConstants.MissionTable + " where m_id = #{missionId}")
     Mission getMissionById(String missionId);
 
-    @Delete("delete from "+ MissionConstants.MissionTable+" where missionId = #{missionId}")
+    @Delete("delete from "+ MissionConstants.MissionTable+" where m_id = #{missionId}")
     Boolean deleteMissionById(String missionId);
 
     @Insert({"insert into mission" +
-            "(missionId, mset_id, name, description, createDate, " +
+            "(m_id, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workLoad, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
             "values(#{missionId}, #{mset_id}, #{name}, #{description}, #{createDate}, " +
@@ -22,7 +22,7 @@ public interface MissionDao {
     Boolean saveMission(Mission mission);
 
     @Update("INSERT INTO mission" +
-            "(missionId, mset_id, name, description, createDate, " +
+            "(m_id, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workLoad, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
             "VALUE(#{missionId},#{mset_id},#{name}, #{description}, #{createDate}, " +
