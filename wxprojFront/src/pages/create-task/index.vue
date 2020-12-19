@@ -256,7 +256,7 @@ export default {
     this.isLoading=!this.isLoading;
   },
   mounted() {
-    this.userId='open91cd84d64333821d73e2751f'
+    // this.userId='open91cd84d64333821d73e2751f'
 
 
     this.$fly.request({
@@ -469,7 +469,9 @@ export default {
     },
 
     gotoDetail(id) {
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+'&uId='+this.userId})
+      wx.navigateBack({
+        delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+      });
     }
   },
 };
