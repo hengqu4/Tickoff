@@ -61,4 +61,7 @@ public class IndexServiceImpl implements IndexService {
         }
         return indexMsetList;
     }
+
+    @Override
+    public Boolean tickOffMission(String missionId){return indexDao.tickOffMission(missionId);}
 }

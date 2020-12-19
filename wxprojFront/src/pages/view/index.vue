@@ -18,11 +18,11 @@
 
 <!--单人任务集合-->
     <ul class="defaultSetCards">
-      <li class="card_unfold" v-for=" (task,i) in defaultTask" :key="i" :id="task.id">
+      <li class="card_unfold" v-for=" (task,i) in defaultTask" :key="i" :id="task.missionId">
         <h1>{{task.name}}</h1>  
         <p>{{task.description}}</p>
-        <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
-        class="completeTaskBtn" :disabled="!defaultTask[i].done"><wux-icon type="ios-checkmark." size="16"/></wux-button>
+        <wux-button  type="calm" size="small" :id='task.missionId' @click="completeTask($event)"
+        class="completeTaskBtn" :disabled="defaultTask[i].done"><wux-icon type="ios-checkmark." size="16"/></wux-button>
       </li>
     </ul>
 
@@ -31,10 +31,10 @@
   <wux-button class="foldCard" type="calm" @click="foldCards($event)" size="small" :id='index'><wux-icon :type="taskSetListFoldIcon[index]" size="16"/></wux-button>
   <wux-button class="addTaskInSetBtn" type="calm" @click="plusTaskBtnClick" size="small" :id='item.id'><wux-icon type="ios-add" size="16"/></wux-button>
   <div class="cardList">
-    <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.missions" :key="i" :id="task.id">
+    <li :class="{card_fold:taskSetListFold[index],card_unfold:!taskSetListFold[index]}" v-for="(task,i) in item.missions" :key="i" :id="task.missionId">
       <h1>{{task.name}}</h1>  
       <p>{{task.description}}</p>
-      <wux-button  type="calm" size="small" :id='task.id' @click="completeTask($event)"
+      <wux-button  type="calm" size="small" :id='task.missionId' @click="completeTask($event)"
         class="completeTaskBtn" :disabled="taskSetList[index].missions[i].done"><wux-icon type="ios-checkmark." size="16"/></wux-button>
     </li>
     </div>
@@ -93,7 +93,7 @@ export default {
     this.date[2]=D
     this.$fly.request({
       method: 'get',
-      url: 'http://localhost:8080/tickoff/api/indexMsetTest/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
+      url: 'http://localhost:8080/tickoff/api/indexMissions/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
       for(var i=0;i<res.length;i++){
@@ -180,7 +180,7 @@ export default {
       /*需要回调任务集列表生成函数*/
       this.$fly.request({
       method: 'get',
-      url: 'http://localhost:8080/tickoff/api/indexMsetTest/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
+      url: 'http://localhost:8080/tickoff/api/indexMissions/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
       this.defaultTask=new Array();
@@ -214,13 +214,12 @@ export default {
       }
     },
     completeTask(event){
-      console.log(typeof(this.userID));
+      console.log(typeof(event.currentTarget.id))
       this.$fly.request({
-        method:"post",
-        url:"http://mock-api.com/5g7AeqKe.mock/completeTask",
+        method:"put",
+        url:"http://localhost:8080/tickoff/api/tickoffMission",
         body:{
-          "userID":this.userID,
-          "taskID":event.currentTarget.id
+          "missionId":event.currentTarget.id
         }
       }).then(res =>{
         console.log(res)
@@ -323,10 +322,8 @@ wux-button{
 .cards {
   position: relative;  
   padding: 20px;
-  min-height:300px;
+  min-height:200px;
   height:auto;
-  margin-top:10px;
-  margin-botton:10px;
   width:80%;
   margin-left:5%;
   z-index:1;
@@ -335,10 +332,9 @@ wux-button{
 .defaultSetCards{
   position: relative;  
   padding: 5px;
-  min-height:300px;
+  min-height:100px;
   height:auto;
   margin-top:10px;
-  margin-botton:10px;
   width:80%;
   margin-left:10%;
   z-index:1
