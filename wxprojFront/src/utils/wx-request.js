@@ -1,7 +1,8 @@
 import Fly from 'flyio/dist/npm/wx'
 const fly = new Fly()
 // const host = 'http://mock-api.com/vzMrDQgG.mock/'
-const host = 'http://mock-api.com/6KLpmWKk.mock/'
+// const host = 'http://mock-api.com/6KLpmWKk.mock/'
+const host='http://localhost:8080/'
 // 添加请求拦截器
 fly.interceptors.request.use((request) => {
   wx.showLoading({

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     userInfo:{},
-    openId:123,
+    openId:'open91cd84d64333821d73e2751f',
   },
   mutations: {
     [mutationtypes.USERINFO_MUTATION](state, value) {
