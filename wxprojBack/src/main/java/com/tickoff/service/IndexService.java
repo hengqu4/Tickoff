@@ -16,4 +16,6 @@ public interface IndexService {
     public List<Mission_set> getMsetsByUserId(String open_id);
 
     public List<IndexMset> turnMsetToIndexMset(String open_id,String ddl);
+
+    public Boolean tickOffMission(String missionId);
 }

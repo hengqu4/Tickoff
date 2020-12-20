@@ -42,4 +42,7 @@ public class JSONtoObject {
                 .build();
 
     }
+    public String JSONtoMissionId(JSONObject json) throws ParseException{
+        return json.getString("missionId");
+    }
 }
