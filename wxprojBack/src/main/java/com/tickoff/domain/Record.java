@@ -6,16 +6,19 @@ import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Tolerate;
 
+import java.sql.Date;
+
+
 @ToString
 @Builder
 @Data
-public class User {
-    private String user_id;
-    private String nickname;
-    private String avatar_url;
-    private int like;
+public class Record {
+    private String User_id;
+    private Date Date;
+    private int Total_m;
+    private int done_m;
     @Tolerate
-    public User(){
+    public Record(){
 
     }
 }
