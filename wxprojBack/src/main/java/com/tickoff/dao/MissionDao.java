@@ -14,7 +14,7 @@ public interface MissionDao {
 
     @Insert({"insert into mission" +
             "(m_id, mset_id, name, description, createDate, " +
-            "startDate, endDate, routine, delay, workLoad, " +
+            "startDate, endDate, routine, delay, workload, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
             "values(#{missionId}, #{mset_id}, #{name}, #{description}, #{createDate}, " +
             "#{startDate}, #{endDate}, #{routine}, #{delay}, #{workLoad}, " +
@@ -23,14 +23,14 @@ public interface MissionDao {
 
     @Update("INSERT INTO mission" +
             "(m_id, mset_id, name, description, createDate, " +
-            "startDate, endDate, routine, delay, workLoad, " +
+            "startDate, endDate, routine, delay, workload, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
             "VALUE(#{missionId},#{mset_id},#{name}, #{description}, #{createDate}, " +
             "#{startDate},#{endDate},#{routine}, #{delay}, #{workLoad}, " +
             "#{requireCheck},#{needNotice},#{noticeTime}, #{done}, #{delayDate}) " +
             "ON DUPLICATE KEY UPDATE " +
             "mset_id=#{mset_id},name=#{name},description=#{description},createDate=#{createDate}," +
-            "startDate=#{startDate},endDate=#{endDate},routine=#{routine},delay=#{delay},workLoad=#{workLoad}," +
+            "startDate=#{startDate},endDate=#{endDate},routine=#{routine},delay=#{delay},workload=#{workLoad}," +
             "requireCheck=#{requireCheck},needNotice=#{needNotice},noticeTime=#{noticeTime},done=#{done},delayDate=#{delayDate}" )
     Boolean modifyMission(Mission mission);
 
