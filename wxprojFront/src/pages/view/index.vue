@@ -5,11 +5,6 @@
 		    <van-button class="floatBtn" round type="info" size="large" @click="plusBtnClick"><wux-icon class="floatBtnIcon"  type="ios-add" size="30"/></van-button>
 	    </movable-view>
     </movable-area>
-  <div class="userInfo">
-    <wux-avatar v-if="isShow" class="userAvatar" :src="userInfo.avatarUrl" alt="Error Pic" size="large"/>
-    <wux-button class="showUsrAvatar" v-else open-type="getUserInfo" @getuserinfo="getUserInfo">点击获取用户登录信息</wux-button>
-    <p class="userName">{{userInfo.nickName}}</p>
-    </div>
     <div class="btnNav">
     <wux-button class="monthView" type="calm" @click="swapCalendar" size="small"><wux-icon type="ios-calendar" size="16"/></wux-button>
     </div>
@@ -96,14 +91,16 @@ export default {
       url: 'http://localhost:8080/tickoff/api/indexMissions/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
+      this.defaultTask=new Array();
       for(var i=0;i<res.length;i++){
         /*此处替换为默认任务集的id*/
-        if(res[i].id==0){
-          this.defaultTask=res[i].task;
+        if(res[i].setName=="默认任务集"){
+          this.defaultTask=res[i].missions;
           res.splice(i,1)
           break;
         }
       }
+      this.taskSetList=res
       /*初始化卡片堆折叠信息*/
       var foldArray=Array(this.taskSetList.length).fill(true);
       this.taskSetListFold=foldArray;
@@ -239,11 +236,10 @@ page{
 /*浮动按钮组件*/
 movable-area{
   pointer-events: none;
-  height: 90%;
+  height: 100%;
   width: 100%;
   position:fixed;
   left:0px;
-  top:50px;
   z-index:100;
 }
 movable-view{

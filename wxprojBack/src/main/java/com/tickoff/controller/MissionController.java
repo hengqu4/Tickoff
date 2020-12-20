@@ -39,7 +39,7 @@ public class MissionController {
         JSONtoObject jsontoObject = new JSONtoObject();
         JSONObject json = JSONObject.parseObject(requestJson);
         Mission mission = jsontoObject.JSONtoMission(json);
-        mission.setMissionId(UniqueId.getUUID());
+        mission.setM_id(UniqueId.getUUID());
         missionService.addMission(mission);
         return mission.toString();
     }

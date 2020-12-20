@@ -24,7 +24,7 @@ public class JSONtoObject {
         String noticeTime = json.getString("noticeTime");
 
         return Mission.builder()
-                .missionId(json.getString("missionId"))
+                .m_id(json.getString("missionId"))
                 .setId(json.getString("setId"))
                 .name(json.getString("name"))
                 .description(json.getString("description"))

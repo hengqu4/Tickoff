@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface IndexDao {
-    @Select("select * from " + MissionConstants.MissionTable + " where setId = #{setId} and Date(endDate) = #{ddl}")
+    @Select("select * from " + MissionConstants.MissionTable + " where mset_id = #{setId} and Date(endDate) = #{ddl}")
     List<Mission> getMissionsByMsetId(String setId, String ddl);
 
     @Select("select a.* from mission_mset a " +
@@ -20,6 +20,6 @@ public interface IndexDao {
             "where b.openid=#{openid}" )
     List<Mission_set> getMsetsByUserId(String open_id);
 
-    @Update("update " + MissionConstants.MissionTable + " set done = '1' where missionId=#{missionId}")
+    @Update("update " + MissionConstants.MissionTable + " set done = '1' where m_Id=#{missionId}")
     Boolean tickOffMission(String missionId);
 }
