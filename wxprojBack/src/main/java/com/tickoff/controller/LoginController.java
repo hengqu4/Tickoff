@@ -2,6 +2,9 @@ package com.tickoff.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.tickoff.domain.User;
+import com.tickoff.service.UserService;
+import com.tickoff.util.GetToken;
 import com.tickoff.util.HttpRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +25,10 @@ import java.util.Map;
 @RequestMapping("/login")
 public class LoginController {
     @Autowired
-    private UsersService usersService;
+    private UserService userService;
 
     @PostMapping("/regist")
-    public Map gettingOpenID(@RequestParam("code") String code){
+    public Map gettingOpenID(@RequestParam("code") String code,@RequestParam("avatar") String avatar,@RequestParam("nickname") String nickname){
         Map map=new HashMap();
         //登录凭证不能为空
         if (code == null || code.length() == 0) {
@@ -51,20 +54,23 @@ public class LoginController {
         String openid = (String) json.get("openid");
 
         //查询数据库中该openid是否存在
-        if(usersService.queryOpenIdIsExist(openid)){
+        if(userService.queryOpenIdIsExist(openid)){
             //openid存在，则查找该user对象进行返回
-            Users users=usersService.queryUserByOpenID(openid);
+            User users=userService.queryUserByOpenID(openid);
             //status为1，用户openid已存在
             map.put("status", 1);
-            map.put("userInfo",users);
+            map.put("token", GetToken.getToken(users));
         }else{
             //openid不存在，则创建新user对象
-            Users users=new Users();
-            users.setOpenId(openid);
-            users=usersService.saveUsers(users);
+            User user =new User();
+            user.setUser_id(openid);
+            user.setAvatar_url(avatar);
+            user.setLike(0);
+            user.setNickname(nickname);
+            user=userService.saveUser(user);
             //status为2，用户openid未存在
             map.put("status", 2);
-            map.put("userInfo",users);
+            map.put("token", GetToken.getToken(user));
         }
         return map;
     }
