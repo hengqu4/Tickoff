@@ -25,10 +25,12 @@
         <wux-field name="taskSet" :initialValue="listNumber">
           <wux-radio-group title="选择任务集">
             <div v-for="(item,index) in list" :key="index">
-              <wux-radio :title="item" :value="index" />
+              <wux-radio :title="item.name" :value="index" />
             </div>
           </wux-radio-group>
-          <wux-button block outline type="balanced" @click="newTaskSet">新建任务集</wux-button>
+          <div class="buttonObject">
+            <wux-button block outline type="dark" @click="newTaskSet">新建任务集</wux-button>
+          </div>
         </wux-field>
  
         <wux-cell-group title="开始时间">
@@ -63,96 +65,107 @@
           </wux-cell>
         </wux-cell-group>
 
-
       <div v-if="isAdvanced">
+        <wux-sticky scrollTop="scrollTop">
+       <wux-sticky-item>
 
-        <p>高级选项</p>
+        <view slot="title">高级选项</view>
+
+            
+          <view slot="content">
+
+            <wux-cell-group title="是否需要结算">
+              <wux-cell>
+                  <wux-field name="require" :initialValue="isRequire" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onRequireChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+
+            <wux-cell-group title="工作量">
+              <wux-cell hover-class="none">
+                <wux-field name="workLoad" :initialValue="workLoad">
+                  <wux-slider showValue step="1" min="1" max="10" />
+                </wux-field>
+              </wux-cell>
+            </wux-cell-group>
 
 
-        <wux-cell-group title="是否需要结算">
-          <wux-cell>
-              <wux-field name="require" :initialValue="isRequire" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onRequireChange"/>
+            <wux-cell-group title="是否循环">
+              <wux-field name="Loop" :initialValue="loopCode">
+                <wux-radio-group>
+                  <div v-for="(item,index) in isLoop" :key="index">
+                    <wux-radio :title="item" :value="index" />
+                  </div>
+                </wux-radio-group>
               </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-
-        <wux-cell-group title="工作量">
-          <wux-cell hover-class="none">
-            <wux-field name="workLoad" :initialValue="workLoad">
-              <wux-slider showValue step="1" min="1" max="10" />
-            </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-
-
-        <wux-cell-group title="是否循环">
-          <wux-field name="Loop" :initialValue="loopCode">
-            <wux-radio-group>
-              <div v-for="(item,index) in isLoop" :key="index">
-                <wux-radio :title="item" :value="index" />
-              </div>
-            </wux-radio-group>
-          </wux-field>
-        </wux-cell-group>
-
+            </wux-cell-group>
+            <wux-cell-group title="是否提醒">
+              <wux-cell>
+                  <wux-field name="needNotice" :initialValue="isNeedNotice" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onNoticeChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            <div v-if="isNeedNotice">
+              <wux-cell-group title="提醒时间">
+              <wux-cell hover-class="none">
+                <wux-field name="noticeTime" :initValue="noticeDatePicker">
+                    <wux-date-picker 
+                      mode="time" 
+                      @confirm="onConfirmNoticeDatePicker($event)"
+                      @value="noticeDate" 
+                      data-mode="time">
+                      <wux-cell is-link @extra="noticeDatePicker">
+                          {{noticeDatePicker}}
+                      </wux-cell>
+                  </wux-date-picker>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            </div>
+            <wux-cell-group title="是否允许拖延">
+              <wux-cell>
+                  <wux-field name="delay" :initialValue="isDelay" valuePropName="inputChecked" slot="footer">
+                    <wux-switch  @change="onDelayChange"/>
+                  </wux-field>
+              </wux-cell>
+            </wux-cell-group>
+            <div v-if="isDelay">
+              <wux-cell-group title="最晚延后日期">
+              <wux-cell hover-class="none">
+                <wux-field name="delayTime" :initValue="delayDatePicker">
+                  <wux-date-picker 
+                    @confirm="onConfirmDelayDatePicker($event)" 
+                    @value="delayDate"
+                    minDate="2020-01-01 00:00"
+                    >
+                    <wux-cell is-link @extra="delayDatePicker">
+                      {{delayDatePicker}}
+                    </wux-cell>
+                  </wux-date-picker>
+                </wux-field>
+              </wux-cell>
+            </wux-cell-group>
         
-        <wux-cell-group title="是否提醒">
-          <wux-cell>
-              <wux-field name="needNotice" :initialValue="isNeedNotice" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onNoticeChange"/>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        <div v-if="isNeedNotice">
-          <wux-cell-group title="提醒时间">
-          <wux-cell hover-class="none">
-            <wux-field name="noticeTime" :initValue="noticeDatePicker">
-                <wux-date-picker 
-                  mode="time" 
-                  @confirm="onConfirmNoticeDatePicker($event)"
-                  @value="noticeDate" 
-                  data-mode="time">
-                  <wux-cell is-link @extra="noticeDatePicker">
-                      {{noticeDatePicker}}
-                  </wux-cell>
-              </wux-date-picker>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        </div>
-
-
-        <wux-cell-group title="是否允许拖延">
-          <wux-cell>
-              <wux-field name="delay" :initialValue="isDelay" valuePropName="inputChecked" slot="footer">
-                <wux-switch  @change="onDelayChange"/>
-              </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        <div v-if="isDelay">
-          <wux-cell-group title="最晚延后日期">
-          <wux-cell hover-class="none">
-            <wux-field name="delayTime" :initValue="delayDatePicker">
-              <wux-date-picker 
-                @confirm="onConfirmDelayDatePicker($event)" 
-                @value="delayDate"
-                minDate="2020-01-01 00:00"
-                >
-                <wux-cell is-link @extra="delayDatePicker">
-                  {{delayDatePicker}}
-                </wux-cell>
-              </wux-date-picker>
-            </wux-field>
-          </wux-cell>
-        </wux-cell-group>
-        </div>
-
+        
+       
+       
+            </div>
+          </view>
+       </wux-sticky-item>
+        </wux-sticky>
       </div>
       <view class="btn-area">
-        <button @click="onSubmit($event)">创建</button>
-        <button v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</button>
-        <button v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</button>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+        </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
     </wux-form>
@@ -165,11 +178,15 @@
 import { $wuxForm, $wuxToast } from "../../../static/wux/index";
 import moment from 'moment';
 import toast from 'mpvue-toast'
+import store from '../../store';
 
 
 export default {
   data() {
     return {
+
+     scrollTop: 0,
+
 
      userId:'',
 
@@ -192,6 +209,8 @@ export default {
 
       isAdvanced: false,
 
+      todayweekday:'',
+
       isLoading: false,
       radio: '',
       isLoop:["每日循环","每周循环","每月循环"],
@@ -201,6 +220,7 @@ export default {
       isDelay:false,
       isRequire:true,
       workLoad:[1],
+
     };
   },
   components: {
@@ -209,7 +229,6 @@ export default {
 
   onLoad:function(options) {
     this.userId=options.uId
-    this.userId=1
   },
   created(){
 
@@ -255,14 +274,24 @@ export default {
     this.isLoading=!this.isLoading;
   },
   mounted() {
+    console.log(store)
+
+    this.userId=store.state.openId
+
+    console.log(this.userId)
+
     this.$fly.request({
       method: 'get', // post/get 请求方式
-      url: 'api/get_taskset?uId='+this.userId,
+      url: 'tickoff/api/mission_set/openid/'+this.userId,
     }).then(res => {
-      console.log(res.taskSetList)
-      this.list=res.taskSetList
+      console.log("正在通过后端请求list")
+      console.log(res.data)
+      this.list=res.data
+
       console.log(this.list)
     }).catch(function (error) {
+        console.log("正在通过后端请求list，请求失败")
+
         console.log(error);
     });
    
@@ -271,6 +300,13 @@ export default {
   computed: {},
 
   methods: {
+
+    onPageScroll(e){
+        console.log('onPageScroll', e.scrollTop)
+        this.setData({
+            scrollTop: e.scrollTop,
+        })
+    },
       
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
@@ -286,33 +322,39 @@ export default {
       console.log()
       var rou=''
       if(this.loopCode==0){
-        rou='00-00-01'
+        rou=1
       }
       else if(this.loopCode==1){
-        rou='00-01-00'
+        var temp=this.startDatePicker
+        temp=temp.split(" ")[0]
+        temp=temp.split("-")
+        var da=new Date(temp[0],temp[1]-1,temp[2])
+        rou=da.getDay()*10;
       }
       else if(this.loopCode==2){
-        rou='01-00-00'
+        rou=100
       }
       else{
-        rou='00-00-00'
+        rou=0
       }
 
 //赋值
       subData.title=value.title
       subData.description=value.description
       subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
-      subData.startDate=this.startDatePicker
-      subData.endDate=this.endDatePicker
+      subData.startDate=this.startDatePicker+":00"
+      subData.endDate=this.endDatePicker+":00"
       subData.routine=rou
       subData.listNumber=value.taskSet
       subData.isDelay=this.isDelay
-      subData.delayDate=this.delayDatePicker
+      subData.delayDate=this.delayDatePicker+":00"
       subData.workLoad=this.workLoad[0]
       subData.isRequire=this.isRequire
       subData.isNeedNotice=this.isNeedNotice
-      subData.noticeBefore=this.noticeDatePicker
+      subData.noticeBefore=this.noticeDatePicker+":00"
       subData.userId=this.userId
+      subData.setId=this.list[subData.listNumber].mset_id
+      subData.done=false
 
       console.log(subData)
 
@@ -331,22 +373,22 @@ export default {
       else{
         this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createTask",
+        url:"tickoff/api/missions",
         body:{
-          "userId":subData.userId,
-          "title":subData.title,
-          "description":subData.description,
-          "createDate":subData.createDate,
-          "startDate":subData.startDate,
-          "endDate":subData.endDate,
-          "routine":subData.routine,
-          "listNumber":subData.listNumber,
-          "isDelay":subData.isDelay,
-          "delayDate":subData.delayDate,
-          "workLoad":subData.workLoad,
-          "isRequire":subData.isRequire,
-          "isNeedNotice":subData.isNeedNotice,
-          "noticeBefore":subData.noticeBefore
+          "mset_id": subData.setId,
+          "name": subData.title,
+          "description": subData.description,
+          "createDate": subData.createDate,
+          "startDate": subData.startDate,
+          "endDate": subData.endDate,
+          "routine": subData.routine,
+          "delay": subData.isDelay,
+          "workLoad": subData.workLoad,
+          "requireCheck": subData.isRequire,
+          "needNotice": subData.isNeedNotice,
+          "noticeTime": subData.noticeBefore,
+          "done": subData.done,
+          "delayDate": subData.delayDate
         }
       }).then(res =>{
         this.gotoDetail(1)
@@ -370,6 +412,12 @@ export default {
       console.log(event.mp.detail);
       this.startDate = event.mp.detail.value;
       this.startDatePicker = event.mp.detail.label;
+      var temp=this.startDatePicker
+      temp=temp.split(" ")[0]
+      temp=temp.split("-")
+      var da=new Date(temp[0],temp[1]-1,temp[2])
+      // console.log(da.getDay())
+      // this.routine=da.getDay()*10;
     },
 
     onConfirmEndDatePicker(event) {
@@ -449,9 +497,19 @@ export default {
     },
 
     gotoDetail(id) {
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+'&uId='+this.userId})
+      wx.navigateBack({
+        delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+      });
     }
   },
 };
 </script>
 
+<style scoped>
+    .buttonObject {
+        margin: auto;
+        width: 70%;
+        padding: 5rpx;
+    }
+
+</style>

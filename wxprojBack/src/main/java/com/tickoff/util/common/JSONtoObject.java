@@ -24,8 +24,8 @@ public class JSONtoObject {
         String noticeTime = json.getString("noticeTime");
 
         return Mission.builder()
-                .m_id(json.getString("missionId"))
-                .setId(json.getString("setId"))
+                .missionId(json.getString("missionId"))
+                .mset_id(json.getString("mset_id"))
                 .name(json.getString("name"))
                 .description(json.getString("description"))
                 .createDate(createDate)
@@ -41,8 +41,5 @@ public class JSONtoObject {
                 .delayDate(delayDate)
                 .build();
 
-    }
-    public String JSONtoMissionId(JSONObject json) throws ParseException{
-        return json.getString("missionId");
     }
 }

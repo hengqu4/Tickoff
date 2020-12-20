@@ -25,7 +25,7 @@
         <wux-field name="taskSet" :initialValue="listNumber">
           <wux-radio-group title="选择任务集">
             <div v-for="(item,index) in list" :key="index">
-              <wux-radio :title="item" :value="index" />
+              <wux-radio :title="item.name" :value="index" />
             </div>
           </wux-radio-group>
         </wux-field>
@@ -65,7 +65,13 @@
 
       <div v-if="isAdvanced">
 
-        <p>高级选项</p>
+      <wux-sticky scrollTop="scrollTop">
+       <wux-sticky-item>
+
+        <view slot="title">高级选项</view>
+
+            
+          <view slot="content">
 
 
         <wux-cell-group title="是否需要结算">
@@ -146,12 +152,25 @@
           </wux-cell>
         </wux-cell-group>
         </div>
+          </view>
+       </wux-sticky-item>
+      </wux-sticky>
+
+
 
       </div>
       <view class="btn-area">
-        <button @click="onSubmit($event)">修改</button>
-        <button v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</button>
-        <button v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</button>
+
+
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+        </div>
+        <div class="buttonObject"> 
+          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+        </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
     </wux-form>
@@ -169,12 +188,18 @@ import toast from 'mpvue-toast'
 export default {
   data() {
     return {
+
+           scrollTop: 0,
+
      userId:'',      
      taskId:'',
 
+     mset_id:'',
+    
      visible1: false,
      visible2: false,
      visible3: false,
+     done:'',
 
      title:'',
      description:'',
@@ -218,66 +243,69 @@ export default {
 
   },
   beforeMount() {
-    wx.getUserInfo({
-      withCredentials: false,
-      success: (res) => {
-        console.log(res.rawData);
-      },
-      fail: () => {
-        console.log("shibai");
-      },
-      complete: () => {},
-    });
-    this.isLoading=!this.isLoading;
-  },
-  mounted() {
+    // this.userId='aaaas123456'
+    // this.taskId='1fdaf32b-dbe6-4d6d-8d1c-d0e3f96e99b5'
+    
     this.$fly.request({
       method: 'get', // post/get 请求方式
-      url: 'api/get_taskset?uId='+this.userId,
+      url: 'tickoff/api/mission_set/openid/'+this.userId,
     }).then(res => {
-      console.log(res.taskSetList)
-      this.list=res.taskSetList
-      console.log(this.list)
+      console.log(res.data)
+      this.list=res.data
     }).catch(function (error) {
         console.log(error);
     });
 
     this.$fly.request({
       method: 'get', // post/get 请求方式
-      url: 'api/getTask?taskId='+this.taskId,
-    }).then(res => {
+      url: 'tickoff/api/missions/'+this.taskId,
+    }).then(ress => {
       console.log("changeTask 的获取")
-      console.log(res)
-      this.title=res.title
+      console.log(ress)
+      var res=ress.data
+      this.title=res.name
       this.description=res.description
-      this.startDatePicker=res.startDate
-      this.endDatePicker=res.endDate
       this.routine=res.routine
-      this.listNumber=res.listNumber
-      this.isDelay=res.isDelay
-      this.delayDatePicker=res.delayDate
-      this.workLoad=[res.workLoad]
-      this.isRequire=res.isRequire
-      this.isNeedNotice=res.isNeedNotice
-      this.noticeDatePicker=res.noticeBefore
-      this.description=res.description
+      this.mset_id=res.mset_id
 
-      var str=this.routine.split("-")
-      if(str[0]=="01"){
-        this.loopText="每月循环"
+      this.isDelay=res.delay
+      this.workLoad=[res.workLoad]
+      this.isRequire=res.requireCheck
+      this.isNeedNotice=res.needNotice
+      this.done=res.done
+
+      var temp=res.startDate.split(':')
+      temp=temp[0]+":"+temp[1]
+      this.startDatePicker=temp
+
+      var temp=res.endDate.split(':')
+      temp=temp[0]+":"+temp[1]
+      this.endDatePicker=temp
+
+      var temp=res.noticeTime.split(':')
+      temp=temp[0]+":"+temp[1]
+      this.noticeDatePicker=temp
+
+      var temp=res.delayDate.split(':')
+      temp=temp[0]+":"+temp[1]
+      this.delayDatePicker=temp
+
+      if(this.routine==0){
+        this.loopCode=-1
       }
-      else if(str[1]=="01"){
-        this.loopText="每周循环"
+      else if(this.routine==1){
+        this.loopCode=0
       }
-      else if( str[2]=="01"){
-        this.loopText="每日循环"
+      else if(this.routine==100){
+        this.loopCode=2
       }
       else{
-        this.loopText="不循环"
+        this.loopCode=1
       }
 
+
       if(this.isNeedNotice){
-        this.noticeText="提前"+this.noticeBefore
+        this.noticeText="提前"+this.noticeDatePicker
       }
       else{
         this.noticeText="不需要提醒"
@@ -294,16 +322,25 @@ export default {
         console.log(error);
     });
 
-
-
-
-
-
+  },
+  mounted() {
+      for(var i=0;i<this.list.length;i++){
+        if(this.mset_id==this.list[i].mset_id){
+          this.listNumber=i+1
+          break
+        }
+      }
   },
 
   computed: {},
 
   methods: {
+    onPageScroll(e){
+        console.log('onPageScroll', e.scrollTop)
+        this.setData({
+            scrollTop: e.scrollTop,
+        })
+    },
       
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
@@ -316,36 +353,42 @@ export default {
       const value = getFieldsValue()
       console.log(value)
       var subData={}
-      console.log()
-      var rou=''
+
+      var rou
       if(this.loopCode==0){
-        rou='00-00-01'
-      }
-      else if(this.loopCode==1){
-        rou='00-01-00'
+        rou=1
       }
       else if(this.loopCode==2){
-        rou='01-00-00'
+        rou=100
+      }
+      else if(this.loopCode==1){
+        var temp=this.startDatePicker
+        temp=temp.split(" ")[0]
+        temp=temp.split("-")
+        var da=new Date(temp[0],temp[1]-1,temp[2])
+        rou=da.getDay()*10;
       }
       else{
-        rou='00-00-00'
+        rou=0
       }
-
+      var msid=this.list[value.taskSet].mset_id
 //赋值
-      subData.userId=this.userId
-      subData.title=value.title
+      subData.missionId=this.taskId
+      subData.mset_id=msid
+      subData.name=value.title
       subData.description=value.description
       subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
-      subData.startDate=this.startDatePicker
-      subData.endDate=this.endDatePicker
+      subData.startDate=this.startDatePicker+':00'
+      subData.endDate=this.endDatePicker+':00'
       subData.routine=rou
-      subData.listNumber=value.taskSet
-      subData.isDelay=this.isDelay
-      subData.delayDate=this.delayDatePicker
+      subData.delay=this.isDelay
+      subData.delayDate=this.delayDatePicker+':00'
       subData.workLoad=this.workLoad[0]
-      subData.isRequire=this.isRequire
-      subData.isNeedNotice=this.isNeedNotice
-      subData.noticeBefore=this.noticeDatePicker
+      subData.requireCheck=this.isRequire
+      subData.needNotice=this.isNeedNotice
+      subData.noticeTime=this.noticeDatePicker+':00'
+      subData.done=this.done
+
 
       console.log(subData)
 
@@ -363,26 +406,27 @@ export default {
       }
       else{
         this.$fly.request({
-        method:"post", //post/get 请求方式
-        url:"api/changeTask",
+        method:"put", //post/get 请求方式
+        url:"tickoff/api/missions",
         body:{
-          "userId":subData.userId,
-          "title":subData.title,
-          "description":subData.description,
-          "createDate":subData.createDate,
-          "startDate":subData.startDate,
+          "missionId": subData.missionId,
+          "mset_id": subData.mset_id,
+          "name": subData.name,
+          "description": subData.description,
+          "createDate": subData.createDate,
+          "startDate": subData.startDate,
           "endDate":subData.endDate,
-          "routine":subData.routine,
-          "listNumber":subData.listNumber,
-          "isDelay":subData.isDelay,
-          "delayDate":subData.delayDate,
-          "workLoad":subData.workLoad,
-          "isRequire":subData.isRequire,
-          "isNeedNotice":subData.isNeedNotice,
-          "noticeBefore":subData.noticeBefore
+          "routine": subData.routine,
+          "delay": subData.delay,
+          "workLoad": subData.workLoad,
+          "requireCheck": subData.requireCheck,
+          "needNotice": subData.needNotice,
+          "noticeTime": subData.noticeTime,
+          "done": subData.done,
+          "delayDate": subData.delayDate
         }
       }).then(res =>{
-
+          this.gotoDetail()
       })
     }
 
@@ -455,36 +499,22 @@ export default {
 
 
 
-    onReset() {
-      const { getFieldsValue, setFieldsValue } = $wuxForm();
-      const fields = getFieldsValue();
 
-      for (let item in fields) {
-        if ({}.hasOwnProperty.call(fields, item)) {
-          if (Array.isArray(fields[item])) {
-            fields[item] = [];
-            if (item === "slider") {
-              fields[item] = [10, 80];
-            }
-          } else if (typeof fields[item] === "boolean") {
-            fields[item] = false;
-          } else if (typeof fields[item] === "number") {
-            fields[item] = 0;
-          } else {
-            fields[item] = "";
-          }
-        }
-      }
-
-      setFieldsValue({
-        ...fields,
-      });
-    },
 
     gotoDetail(id) {
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id})
-    }
+      // wx.navigateTo({url: '/pages/taskDetail/main?tId='+id})
+    wx.navigateBack()
+  }
   },
 };
 </script>
 
+
+<style scoped>
+    .buttonObject {
+        margin: auto;
+        width: 70%;
+        padding: 5rpx;
+    }
+
+</style>
