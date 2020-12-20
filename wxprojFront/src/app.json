@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/taskDetail/main",
+  "entryPagePath":"pages/view/main",
 
   "pages": [
     "pages/me/main",

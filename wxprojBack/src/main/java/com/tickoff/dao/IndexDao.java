@@ -20,6 +20,6 @@ public interface IndexDao {
             "where b.openid=#{openid}" )
     List<Mission_set> getMsetsByUserId(String open_id);
 
-    @Update("update " + MissionConstants.MissionTable + " set done = '1' where m_Id=#{missionId}")
+    @Update("update " + MissionConstants.MissionTable + " set done = '1' where m_id=#{missionId}")
     Boolean tickOffMission(String missionId);
 }

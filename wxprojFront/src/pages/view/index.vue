@@ -40,6 +40,7 @@
 
 <script>
 import Calendar from 'mpvue-calendar'
+import store from '../../store';
 /*用来组件传值，不知道能用来干啥先放着*/
 props:{
 }
@@ -47,9 +48,8 @@ export default {
   data() {
     return{
     value:[],
-    userInfo:{},
     isShow:false,
-    userID:'aaaas123456',
+    userID:'',
     date:[],
     isCalendarShow:false,
     defaultTask:[],
@@ -63,18 +63,9 @@ export default {
     Calendar
   },
   beforeMount(){
-    this.handleGetUserInfo()
-    wx.login({
-      success: function(res) {
-      console.log(res);//这里的返回值里面便包含code
-      },
-    fail: function(res) {
-      console.log('登陆失败');
-    },
-      complete: function(res) {},
-    })
   },
   mounted(){
+    this.userID=store.state.openId
     var timestamp = Date.parse(new Date());
     var date = new Date(timestamp);
     //获取年份  
