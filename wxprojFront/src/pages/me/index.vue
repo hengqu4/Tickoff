@@ -112,10 +112,11 @@ export default {
   },
   onShow(){
     this.handleGetUserInfo();
+    this.randomNum();
     //console.log("onShow",this.userInfo);
     // this.$fly.request({
     //   method: 'get',
-    //   url: 'http://mock-api.com/5g7AeqKe.mock/likes?UserID='+store.state.openId,
+    //   url: 'http:///likes?UserID='+store.state.openId,
     // }).then(res => {
     //   console.log(res)
     //   this.likes=res
@@ -124,7 +125,7 @@ export default {
     // });
     // this.$fly.request({
     //   method: 'get',
-    //   url: 'http://mock-api.com/5g7AeqKe.mock/activeDays?UserID='+store.state.openId,
+    //   url: 'http:///activeDays?UserID='+store.state.openId,
     // }).then(res => {
     //   console.log(res)
     //   this.activeDays=res
@@ -135,6 +136,10 @@ export default {
   methods: {
     handleGetUserInfo() {
       this.userInfo = store.state.userInfo;
+    },
+    randomNum(){
+      this.likes = Math.round(Math.random()*1000);
+      this.activeDays = Math.round(Math.random()*100);
     },
     onPreview(e) {
       wx.previewImage({

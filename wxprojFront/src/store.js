@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     userInfo:{},
     openId: 'open91cd84d64333821d73e2751f',
     token:'',
+    sessionId_3rd:'2674983f429d11eb8ae1525400094d64',
   },
   mutations: {
     [mutationtypes.USERINFO_MUTATION](state, value) {
@@ -15,6 +16,9 @@ const store = new Vuex.Store({
     },
     [mutationtypes.OPENID_MUTATION](state, value) {
       state.openId = value;
+    },
+    [mutationtypes.SESSIONID3RD_MUTATION](state, value) {
+      state.sessionId_3rd = value;
     },
   },
   getters: {},
