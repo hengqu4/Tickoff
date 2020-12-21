@@ -104,24 +104,6 @@ export default {
   computed:{
   },
   methods: {
-    handleGetUserInfo(){
-      wx.getUserInfo({
-        success:(data)=>{
-          console.log(data);
-          this.userInfo=data.userInfo;
-          this.isShow=true;
-        },
-        fail:()=>{
-          console.log("获取用户登录信息失败");
-        }
-      })
-    },
-    getUserInfo(data){
-      console.log(data);
-      if(data.mp.detail.rawData){
-        this.handleGetUserInfo();
-      }
-    },
     /*切换日历*/
     swapCalendar(){
       if(this.isCalendarShow==true){
@@ -134,6 +116,7 @@ export default {
 
     /*浮动按钮点击事件*/
     plusBtnClick(){
+
       const url = '../create-task/main'
       wx.navigateTo({ 
         url: url,
