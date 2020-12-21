@@ -409,7 +409,7 @@ export default {
         method:"put", //post/get 请求方式
         url:"tickoff/api/missions",
         body:{
-          "missionId": subData.missionId,
+          "m_id": subData.missionId,
           "mset_id": subData.mset_id,
           "name": subData.name,
           "description": subData.description,

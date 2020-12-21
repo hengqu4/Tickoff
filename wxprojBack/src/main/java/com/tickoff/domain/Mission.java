@@ -15,7 +15,7 @@ import java.util.Date;
 @Builder
 @Data
 public class Mission implements Serializable {
-    private String missionId;
+    private String m_id;
     private String mset_id;
     private String name;
     private String description;
