@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/taskDetail/main",
+  "entryPagePath":"pages/share/main",
 
   "pages": [
     "pages/me/main",
@@ -14,7 +14,8 @@
     "pages/changeTask/main",
     "pages/invite/main",
     "pages/history/main",
-    "pages/help/main"
+    "pages/help/main",
+    "pages/share/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
