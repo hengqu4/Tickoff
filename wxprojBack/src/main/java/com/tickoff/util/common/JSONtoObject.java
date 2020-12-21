@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class JSONtoObject {
     public Mission JSONtoMission(JSONObject json) throws ParseException {
-        String a = json.getString("missionId");
+        String a = json.getString("m_id");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
@@ -24,7 +24,7 @@ public class JSONtoObject {
         String noticeTime = json.getString("noticeTime");
 
         return Mission.builder()
-                .missionId(json.getString("missionId"))
+                .m_id(json.getString("m_id"))
                 .mset_id(json.getString("mset_id"))
                 .name(json.getString("name"))
                 .description(json.getString("description"))
@@ -41,5 +41,8 @@ public class JSONtoObject {
                 .delayDate(delayDate)
                 .build();
 
+    }
+    public String JSONtoMissionId(JSONObject json) throws ParseException{
+        return json.getString("missionId");
     }
 }

@@ -176,7 +176,7 @@
 
 <script>
 import { $wuxForm, $wuxToast } from "../../../static/wux/index";
-import moment from 'moment';
+import miment from 'miment';
 import toast from 'mpvue-toast'
 import store from '../../store';
 
@@ -236,27 +236,27 @@ export default {
   beforeMount() {
 
     var tempDate=[]
-    this.startDatePicker=moment().format('YYYY-MM-DD HH:mm')
-    tempDate[0]=parseInt(moment().format('YYYY')) 
-    tempDate[1]=parseInt(moment().format('MM'))
-    tempDate[2]=parseInt(moment().format('DD'))
-    tempDate[3]=parseInt(moment().format('HH'))
-    tempDate[4]=parseInt(moment().format('mm'))
+    this.startDatePicker=miment().format('YYYY-MM-DD HH:mm')
+    tempDate[0]=parseInt(miment().format('YYYY')) 
+    tempDate[1]=parseInt(miment().format('MM'))
+    tempDate[2]=parseInt(miment().format('DD'))
+    tempDate[3]=parseInt(miment().format('HH'))
+    tempDate[4]=parseInt(miment().format('mm'))
     this.startDate=tempDate
 
 
     var tempEndDate=[]
-    this.endDatePicker=moment().add(1,'h').format('YYYY-MM-DD HH:mm')
-    tempEndDate[0]=parseInt(moment().add(1,'h').format('YYYY')) 
-    tempEndDate[1]=parseInt(moment().add(1,'h').format('MM'))
-    tempEndDate[2]=parseInt(moment().add(1,'h').format('DD'))
-    tempEndDate[3]=parseInt(moment().add(1,'h').format('HH'))
-    tempEndDate[4]=parseInt(moment().add(1,'h').format('mm'))
+    this.endDatePicker=miment().add(1,'h').format('YYYY-MM-DD HH:mm')
+    tempEndDate[0]=parseInt(miment().add(1,'h').format('YYYY')) 
+    tempEndDate[1]=parseInt(miment().add(1,'h').format('MM'))
+    tempEndDate[2]=parseInt(miment().add(1,'h').format('DD'))
+    tempEndDate[3]=parseInt(miment().add(1,'h').format('HH'))
+    tempEndDate[4]=parseInt(miment().add(1,'h').format('mm'))
     this.endDate=tempEndDate
 
 
     this.delayDate=tempEndDate
-    this.delayDatePicker=moment().add(1,'h').format('YYYY-MM-DD HH:mm')
+    this.delayDatePicker=miment().add(1,'h').format('YYYY-MM-DD HH:mm')
 
     this.noticeDate=tempEndDate
     this.noticeDatePicker="00:00"
@@ -341,7 +341,7 @@ export default {
 //赋值
       subData.title=value.title
       subData.description=value.description
-      subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
+      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
       subData.startDate=this.startDatePicker+":00"
       subData.endDate=this.endDatePicker+":00"
       subData.routine=rou
@@ -362,11 +362,11 @@ export default {
         this.setVisible1()
         return
       }
-      else if(!moment(subData.startDate).isBefore(subData.endDate)){
+      else if(!miment(subData.startDate).isBefore(subData.endDate)){
         this.setVisible2()
         return 
       }
-      else if(subData.isDelay &&moment(subData.delayDate).isBefore(subData.endDate)){
+      else if(subData.isDelay &&miment(subData.delayDate).isBefore(subData.endDate)){
         this.setVisible3()
         return 
       }

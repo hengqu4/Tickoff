@@ -6,17 +6,17 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface MissionDao {
-    @Select("select * from " + MissionConstants.MissionTable + " where m_id = #{missionId}")
-    Mission getMissionById(String missionId);
+    @Select("select * from " + MissionConstants.MissionTable + " where m_id = #{m_id}")
+    Mission getMissionById(String m_id);
 
-    @Delete("delete from "+ MissionConstants.MissionTable+" where m_id = #{missionId}")
-    Boolean deleteMissionById(String missionId);
+    @Delete("delete from "+ MissionConstants.MissionTable+" where m_id = #{m_id}")
+    Boolean deleteMissionById(String m_id);
 
     @Insert({"insert into mission" +
             "(m_id, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workload, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
-            "values(#{missionId}, #{mset_id}, #{name}, #{description}, #{createDate}, " +
+            "values(#{m_id}, #{mset_id}, #{name}, #{description}, #{createDate}, " +
             "#{startDate}, #{endDate}, #{routine}, #{delay}, #{workLoad}, " +
             "#{requireCheck}, #{needNotice}, #{noticeTime}, #{done}, #{delayDate})" })
     Boolean saveMission(Mission mission);
@@ -25,7 +25,7 @@ public interface MissionDao {
             "(m_id, mset_id, name, description, createDate, " +
             "startDate, endDate, routine, delay, workload, " +
             "requireCheck, needNotice, noticeTime, done, delayDate) " +
-            "VALUE(#{missionId},#{mset_id},#{name}, #{description}, #{createDate}, " +
+            "VALUE(#{m_id},#{mset_id},#{name}, #{description}, #{createDate}, " +
             "#{startDate},#{endDate},#{routine}, #{delay}, #{workLoad}, " +
             "#{requireCheck},#{needNotice},#{noticeTime}, #{done}, #{delayDate}) " +
             "ON DUPLICATE KEY UPDATE " +
