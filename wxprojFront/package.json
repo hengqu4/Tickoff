@@ -29,7 +29,6 @@
     "less": "^3.13.0",
     "less-loader": "^4.1.0",
     "miment": "0.0.9",
-    "moment": "^2.29.1",
     "mpvue": "^2.0.0",
     "mpvue-calendar": "^2.3.7",
     "mpvue-router-patch": "^2.0.0",

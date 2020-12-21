@@ -48,7 +48,7 @@
 
 <script>
 import { $wuxForm, $wuxToast } from "../../../static/wux/index";
-import moment from 'moment';
+import miment from 'miment';
 import toast from 'mpvue-toast'
 
 

@@ -2,7 +2,7 @@ package com.tickoff.util.common;
 
 public class MissionConstants {
     public static final String MissionTable="mission";
-    public static final String missionId="missionId";
+    public static final String missionId="m_id";
     public static final String setId="mset_id";
     public static final String name="name";
     public static final String description="description";
