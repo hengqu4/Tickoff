@@ -181,7 +181,7 @@
 
 <script>
 import { $wuxForm, $wuxToast } from "../../../static/wux/index";
-import moment from 'moment';
+import miment from 'miment';
 import toast from 'mpvue-toast'
 
 
@@ -377,7 +377,7 @@ export default {
       subData.mset_id=msid
       subData.name=value.title
       subData.description=value.description
-      subData.createDate=moment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
+      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
       subData.startDate=this.startDatePicker+':00'
       subData.endDate=this.endDatePicker+':00'
       subData.routine=rou
@@ -396,11 +396,11 @@ export default {
         this.setVisible1()
         return
       }
-      else if(!moment(subData.startDate).isBefore(subData.endDate)){
+      else if(!miment(subData.startDate).isBefore(subData.endDate)){
         this.setVisible2()
         return 
       }
-      else if(subData.isDelay &&moment(subData.delayDate).isBefore(subData.endDate)){
+      else if(subData.isDelay &&miment(subData.delayDate).isBefore(subData.endDate)){
         this.setVisible3()
         return 
       }
