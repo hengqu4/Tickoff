@@ -1,4 +1,5 @@
 import Fly from 'flyio/dist/npm/wx'
+import Store from '../store'
 const fly = new Fly()
 // const host = 'http://mock-api.com/vzMrDQgG.mock/'
 // const host = 'http://mock-api.com/6KLpmWKk.mock/'
@@ -14,7 +15,8 @@ fly.interceptors.request.use((request) => {
   // request.headers['content-type']= 'application/json';
   request.headers = {
     'X-Tag': 'flyio',
-    'content-type': 'application/json'
+    'content-type': 'application/json',
+    'Authorization':Store.state.token
   }
  
   let authParams = {
