@@ -40,6 +40,7 @@
       </div>
       <!-- <div class="allLog"><a href="">show all contributions</a></div> -->
     </div>
+    <wux-button @click="callWxMSG()">ssss</wux-button>
   </div>
 </template>
 <script>
@@ -155,6 +156,14 @@ export default {
     calDayNum() {
       let day = new Date().getDay();
       this.dayNum = day + 133;
+    },
+    callWxMSG(){
+      wx.requestSubscribeMessage({
+      tmplIds: ["IW9tcQJ8L1-9W6CqQysyh0PgruxfxjH-5HPHOuBdM1M"],
+      success(res) {
+        console.log("res of select", res);
+      },
+      });
     },
     // async getActivity() {
     //   this.$fly
