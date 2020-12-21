@@ -92,4 +92,13 @@ public class Mission_setController {
             return RetrunJson.returnJsonFailure(jsonObject.toJSONString());
         }
     }
+    //2020.12.20
+    //创建者：任冬晨
+    @RequestMapping(value="/api/mission_set/mset_info/{mset_id}",method = RequestMethod.GET)
+    public JSONObject getMission_setInfo(@PathVariable String mset_id){
+        Mission_set mission_set= mission_setService.getMissionSetById(mset_id);
+        List<User_mset> user_msets=user_msetService.getAllMsetAllUser(mset_id);
+        String str=JSON.toJSONString(mission_set);
+        return RetrunJson.returnJsonSuccess(str);
+    }
 }

@@ -32,4 +32,5 @@ public interface Mission_setDao {
             "ON DUPLICATE KEY UPDATE " +
             " mset_id=#{mset_id}, name=#{name}, description=#{dscb}, createDate=#{create_date}")
     Boolean modifyMissionSet(Mission_set mission_set);
+
 }
