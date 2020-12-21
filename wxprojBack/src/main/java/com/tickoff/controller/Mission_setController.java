@@ -1,12 +1,13 @@
 package com.tickoff.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.tickoff.domain.Mission_set;
+import com.tickoff.domain.Mission_setInfo;
+import com.tickoff.domain.User;
 import com.tickoff.domain.User_mset;
 import com.tickoff.service.Mission_setService;
+import com.tickoff.service.UserService;
 import com.tickoff.service.User_msetService;
 import com.tickoff.util.RetrunJson;
 import com.tickoff.util.UniqueId;
@@ -24,6 +25,9 @@ public class Mission_setController {
 
     @Autowired
     private User_msetService user_msetService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/api/mission_set/openid/{openid}",method = RequestMethod.GET)
     public JSONObject getMissionSetList(@PathVariable String openid){
@@ -97,8 +101,16 @@ public class Mission_setController {
     @RequestMapping(value="/api/mission_set/mset_info/{mset_id}",method = RequestMethod.GET)
     public JSONObject getMission_setInfo(@PathVariable String mset_id){
         Mission_set mission_set= mission_setService.getMissionSetById(mset_id);
-        List<User_mset> user_msets=user_msetService.getAllMsetAllUser(mset_id);
-        String str=JSON.toJSONString(mission_set);
+        List<User_mset> user_msets=user_msetService.getMsetAllUser(mset_id);
+        List<User> userList = null;
+        for (User_mset temp:user_msets
+             ) {
+            userList.add(userService.getUserById(temp.getOpenid()));
+        }
+        Mission_setInfo mission_setInfo=new Mission_setInfo(mission_set,userList);
+        String str=JSON.toJSONString(mission_setInfo);
         return RetrunJson.returnJsonSuccess(str);
     }
+
+
 }

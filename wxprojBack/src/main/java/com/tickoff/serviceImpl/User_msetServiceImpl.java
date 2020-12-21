@@ -19,7 +19,7 @@ public class User_msetServiceImpl implements User_msetService {
     }
 
     @Override
-    public List<User_mset> getAllMsetAllUser(String mset_id) {
+    public List<User_mset> getMsetAllUser(String mset_id) {
         return user_msetDao.getMsetAllUser(mset_id);
     }
 
