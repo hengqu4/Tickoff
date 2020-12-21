@@ -21,7 +21,7 @@ public class UserController {
     public JSONObject getUserLikes(@PathVariable String userId){
         User user=userService.getUserById(userId);
         JSONObject likes=new JSONObject();
-        likes.put("likes",user.getLike());
+        likes.put("likes",user.getOtherlike());
         JSONObject returnjson=new JSONObject();
         returnjson.put("error_code","200");
         returnjson.put("data",likes);

@@ -28,7 +28,7 @@ public class IndexServiceImpl implements IndexService {
         List<IndexMission> indexMissionList=new LinkedList<>();
         for(Mission mission:missionList){
             IndexMission indexMission= IndexMission.builder()
-                    .missionId(mission.getMissionId())
+                    .missionId(mission.getM_id())
                     .name(mission.getName())
                     .description(mission.getDescription())
                     .done(mission.isDone()?1:0)

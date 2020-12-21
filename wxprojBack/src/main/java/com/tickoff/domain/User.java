@@ -12,7 +12,7 @@ public class User {
     private String user_id;
     private String nickname;
     private String avatar_url;
-    private int like;
+    private int otherlike;
     @Tolerate
     public User(){
 

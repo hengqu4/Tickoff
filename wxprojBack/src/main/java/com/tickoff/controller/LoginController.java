@@ -54,20 +54,20 @@ public class LoginController {
         String openid = (String) json.get("openid");
 
         //查询数据库中该openid是否存在
-        if(userService.queryOpenIdIsExist(openid)){
+        if(userService.queryOpenIdIsExist(code)){
             //openid存在，则查找该user对象进行返回
-            User users=userService.queryUserByOpenID(openid);
+            User users=userService.queryUserByOpenID(code);
             //status为1，用户openid已存在
             map.put("status", 1);
             map.put("token", GetToken.getToken(users));
         }else{
             //openid不存在，则创建新user对象
             User user =new User();
-            user.setUser_id(openid);
+            user.setUser_id(code);
             user.setAvatar_url(avatar);
-            user.setLike(0);
+            user.setOtherlike(0);
             user.setNickname(nickname);
-            user=userService.saveUser(user);
+            userService.saveUser(user);
             //status为2，用户openid未存在
             map.put("status", 2);
             map.put("token", GetToken.getToken(user));

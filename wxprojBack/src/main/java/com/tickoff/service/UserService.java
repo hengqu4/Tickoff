@@ -10,5 +10,5 @@ public interface UserService {
 
     User queryUserByOpenID(String openid);
 
-    User saveUser(User users);
+    Boolean saveUser(User users);
 }
