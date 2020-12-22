@@ -1,7 +1,7 @@
 <template>
   <div>
     <movable-area>
-      <movable-view direction="all" x="300" y="50">
+      <movable-view direction="all" x="300" y="500">
         <van-button
           class="floatBtn"
           round
@@ -16,18 +16,8 @@
     <view slot="footer" class="popup__button" @click="closecountToday">OK</view>
     </wux-popup>
     <div class="btnNav">
-<<<<<<< HEAD
-      <wux-button
-        class="monthView"
-        type="calm"
-        @click="swapCalendar"
-        size="small"
-        ><wux-icon type="ios-calendar" size="16"
-      /></wux-button>
-=======
     <wux-button class="monthView" type="calm" @click="swapCalendar" size="small"><wux-icon type="ios-calendar" size="16"/></wux-button>
     <wux-button class="monthView" type="calm" @click="countToday" size="small">结算本日</wux-button>
->>>>>>> origin/MonthView
     </div>
     <Calendar v-if="isCalendarShow" @select="selectDay" />
     <div class="taskSetListView">
@@ -37,7 +27,7 @@
           class="card_unfold"
           v-for="(task, i) in defaultTask"
           :key="i"
-          :id="task.missionId"
+          :id="task.missionId" @click="toTaskDetail($event)"
         >
           <h1>{{ task.name }}</h1>
           <p>{{ task.description }}</p>
@@ -84,7 +74,7 @@
             }"
             v-for="(task, i) in item.missions"
             :key="i"
-            :id="task.missionId"
+            :id="task.missionId" @click="toTaskDetail($event)"
           >
             <h1>{{ task.name }}</h1>
             <p>{{ task.description }}</p>
@@ -132,57 +122,13 @@ export default {
   components: {
     Calendar,
   },
-  beforeMount() {
-    this.userInfo = store.state.userInfo;
-    console.log("beforeMount", this.userInfo);
-    // 操作者登录
-    wx.login({
-      success: function (r) {
-        console.log("src/App.vue::onLaunch()::success::return", r); //r包含code
-        //通过code获得openid并存入store
-        var code = r.code;
-        var rawUrl = store.state.userInfo.avatarUrl;
-        var newUrl = rawUrl.replace("/", "-");
-        for (var i = 0; i < 100; i++) {
-          newUrl = newUrl.replace("/", "-");
-        }
-        
-        if (code) {
-          //发送code到后台，分析openid
-          fly
-            .request({
-              method: "post",
-              url:
-                "login/regist/code/" +
-                code +
-                "/avatar/" +
-                newUrl +
-                "/nickname/" +
-                store.state.userInfo.nickName,
-              header: {
-                "content-type": "application/json",
-              },
-            })
-            .then((res) => {
-              console.log("oL,res:", res);
-              console.log("token:",res.token);
-              store.commit('TOKEN_MUTATION', res.token);
-              store.commit('OPENID_MUTATION', res.openid);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-        }
-      },
-      fail: function (res) {
-        console.log("login()失败");
-      },
-      complete: function (res) {},
-    });
+  created() {
+    
   },
 
   mounted() {
     this.userID = store.state.openId;
+    console.log("this.userID",this.userID);
     var timestamp = Date.parse(new Date());
     var date = new Date(timestamp);
     //获取年份
@@ -201,7 +147,7 @@ export default {
       .request({
         method: "get",
         url:
-          "http://localhost:8080/tickoff/api/indexMissions/" +
+          "tickoff/api/indexMissions/" +
           this.userID +
           "/date/" +
           this.date[0] +
@@ -260,6 +206,11 @@ export default {
       });
     },
 
+    toTaskDetail(event){
+      console.log("fuck");
+      console.log(event.currentTarget.id);
+    },
+
     /*结算本日*/
     countToday(){
       var timestamp = Date.parse(new Date());
@@ -273,7 +224,7 @@ export default {
       this.visible=!this.visible;
       this.$fly.request({
       method: 'get',
-      url: 'http://localhost:8080/tickoff/api/doneMissions/'+this.userID+'/date/'+Y+'-'+M+'-'+D,
+      url: 'tickoff/api/doneMissions/'+this.userID+'/date/'+Y+'-'+M+'-'+D,
     }).then(res => {
       console.log(res)
       this.todayCount='今日您已完成'+res+'个任务';
@@ -311,7 +262,7 @@ export default {
         .request({
           method: "get",
           url:
-            "http://localhost:8080/tickoff/api/indexMissions/" +
+            "tickoff/api/indexMissions/" +
             this.userID +
             "/date/" +
             this.date[0] +
@@ -377,7 +328,7 @@ export default {
       var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
       this.$fly.request({
         method:"put",
-        url:"http://localhost:8080/tickoff/api/tickoffMission",
+        url:"tickoff/api/tickoffMission",
         body:{
           "missionId":event.currentTarget.id
         }
@@ -388,7 +339,7 @@ export default {
     });
     this.$fly.request({
         method:"put",
-        url:"http://localhost:8080/tickoff/api/addRecord",
+        url:"tickoff/api/addRecord",
         body:{
           "open_id":this.userID,
           "date":Y+"-"+M+"-"+D
@@ -525,9 +476,9 @@ wux-button {
   padding: 20px;
   box-shadow: 0 0 4px #000;
   transform: translateY(0) translateX(25px) scale(1);
-  transform-origin: 0 0;
-  transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s,
-    background 0.4s linear;
+  Wtransform-origin: 0 0;
+  transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s;
+  background:0.4s linear;
   cursor: pointer;
   user-select: none;
   z-index: 5;
@@ -542,8 +493,8 @@ wux-button {
   box-shadow: 0 0 4px #000;
   transform: translateY(0) translateX(25px) scale(1);
   transform-origin: 0 0;
-  transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s,
-    background 0.4s linear;
+  transition: transform 0.6s cubic-bezier(0.8, 0.2, 0.1, 0.8) 0.1s;
+  background:0.4s linear;
   cursor: pointer;
   user-select: none;
   z-index: 5;

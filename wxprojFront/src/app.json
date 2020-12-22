@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/view/main",
+  "entryPagePath":"pages/loading/main",
 
   "pages": [
     "pages/me/main",
@@ -15,7 +15,8 @@
     "pages/invite/main",
     "pages/history/main",
     "pages/help/main",
-    "pages/share/main"
+    "pages/share/main",
+    "pages/loading/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

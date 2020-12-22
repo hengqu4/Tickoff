@@ -124,6 +124,11 @@
           "pathName": "pages/history/main",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/taskDetail/main",
+          "pathName": "pages/taskDetail/main",
+          "scene": null
         }
       ]
     }

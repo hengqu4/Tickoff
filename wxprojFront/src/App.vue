@@ -36,15 +36,7 @@ export default {
     console.log("场景值设置完成"+ store.state.scene)
     //把公开信息存储在全局store里
     //获取操作者公开信息并存入store
-    wx.getUserInfo({
-      success: (data) => {
-        console.log("getUserInfo()::", data);
-        store.commit(mutationtypes.USERINFO_MUTATION, data.userInfo);
-      },
-      fail: () => {
-        console.log("getUserInfo()失败");
-      },
-    });
+    
     
   },
   beforeMount() {
