@@ -112,26 +112,28 @@ export default {
   },
   onShow(){
     this.handleGetUserInfo();
-    this.randomNum();
-    //console.log("onShow",this.userInfo);
-    // this.$fly.request({
-    //   method: 'get',
-    //   url: 'http:///likes?UserID='+store.state.openId,
-    // }).then(res => {
-    //   console.log(res)
-    //   this.likes=res
-    // }).catch(function (error) {
-    //     console.log(error);
-    // });
-    // this.$fly.request({
-    //   method: 'get',
-    //   url: 'http:///activeDays?UserID='+store.state.openId,
-    // }).then(res => {
-    //   console.log(res)
-    //   this.activeDays=res
-    // }).catch(function (error) {
-    //     console.log(error);
-    // });
+    //this.randomNum();
+    // console.log("token11111111111:",store.state.token);
+    // store.commit(mutationtypes.TOKEN_MUTATION, "111szdghjfhjkdasbfhug");
+    // console.log("token1222222222222222:",store.state.token);
+    this.$fly.request({
+      method: 'get',
+      url: '/tickoff/api/likes/UserID/'+store.state.openId,
+    }).then(res => {
+      console.log(res)
+      this.likes=res.data.likes
+    }).catch(function (error) {
+        console.log(error);
+    });
+    this.$fly.request({
+      method: 'get',
+      url: 'tickoff/api/activeDays/UserID/'+store.state.openId,
+    }).then(res => {
+      console.log(res)
+      this.activeDays=res.data.days
+    }).catch(function (error) {
+        console.log(error);
+    });
   },
   methods: {
     handleGetUserInfo() {

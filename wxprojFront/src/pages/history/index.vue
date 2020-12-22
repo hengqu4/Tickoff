@@ -36,10 +36,10 @@
             v-for="i in dayNum"
             :key="i"
             v-bind:class="{
-              lvl1: 5 > test1[i] && test1[i] >= 1,
-              lvl2: 10 > test1[i] && test1[i] >= 5,
-              lvl3: 15 > test1[i] && test1[i] >= 10,
-              lvl4: test1[i] && test1[i] >= 15,
+              lvl1: 5 > activity[i].done && activity[i].done >= 1,
+              lvl2: 10 > activity[i].done && activity[i].done >= 5,
+              lvl3: 15 > activity[i].done && activity[i].done >= 10,
+              lvl4: activity[i].done && activity[i].done >= 15,
             }"
             @click="calDate(i)"
           >
@@ -69,11 +69,11 @@ import { formatTimeHash, monthStr } from "../../utils/index";
 export default {
   name: "activityMap",
   mounted() {
-    // this.getActivity()
-    console.log("mounted", this.$refs.blockItem);
+    this.getActivity()
+    //console.log("mounted", this.$refs.blockItem);
     console.log("mounted", this.dayNum);
-    console.log(this.calMonth(1));
-    console.log("fucked up");
+    //console.log(this.calMonth(1));
+    //console.log("fucked up");
   },
   created() {
     console.log("mounted", this.dayNum);
@@ -85,16 +85,7 @@ export default {
       userInfo: {},
       scene:false,
       dayNum: 100,
-      activity: {
-        error_code: 0,
-        data: [
-          {
-            date: "2020-10-19",
-            mission: 20,
-            done: 12,
-          },
-        ],
-      },
+      activity: [],
       missionNum: 0,
       doneNum: 0,
       test1: [
@@ -235,6 +226,7 @@ export default {
     calDayNum() {
       let day = new Date().getDay();
       this.dayNum = day + 133;
+      console.log("dayNumUpdateNow:",this.dayNum)
     },
     callWxMSG(){
       wx.requestSubscribeMessage({
@@ -244,27 +236,29 @@ export default {
       },
       });
     },
-    // async getActivity() {
-    //   this.$fly
-    //     .request({
-    //       method: "get",
-    //       url: "http:///history?UserID=" + store.state.openId,
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       console.log(res.data.data);
-    //       this.activity = res.data.data;
-    //       this.colorful(this.activity);
-    //       this.activity.forEach((item, index) => {
-    //         console.log(item);
-    //         this.missionNum += parseInt(item.mission);
-    //         this.doneNum += parseInt(item.done);
-    //       });
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
+    getActivity() {
+      this.$fly
+        .request({
+          method: "get",
+          url: "tickoff/api/HistoryRecord/UserID/" + store.state.openId,
+        })
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          this.activity = res.data;
+          for(var i=0;i<135;i++){
+            console.log(this.activity[i].done);
+          }
+          // this.activity.forEach((item, index) => {
+          //   console.log(item);
+          //   this.missionNum += parseInt(item.mission);
+          //   this.doneNum += parseInt(item.done);
+          // });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     //向前数dayNum-index天的日期 格式2020-12-18
     calDate(index) {
       let indexTime =

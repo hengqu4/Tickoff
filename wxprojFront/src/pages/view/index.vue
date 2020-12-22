@@ -100,6 +100,7 @@
 import Calendar from "mpvue-calendar";
 import store from "../../store";
 import fly from "../../utils/wx-request";
+
 /*用来组件传值，不知道能用来干啥先放着*/
 props: {
 }
@@ -155,8 +156,9 @@ export default {
             })
             .then((res) => {
               console.log("oL,res:", res);
-              store.commit(mutationtypes.TOKEN_MUTATION, res.token);
-              store.commit(mutationtypes.OPENID_MUTATION, res.openid);
+              console.log("token:",res.token);
+              store.commit('TOKEN_MUTATION', res.token);
+              store.commit('OPENID_MUTATION', res.openid);
             })
             .catch(function (error) {
               console.log(error);

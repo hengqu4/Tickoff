@@ -44,7 +44,7 @@ public class RecordController {
         int month=now.get(Calendar.MONTH)+1;
         int day=now.get(Calendar.DAY_OF_MONTH);
         int week=now.get(Calendar.DAY_OF_WEEK);
-        int total=113+weekdays[week-1];
+        int total=133+weekdays[week-1];
 
         List<ReturnRecord> result=new ArrayList<>();
         for(int i=total-1;i>=0;i--){
