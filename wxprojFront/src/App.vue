@@ -30,6 +30,9 @@ export default {
   },
   onLaunch: function () {
     console.log("OonLaunch");
+    console.log( this.$root.$mp.appOptions.scene)
+    store.commit(mutationtypes.SENCE_MUTATION,this.$root.$mp.appOptions.scene)
+    console.log("场景值设置完成"+ store.state.scene)
     // 操作者登录
     wx.login({
       success: function (r) {

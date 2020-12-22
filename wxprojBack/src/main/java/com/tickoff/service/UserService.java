@@ -11,4 +11,6 @@ public interface UserService {
     User queryUserByOpenID(String openid);
 
     Boolean saveUser(User users);
+
+    Boolean addLike(String openid);
 }

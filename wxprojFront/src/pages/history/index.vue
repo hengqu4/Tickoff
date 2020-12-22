@@ -1,6 +1,14 @@
 <template>
   <div class="map">
     <div class="title">{{ this.activityNum }} updates in the last year</div>
+    <div v-if="scene">
+      <div v-if="!haveLiked">
+        <wux-icon @click="makelike" type="ios-heart-empty" />
+      </div>
+      <div v-if="haveLiked">
+        <wux-icon type="ios-heart"/>
+      </div>
+    </div>
     <div class="map-inner clearfix">
       <div class="block-box">
         <div class="week">
@@ -43,6 +51,7 @@
   </div>
 </template>
 <script>
+import store from '../../store';
 import { formatTimeHash, monthStr } from "../../utils/index";
 export default {
   name: "activityMap",
@@ -59,6 +68,8 @@ export default {
   },
   data() {
     return {
+      haveLiked:false,
+      scene:false,
       dayNum: 100,
       activity: {
         error_code: 0,
@@ -151,7 +162,57 @@ export default {
       ],
     };
   },
+  onLoad:function(options) {
+    console.log("onload")
+    this.userId=options.uId
+    this.userId='open91cd84d64333821d73e2751f'
+    if(store.state.scene==1036){
+      this.userId=options.uId
+    }
+    else{
+      this.userId=store.state.openId
+    }
+  },
+  beforeMount(){
+    if(store.state.scene==1001){
+      this.scene=true
+    }
+    else{
+      this.scene=false
+    }
+    this.$fly
+        .request({
+          method: "get",
+          url: "tickoff/api/user/UserID/" + this.userId,
+        })
+        .then((res) => {
+          console.log(res)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  },
+  onShareAppMessage: function() {
+    return{
+      title:'来看看我的历史记录',
+      path:'/pages/history/main?uid='+store.state.openId
+    }
+  },
   methods: {
+    makelike(){
+      console.log("clike like")
+      this.haveLiked=true
+       this.$fly.request({
+      method: 'put', // post/get 请求方式
+      url: 'tickoff/api/user/like/openid/'+this.userId,
+    }).then(res => {
+      console.log("成功点赞了")
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    },
+
     calDayNum() {
       let day = new Date().getDay();
       this.dayNum = day + 133;

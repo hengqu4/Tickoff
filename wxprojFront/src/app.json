@@ -1,6 +1,6 @@
 {
   
-  "entryPagePath":"pages/share/main",
+  "entryPagePath":"pages/history/main",
 
   "pages": [
     "pages/me/main",

@@ -6,6 +6,7 @@ import com.tickoff.domain.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserDao {
@@ -19,5 +20,12 @@ public interface UserDao {
             "(user_id, nickname, avatar_url, otherlike) " +
             "values(#{user_id}, #{nickname}, #{avatar_url}, #{otherlike})" })
     Boolean saveUser(User user);
+
+    @Update({"insert into user " +
+            "(user_id, nickname, avatar_url, otherlike) " +
+            "values(#{user_id}, #{nickname}, #{avatar_url}, #{otherlike}) " +
+            "ON DUPLICATE KEY UPDATE " +
+            "user_id=#{user_id}, nickname=#{nickname}, avatar_url=#{avatar_url}, otherlike=#{otherlike}"})
+    Boolean updateUser(User user);
 
 }

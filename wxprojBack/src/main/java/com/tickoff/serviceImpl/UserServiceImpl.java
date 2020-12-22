@@ -42,5 +42,12 @@ public class UserServiceImpl  implements UserService {
         return userDao.saveUser(users);
     }
 
+    @Override
+    public Boolean addLike(String openid) {
+        User user=userDao.getUserById(openid);
+        user.setOtherlike(user.getOtherlike()+1);
+        return userDao.updateUser(user);
+    }
+
 
 }
