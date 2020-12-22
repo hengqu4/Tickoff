@@ -106,6 +106,22 @@ export default {
       });
   },
 
+  onShareAppMessage: function() {
+    return{
+      title:'邀请加入任务集:'+this.title,
+      path:'/pages/invite/main?setId='+this.setId,
+      success: function (res) {
+	        wx.showToast({
+	          title: "分享成功",
+	          icon: 'success',
+	          duration: 2000
+	        })
+       },
+      fail: function (res) {
+      },
+    }
+  },
+
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
