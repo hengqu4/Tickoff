@@ -5,20 +5,8 @@
 import store from "../../store";
 import fly from "../../utils/wx-request";
 export default {
-  mounted() {},
-  beforeMount() {
-    wx.getUserInfo({
-      success: (data) => {
-        console.log("getUserInfo()::", data);
-        store.commit("USERINFO_MUTATION", data.userInfo);
-      },
-      fail: () => {
-        console.log("getUserInfo()失败");
-      },
-    });
-    console.log("ssss");
-    // 操作者登录
-    wx.login({
+  mounted() {
+        wx.login({
       success: function (r) {
         console.log("pages/loading::onLaunch()::success::return", r); //r包含code
         //通过code获得openid并存入store
@@ -61,6 +49,11 @@ export default {
       complete: function (res) {},
     });
     this.randomNaviToView();
+  },
+  beforeMount() {
+
+    // 操作者登录
+
   },
   data() {
     return {};

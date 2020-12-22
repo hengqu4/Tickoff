@@ -10,6 +10,8 @@
     "van-collapse":"../../../static/vant/collapse",
     "van-collapse-item":"../../../static/vant/collapse-item",
     "van-button":"../../../static/vant/button",
-    "wux-popup":"../../../static/wux/popup/index"
+    "wux-popup":"../../../static/wux/popup/index",
+    "wux-card": "../../../static/wux/card/index",
+    "wux-wing-blank": "../../static/wux/wing-blank/index"
   }
 }

@@ -71,20 +71,12 @@ export default {
   },
 
   beforeMount() {
-    wx.getUserInfo({
-      withCredentials: false,
-      success: (res) => {
-      },
-      fail: () => {
-        console.log("shibai");
-      },
-      complete: () => {},
-    });
+   
   },
-  mounted() {
+  onShow() {
     
-    this.taskId='1d6cb51e63cf407bb5203ef2ac19ec47'
-    this.userId='open91cd84d64333821d73e2751f'
+    // this.taskId='1d6cb51e63cf407bb5203ef2ac19ec47'
+    // this.userId='open91cd84d64333821d73e2751f'
 
 
     this.$fly.request({

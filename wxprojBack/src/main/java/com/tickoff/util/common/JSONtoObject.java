@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class JSONtoObject {
     public Mission JSONtoMission(JSONObject json) throws ParseException {
-        String a = json.getString("missionId");
+        String a = json.getString("m_id");
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");

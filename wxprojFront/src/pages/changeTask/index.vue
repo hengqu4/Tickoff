@@ -163,7 +163,7 @@
 
 
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+          <wux-button block outline type="dark" @click="onSubmit($event)">修改</wux-button>
         </div>
         <div class="buttonObject"> 
           <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
@@ -378,7 +378,7 @@ export default {
       subData.mset_id=msid
       subData.name=value.title
       subData.description=value.description
-      subData.createDate=miment().add(1,'sss').format('YYYY-MM-DD HH:mm:ss')
+      subData.createDate=miment().format('YYYY-MM-DD hh:mm:ss')
       subData.startDate=this.startDatePicker+':00'
       subData.endDate=this.endDatePicker+':00'
       subData.routine=rou

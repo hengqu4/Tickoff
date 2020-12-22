@@ -58,7 +58,7 @@ public class MissionController {
     public JSONObject modifyMission(@RequestBody String requestJson) throws ParseException {
         JSONtoObject jsontoObject = new JSONtoObject();
         JSONObject json = JSONObject.parseObject(requestJson);
-        Mission mission = jsontoObject.JSONtoMission(json);
+        Mission mission = JSON.toJavaObject(json,Mission.class);
         if (missionService.modifyMission(mission)) {
             return RetrunJson.returnJsonSuccess(JSON.toJSONString(mission));
         } else {
