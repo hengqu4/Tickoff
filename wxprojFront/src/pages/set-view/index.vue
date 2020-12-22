@@ -2,14 +2,14 @@
   <div>
     <div v-for="(item, index) in dataList" :key="index" :style="{marginBottom: '5px'}">
       <wux-wing-blank size="default"  :key="index">
-        <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onAction($event,item.setId)">
+        <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onAction($event,item.mset_id)">
           <view slot="body">
             <view class="wux-ellipsis">{{item.description}}</view>
           </view>
           <view slot="footer">
               <p>成员</p>
               <span v-for="(mem, aid) in item.member" :key="aid">
-                <wux-avatar :src="mem.avater" />
+                <wux-avatar :src="mem.avatar_url" />
               </span>
           </view>
         </wux-card>
@@ -26,7 +26,7 @@
 
 <script>
 import '../../../static/wux/styles/index.wxss'
-
+import store from '../../store'
 export default {
   data(){
     return{
@@ -53,13 +53,14 @@ export default {
   },
   
   mounted() {
+    var oid=store.state.openid
     this.$fly.request({
       method: 'get', 
-      url: 'api/getSetList',
+      url: '/api/mission_set/mset_info_list/'+oid,
     }).then(res => {
       console.log("res")
       console.log(res)
-      this.dataList=res.dataList
+      this.dataList=res.data
     }).catch(function (error) {
       console.log("error")
       console.log(error);

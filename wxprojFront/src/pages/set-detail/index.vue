@@ -22,8 +22,8 @@
       <wux-cell hover-class="none">
         <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
           <view>
-            <wux-avatar :src="item.avater" />
-            <span>{{item.name}}</span>
+            <wux-avatar :src="item.avatar_url" />
+            <span>{{item.nickname}}</span>
           </view>
         </div>
       </wux-cell>
@@ -47,7 +47,6 @@ export default {
       setId:'',
       title: "",
       description: "",
-      memberNum:'',
       member:[]
     };
   },
@@ -73,14 +72,13 @@ export default {
   mounted() {
     this.$fly.request({
       method: 'get', 
-      url: 'api/getSet?setId='+this.setId,
+      url: 'tickoff/api/mission_set/mset_info/'+this.setId,
     }).then(res => {
       console.log("res")
       console.log(res)
-      this.title=res.title
-      this.description=res.description
-      this.memberNum=res.memberNum
-      this.member=res.member
+      this.title=res.data.title
+      this.description=res.data.description
+      this.member=res.data.member
     }).catch(function (error) {
       console.log("error")
       console.log(error);

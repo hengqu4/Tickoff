@@ -19,6 +19,11 @@ public class User_msetServiceImpl implements User_msetService {
     }
 
     @Override
+    public List<User_mset> getMsetAllUser(String mset_id) {
+        return user_msetDao.getMsetAllUser(mset_id);
+    }
+
+    @Override
     public User_mset getUser_mset(String openid, String mset_id) {
         return user_msetDao.getUser_msetById(openid, mset_id);
     }
@@ -33,4 +38,6 @@ public class User_msetServiceImpl implements User_msetService {
     public boolean deleteUser_mset(String openid, String mset_id) {
         return user_msetDao.deleteUser_mset(openid, mset_id);
     }
+
+
 }
