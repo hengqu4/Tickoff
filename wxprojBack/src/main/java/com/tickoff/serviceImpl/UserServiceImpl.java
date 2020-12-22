@@ -38,8 +38,15 @@ public class UserServiceImpl  implements UserService {
     }
 
     @Override
-    public User saveUser(User users) {
-        return null;
+    public Boolean saveUser(User users) {
+        return userDao.saveUser(users);
+    }
+
+    @Override
+    public Boolean addLike(String openid) {
+        User user=userDao.getUserById(openid);
+        user.setOtherlike(user.getOtherlike()+1);
+        return userDao.updateUser(user);
     }
 
 
