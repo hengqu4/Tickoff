@@ -1,5 +1,17 @@
 <template>
   <div class="map">
+    <view class="userinfo">
+      <wux-avatar
+          class="userAvatar"
+          :src="userInfo.avatarUrl"
+          alt="登陆失败"
+          size="large"
+          shape="square"
+          scale="true"
+        />
+        <wux-white-space size="small" />
+        <p class="userName">微信名:{{ userInfo.nickName }}</p>
+    </view>
     <div class="title">{{ this.activityNum }} updates in the last year</div>
     <div v-if="scene">
       <div v-if="!haveLiked">
@@ -69,6 +81,7 @@ export default {
   data() {
     return {
       haveLiked:false,
+      userInfo: {},
       scene:false,
       dayNum: 100,
       activity: {
@@ -173,6 +186,9 @@ export default {
       this.userId=store.state.openId
     }
   },
+  onShow(){
+    this.handleGetUserInfo();
+  },
   beforeMount(){
     if(store.state.scene==1001){
       this.scene=true
@@ -212,7 +228,9 @@ export default {
     });
 
     },
-
+    handleGetUserInfo() {
+      this.userInfo = store.state.userInfo;
+    },
     calDayNum() {
       let day = new Date().getDay();
       this.dayNum = day + 133;
