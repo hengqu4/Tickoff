@@ -236,7 +236,7 @@ export default {
   beforeMount() {
 
     var tempDate=[]
-    this.startDatePicker=miment().format('YYYY-MM-DD HH:mm')
+    this.startDatePicker=miment().format('YYYY-MM-DD hh:mm')
     tempDate[0]=parseInt(miment().format('YYYY')) 
     tempDate[1]=parseInt(miment().format('MM'))
     tempDate[2]=parseInt(miment().format('DD'))
@@ -246,7 +246,7 @@ export default {
 
 
     var tempEndDate=[]
-    this.endDatePicker=miment().add(1,'h').format('YYYY-MM-DD HH:mm')
+    this.endDatePicker=miment().add(1,'h').format('YYYY-MM-DD hh:mm')
     tempEndDate[0]=parseInt(miment().add(1,'h').format('YYYY')) 
     tempEndDate[1]=parseInt(miment().add(1,'h').format('MM'))
     tempEndDate[2]=parseInt(miment().add(1,'h').format('DD'))
@@ -256,7 +256,7 @@ export default {
 
 
     this.delayDate=tempEndDate
-    this.delayDatePicker=miment().add(1,'h').format('YYYY-MM-DD HH:mm')
+    this.delayDatePicker=miment().add(1,'h').format('YYYY-MM-DD hh:mm')
 
     this.noticeDate=tempEndDate
     this.noticeDatePicker="00:00"
@@ -341,7 +341,7 @@ export default {
 //赋值
       subData.title=value.title
       subData.description=value.description
-      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
+      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD hh:mm:ss')
       subData.startDate=this.startDatePicker+":00"
       subData.endDate=this.endDatePicker+":00"
       subData.routine=rou

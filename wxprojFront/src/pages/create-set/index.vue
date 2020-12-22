@@ -1,7 +1,6 @@
 <template>
   <div>
     <wux-form id="wux-form" @change="onChange">
-
       <wux-cell-group title="标题">
         <wux-cell hover-class="none">
           <wux-field name="title" initialValue="请输入任务集标题">
@@ -19,11 +18,17 @@
       </wux-cell-group>
 
       <view class="create-set-submit-button">
-        <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)" @click="onSubmit">
+        <van-button
+          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+          @click="onSubmit"
+        >
           创建
         </van-button>
-        <div/>
-        <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)" @click="onReset">
+        <div />
+        <van-button
+          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+          @click="onReset"
+        >
           重置
         </van-button>
       </view>
@@ -32,13 +37,11 @@
 </template>
 
 <script>
-import { $wuxForm } from '../../../static/wux/index'
-import store from '../../store'
-import miment from 'miment';
+import { $wuxForm } from "../../../static/wux/index";
+import store from "../../store";
+import miment from "miment";
 export default {
-  computed: {
-
-  },
+  computed: {},
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
@@ -46,78 +49,71 @@ export default {
     },
 
     onSubmit() {
-      const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm()
-      const value = getFieldsValue()
-      console.log('Wux Form Submit \n', value)
+      const { getFieldsValue, getFieldValue, setFieldsValue } = $wuxForm();
+      const value = getFieldsValue();
+      console.log("Wux Form Submit \n", value);
 
-      var subData={}
-      subData.title=value.title
-      subData.description=value.description
-      var oid=store.state.openid
-      var createTime=miment().format('YYYY-MM-DD HH:mm')
+      var subData = {};
+      subData.title = value.title;
+      subData.description = value.description;
+      var oid = store.state.openId;
+      var createTime = miment().format("YYYY-MM-DD hh:mm:ss");
+      console.log("onSubmit:", store.state.openId);
 
-      this.$fly.request({
-        method:"post", //post/get 请求方式
-        url:"tickoff/api/mission_set/openid/"+oid,
-        body:{
-          "name":subData.title,
-          "description":subData.description,
-          "create_date":createTime+":00"
-        }
-      }).then(res =>{
-        console.log(subData.title)
-        console.log(subData.description)
-        this.gotoDetail(1)
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-
-    gotoDetail(id) {
-      // const url = '/pages/set-detail/main?tId='+id+'&uId='+this.userId
-      const url = '../set-detail/main'
-      wx.navigateTo({ 
-        url: url,
-        success: function(res){
-          console.log('跳转到页面成功')// success
-        },
-        fail: function() {
-        console.log('跳转到页面失败')  // fail
-        },
-      })
+      this.$fly
+        .request({
+          method: "post", //post/get 请求方式
+          url: "tickoff/api/mission_set/openid/" + store.state.openId,
+          body: {
+            name: subData.title,
+            description: subData.description,
+            create_date: createTime,
+          },
+        })
+        .then((res) => {
+          console.log(subData.title);
+          console.log(subData.description);
+          //this.gotoDetail(1)
+          wx.navigateBack({
+            delta: 1, //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
 
     onReset() {
-      const { getFieldsValue, setFieldsValue } = $wuxForm()
-       const fields = getFieldsValue()
+      const { getFieldsValue, setFieldsValue } = $wuxForm();
+      const fields = getFieldsValue();
 
       for (let item in fields) {
         if ({}.hasOwnProperty.call(fields, item)) {
           if (Array.isArray(fields[item])) {
-            fields[item] = []
-            if (item === 'slider') {
-              fields[item] = [10, 80]
+            fields[item] = [];
+            if (item === "slider") {
+              fields[item] = [10, 80];
             }
-          } else if (typeof fields[item] === 'boolean') {
-              fields[item] = false
-            } else if (typeof fields[item] === 'number') {
-              fields[item] = 0
-            } else {
-              fields[item] = ''
-            }
+          } else if (typeof fields[item] === "boolean") {
+            fields[item] = false;
+          } else if (typeof fields[item] === "number") {
+            fields[item] = 0;
+          } else {
+            fields[item] = "";
+          }
         }
       }
 
       setFieldsValue({
         ...fields,
-      })
+      });
     },
-  }
-}
+  },
+};
 </script>
 
 <style>
-.create-set-submit-button{
+.create-set-submit-button {
   padding-bottom: 10px;
   text-align: center;
 }

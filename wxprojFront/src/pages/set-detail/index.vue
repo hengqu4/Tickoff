@@ -69,7 +69,7 @@ export default {
     });
   },
 
-  mounted() {
+  onShow() {
     this.$fly.request({
       method: 'get', 
       url: 'tickoff/api/mission_set/mset_info/'+this.setId,

@@ -22,7 +22,7 @@ public class Mission_setInfo {
     public Mission_setInfo(Mission_set mission_set,List<User> userList){
         mset_id=mission_set.getMset_id();
         title=mission_set.getName();
-        description=mission_set.getDscb();
+        description=mission_set.getDescription();
         create_date=mission_set.getCreate_date();
         member=userList;
     }

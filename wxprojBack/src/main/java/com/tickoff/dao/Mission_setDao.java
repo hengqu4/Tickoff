@@ -20,7 +20,7 @@ public interface Mission_setDao {
     Mission_set getMissionSetById(String mset_id);
 
     @Insert("insert into "+ Mission_setConstants.Mission_setTable+
-    " (mset_id, name, description, createDate) values(#{mset_id}, #{name}, #{dscb}, #{create_date})")
+    " (mset_id, name, description, createDate) values(#{mset_id}, #{name}, #{description}, #{create_date})")
     Boolean saveMissionSet(Mission_set mission_set);
 
     @Delete("delete from "+Mission_setConstants.Mission_setTable+
@@ -28,9 +28,9 @@ public interface Mission_setDao {
     Boolean deleteMissionSet(String mset_id);
 
     @Update("insert into "+Mission_setConstants.Mission_setTable+
-            " (mset_id, name, description, createDate) values(#{mset_id}, #{name}, #{dscb}, #{create_date}) " +
+            " (mset_id, name, description, createDate) values(#{mset_id}, #{name}, #{description}, #{create_date}) " +
             "ON DUPLICATE KEY UPDATE " +
-            " mset_id=#{mset_id}, name=#{name}, description=#{dscb}, createDate=#{create_date}")
+            " mset_id=#{mset_id}, name=#{name}, description=#{description}, createDate=#{create_date}")
     Boolean modifyMissionSet(Mission_set mission_set);
 
 }

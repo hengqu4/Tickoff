@@ -52,11 +52,10 @@ export default {
     });
   },
   
-  mounted() {
-    var oid=store.state.openid
+  onShow() {
     this.$fly.request({
       method: 'get', 
-      url: '/api/mission_set/mset_info_list/'+oid,
+      url: 'tickoff/api/mission_set/mset_info_list/'+store.state.openId,
     }).then(res => {
       console.log("res")
       console.log(res)

@@ -14,6 +14,7 @@ import com.tickoff.util.UniqueId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -102,7 +103,7 @@ public class Mission_setController {
     public JSONObject getMission_setInfo(@PathVariable String mset_id){
         Mission_set mission_set= mission_setService.getMissionSetById(mset_id);
         List<User_mset> user_msets=user_msetService.getMsetAllUser(mset_id);
-        List<User> userList = null;
+        List<User> userList = new ArrayList<>();
         for (User_mset temp:user_msets
              ) {
             userList.add(userService.getUserById(temp.getOpenid()));
@@ -115,12 +116,12 @@ public class Mission_setController {
     @RequestMapping(value="/api/mission_set/mset_info_list/{open_id}",method = RequestMethod.GET)
     public JSONObject getMission_setInfList(@PathVariable String open_id){
         List<User_mset> msets=user_msetService.getAllUser_mset(open_id);
-        List<Mission_setInfo> msetInfoList = null;
+        List<Mission_setInfo> msetInfoList = new ArrayList<>();
         for (User_mset temp_msets:msets
         ) {
             Mission_set mission_set= mission_setService.getMissionSetById(temp_msets.getMset_id());
             List<User_mset> user_msets=user_msetService.getMsetAllUser(temp_msets.getMset_id());
-            List<User> userList = null;
+            List<User> userList = new ArrayList<>();
             for (User_mset temp:user_msets
             ) {
                 userList.add(userService.getUserById(temp.getOpenid()));
@@ -129,7 +130,7 @@ public class Mission_setController {
             msetInfoList.add(mission_setInfo);
         }
         String str=JSON.toJSONString(msetInfoList);
-        return RetrunJson.returnJsonSuccess(str);
+        return RetrunJson.returnJsonArraySuccess(str);
     }
 
 
