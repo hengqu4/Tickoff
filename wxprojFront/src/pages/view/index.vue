@@ -5,11 +5,6 @@
 		    <van-button class="floatBtn" round type="info" size="large" @click="plusBtnClick"><wux-icon class="floatBtnIcon"  type="ios-add" size="30"/></van-button>
 	    </movable-view>
     </movable-area>
-  <div class="userInfo">
-    <wux-avatar v-if="isShow" class="userAvatar" :src="userInfo.avatarUrl" alt="Error Pic" size="large"/>
-    <wux-button class="showUsrAvatar" v-else open-type="getUserInfo" @getuserinfo="getUserInfo">点击获取用户登录信息</wux-button>
-    <p class="userName">{{userInfo.nickName}}</p>
-    </div>
     <div class="btnNav">
     <wux-button class="monthView" type="calm" @click="swapCalendar" size="small"><wux-icon type="ios-calendar" size="16"/></wux-button>
     </div>
@@ -45,6 +40,7 @@
 
 <script>
 import Calendar from 'mpvue-calendar'
+import store from '../../store';
 /*用来组件传值，不知道能用来干啥先放着*/
 props:{
 }
@@ -52,9 +48,8 @@ export default {
   data() {
     return{
     value:[],
-    userInfo:{},
     isShow:false,
-    userID:'aaaas123456',
+    userID:'',
     date:[],
     isCalendarShow:false,
     defaultTask:[],
@@ -68,18 +63,9 @@ export default {
     Calendar
   },
   beforeMount(){
-    this.handleGetUserInfo()
-    wx.login({
-      success: function(res) {
-      console.log(res);//这里的返回值里面便包含code
-      },
-    fail: function(res) {
-      console.log('登陆失败');
-    },
-      complete: function(res) {},
-    })
   },
   mounted(){
+    this.userID=store.state.openId
     var timestamp = Date.parse(new Date());
     var date = new Date(timestamp);
     //获取年份  
@@ -96,14 +82,16 @@ export default {
       url: 'http://localhost:8080/tickoff/api/indexMissions/'+this.userID+'/date/'+this.date[0]+'-'+this.date[1]+'-'+this.date[2],
     }).then(res => {
       console.log(res)
+      this.defaultTask=new Array();
       for(var i=0;i<res.length;i++){
         /*此处替换为默认任务集的id*/
-        if(res[i].id==0){
-          this.defaultTask=res[i].task;
+        if(res[i].setName=="默认任务集"){
+          this.defaultTask=res[i].missions;
           res.splice(i,1)
           break;
         }
       }
+      this.taskSetList=res
       /*初始化卡片堆折叠信息*/
       var foldArray=Array(this.taskSetList.length).fill(true);
       this.taskSetListFold=foldArray;
@@ -116,24 +104,6 @@ export default {
   computed:{
   },
   methods: {
-    handleGetUserInfo(){
-      wx.getUserInfo({
-        success:(data)=>{
-          console.log(data);
-          this.userInfo=data.userInfo;
-          this.isShow=true;
-        },
-        fail:()=>{
-          console.log("获取用户登录信息失败");
-        }
-      })
-    },
-    getUserInfo(data){
-      console.log(data);
-      if(data.mp.detail.rawData){
-        this.handleGetUserInfo();
-      }
-    },
     /*切换日历*/
     swapCalendar(){
       if(this.isCalendarShow==true){
@@ -146,6 +116,7 @@ export default {
 
     /*浮动按钮点击事件*/
     plusBtnClick(){
+
       const url = '../create-task/main'
       wx.navigateTo({ 
         url: url,
@@ -239,11 +210,10 @@ page{
 /*浮动按钮组件*/
 movable-area{
   pointer-events: none;
-  height: 90%;
+  height: 100%;
   width: 100%;
   position:fixed;
   left:0px;
-  top:50px;
   z-index:100;
 }
 movable-view{

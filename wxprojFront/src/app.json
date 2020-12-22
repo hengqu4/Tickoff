@@ -1,6 +1,10 @@
 {
   
+<<<<<<< HEAD
   "entryPagePath":"pages/history/main",
+=======
+  "entryPagePath":"pages/view/main",
+>>>>>>> origin/MonthView
 
   "pages": [
     "pages/me/main",

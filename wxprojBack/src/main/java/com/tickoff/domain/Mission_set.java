@@ -11,7 +11,7 @@ import lombok.experimental.Tolerate;
 public class Mission_set {
     private String mset_id;
     private String name;
-    private String dscb;
+    private String description;
     private String create_date;
     @Tolerate
     public Mission_set(){

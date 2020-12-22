@@ -41,7 +41,6 @@ export default {
         var code = r.code;
         if (code) {
           //发送code到后台，分析openid
-      
           //this.$fly.request({
           //   method: 'post',
           //   url: 'http:///login/regist?code=" + code,

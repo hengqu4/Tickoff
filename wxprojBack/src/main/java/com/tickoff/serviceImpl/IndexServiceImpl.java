@@ -53,7 +53,7 @@ public class IndexServiceImpl implements IndexService {
             IndexMset indexMset=IndexMset.builder()
                     .setId(mission_set.getMset_id())
                     .setName(mission_set.getName())
-                    .setDescription(mission_set.getDscb())
+                    .setDescription(mission_set.getDescription())
                     .missions(indexMissionList)
                     .build();
             indexMsetList.add(indexMset);
