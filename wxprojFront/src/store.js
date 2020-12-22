@@ -30,6 +30,7 @@ const store = new Vuex.Store({
     [mutationtypes.SENCE_MUTATION](state, value) {
       state.scene = value;
     },
+
   },
   getters: {},
 });

@@ -22,13 +22,14 @@ import java.util.Map;
  **/
 
 @RestController
-@RequestMapping("/login")
+
 public class LoginController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/regist")
-    public Map gettingOpenID(@RequestParam("code") String code,@RequestParam("avatar") String avatar,@RequestParam("nickname") String nickname){
+    @RequestMapping(value = "/login/regist/code/{code}/avatar/{avatar}/nickname/{nickname}",method = RequestMethod.POST)
+    public Map gettingOpenID(@PathVariable String code,@PathVariable String avatar,@PathVariable String nickname){
+        String newAvatar = avatar.replace("-","/");
         Map map=new HashMap();
         //登录凭证不能为空
         if (code == null || code.length() == 0) {
@@ -54,22 +55,24 @@ public class LoginController {
         String openid = (String) json.get("openid");
 
         //查询数据库中该openid是否存在
-        if(userService.queryOpenIdIsExist(code)){
+        if(userService.queryOpenIdIsExist(openid)){
             //openid存在，则查找该user对象进行返回
-            User users=userService.queryUserByOpenID(code);
+            User users=userService.queryUserByOpenID(openid);
             //status为1，用户openid已存在
             map.put("status", 1);
+            map.put("openid",openid);
             map.put("token", GetToken.getToken(users));
         }else{
             //openid不存在，则创建新user对象
             User user =new User();
-            user.setUser_id(code);
-            user.setAvatar_url(avatar);
+            user.setUser_id(openid);
+            user.setAvatar_url(newAvatar);
             user.setOtherlike(0);
             user.setNickname(nickname);
             userService.saveUser(user);
             //status为2，用户openid未存在
             map.put("status", 2);
+            map.put("openid",openid);
             map.put("token", GetToken.getToken(user));
         }
         return map;
