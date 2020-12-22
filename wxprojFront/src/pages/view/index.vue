@@ -12,7 +12,11 @@
         /></van-button>
       </movable-view>
     </movable-area>
+    <wux-popup :visible="visible" title="本日任务完成情况" :content="todayCount">
+    <view slot="footer" class="popup__button" @click="closecountToday">OK</view>
+    </wux-popup>
     <div class="btnNav">
+<<<<<<< HEAD
       <wux-button
         class="monthView"
         type="calm"
@@ -20,6 +24,10 @@
         size="small"
         ><wux-icon type="ios-calendar" size="16"
       /></wux-button>
+=======
+    <wux-button class="monthView" type="calm" @click="swapCalendar" size="small"><wux-icon type="ios-calendar" size="16"/></wux-button>
+    <wux-button class="monthView" type="calm" @click="countToday" size="small">结算本日</wux-button>
+>>>>>>> origin/MonthView
     </div>
     <Calendar v-if="isCalendarShow" @select="selectDay" />
     <div class="taskSetListView">
@@ -106,19 +114,20 @@ props: {
 }
 export default {
   data() {
-    return {
-      value: [],
-      userInfo: {},
-      isShow: false,
-      userID: "",
-      date: [],
-      isCalendarShow: false,
-      defaultTask: [],
-      taskSetList: [],
-      taskSetListFold: [] /*卡片堆叠样式*/,
-      taskSetListFoldIcon: [],
-      activeNames: [],
-    };
+    return{
+    visible:false,
+    todayCount:'',
+    value:[],
+    isShow:false,
+    userID:'',
+    date:[],
+    isCalendarShow:false,
+    defaultTask:[],
+    taskSetList:[],
+    taskSetListFold:[],/*卡片堆叠样式*/
+    taskSetListFoldIcon:[],
+    activeNames: [],
+    }
   },
   components: {
     Calendar,
@@ -237,9 +246,10 @@ export default {
     },
 
     /*浮动按钮点击事件*/
-    plusBtnClick() {
-      const url = "../create-task/main";
-      wx.navigateTo({
+
+    plusBtnClick(){
+      const url = '../create-task/main';
+      wx.navigateTo({ 
         url: url,
         success: function (res) {
           console.log("跳转到页面成功");
@@ -248,6 +258,33 @@ export default {
           console.log("跳转到页面失败");
         },
       });
+    },
+
+    /*结算本日*/
+    countToday(){
+      var timestamp = Date.parse(new Date());
+      var date = new Date(timestamp);
+      //获取年份  
+      var Y =date.getFullYear();
+      //获取月份  
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+      //获取当日日期 
+      var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+      this.visible=!this.visible;
+      this.$fly.request({
+      method: 'get',
+      url: 'http://localhost:8080/tickoff/api/doneMissions/'+this.userID+'/date/'+Y+'-'+M+'-'+D,
+    }).then(res => {
+      console.log(res)
+      this.todayCount='今日您已完成'+res+'个任务';
+    }).catch(function (error) {
+      console.log(error);
+      this.todayCount='今日您尚未完成任务打卡';
+    });
+    },
+
+    closecountToday(){
+      this.visible=!this.visible;
     },
 
     /*任务集下增加任务按钮事件*/
@@ -329,25 +366,41 @@ export default {
         );
       }
     },
-    completeTask(event) {
-      console.log(typeof event.currentTarget.id);
-      this.$fly
-        .request({
-          method: "put",
-          url: "http://localhost:8080/tickoff/api/tickoffMission",
-          body: {
-            missionId: event.currentTarget.id,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-  },
-};
+    completeTask(event){
+      var timestamp = Date.parse(new Date());
+      var date = new Date(timestamp);
+      //获取年份  
+      var Y =date.getFullYear();
+      //获取月份  
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+      //获取当日日期 
+      var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+      this.$fly.request({
+        method:"put",
+        url:"http://localhost:8080/tickoff/api/tickoffMission",
+        body:{
+          "missionId":event.currentTarget.id
+        }
+      }).then(res =>{
+        console.log(res)
+      }).catch(function (error) {
+        console.log(error);
+    });
+    this.$fly.request({
+        method:"put",
+        url:"http://localhost:8080/tickoff/api/addRecord",
+        body:{
+          "open_id":this.userID,
+          "date":Y+"-"+M+"-"+D
+        }
+      }).then(res =>{
+        console.log(res)
+      }).catch(function (error) {
+        console.log(error);
+    });
+    }
+  }
+}
 </script>
 
 <style scope>
@@ -409,6 +462,11 @@ wux-button {
   bottom: 0;
   right: 0;
   margin: auto;
+}
+
+.popup__button{
+  margin-left:135px;
+  color:green;
 }
 /*月视图样式*/
 .mpvue-calendar {

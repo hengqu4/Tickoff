@@ -228,6 +228,7 @@ export default {
       isDelay:false,
       isRequire:true,
       workLoad:[1],
+      oneHour:60*60*1000,
     };
   },
   components: {
@@ -377,7 +378,7 @@ export default {
       subData.mset_id=msid
       subData.name=value.title
       subData.description=value.description
-      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD HH:mm:ss')
+      subData.createDate=miment().add(1,'sss').format('YYYY-MM-DD HH:mm:ss')
       subData.startDate=this.startDatePicker+':00'
       subData.endDate=this.endDatePicker+':00'
       subData.routine=rou

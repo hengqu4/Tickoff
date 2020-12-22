@@ -220,6 +220,7 @@ export default {
       isDelay:false,
       isRequire:true,
       workLoad:[1],
+      oneHour:60*60*1000
 
     };
   },
@@ -240,23 +241,23 @@ export default {
     tempDate[0]=parseInt(miment().format('YYYY')) 
     tempDate[1]=parseInt(miment().format('MM'))
     tempDate[2]=parseInt(miment().format('DD'))
-    tempDate[3]=parseInt(miment().format('HH'))
+    tempDate[3]=parseInt(miment().format('hh'))
     tempDate[4]=parseInt(miment().format('mm'))
     this.startDate=tempDate
 
 
     var tempEndDate=[]
-    this.endDatePicker=miment().add(1,'h').format('YYYY-MM-DD hh:mm')
-    tempEndDate[0]=parseInt(miment().add(1,'h').format('YYYY')) 
-    tempEndDate[1]=parseInt(miment().add(1,'h').format('MM'))
-    tempEndDate[2]=parseInt(miment().add(1,'h').format('DD'))
-    tempEndDate[3]=parseInt(miment().add(1,'h').format('HH'))
-    tempEndDate[4]=parseInt(miment().add(1,'h').format('mm'))
+    this.endDatePicker=miment().add(this.oneHour,'sss').format('YYYY-MM-DD hh:mm')
+    tempEndDate[0]=parseInt(miment().add(this.oneHour,'sss').format('YYYY')) 
+    tempEndDate[1]=parseInt(miment().add(this.oneHour,'sss').format('MM'))
+    tempEndDate[2]=parseInt(miment().add(this.oneHour,'sss').format('DD'))
+    tempEndDate[3]=parseInt(miment().add(this.oneHour,'sss').format('hh'))
+    tempEndDate[4]=parseInt(miment().add(this.oneHour,'sss').format('mm'))
     this.endDate=tempEndDate
 
 
     this.delayDate=tempEndDate
-    this.delayDatePicker=miment().add(1,'h').format('YYYY-MM-DD hh:mm')
+    this.delayDatePicker=miment().add(this.oneHour,'sss').format('YYYY-MM-DD hh:mm')
 
     this.noticeDate=tempEndDate
     this.noticeDatePicker="00:00"
@@ -341,7 +342,7 @@ export default {
 //赋值
       subData.title=value.title
       subData.description=value.description
-      subData.createDate=miment().add(1,'h').format('YYYY-MM-DD hh:mm:ss')
+      subData.createDate=miment().add(this.oneHour,'sss').format('YYYY-MM-DD hh:mm:ss')
       subData.startDate=this.startDatePicker+":00"
       subData.endDate=this.endDatePicker+":00"
       subData.routine=rou

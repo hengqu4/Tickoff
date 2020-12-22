@@ -35,4 +35,22 @@ public class IndexController {
         }
     }
 
+
+    @RequestMapping(value = "/api/addRecord", method = RequestMethod.PUT)
+    public String addRecord(@RequestBody String requestJson) throws ParseException {
+        JSONtoObject jsontoObject = new JSONtoObject();
+        JSONObject json = JSONObject.parseObject(requestJson);
+        String open_id = jsontoObject.JSONtoUser(json);
+        String date=jsontoObject.JSONtoDate(json);
+        if (indexService.addRecord(open_id,date)) {
+            return "任务登记成功";
+        } else {
+            return "任务登记失败";
+        }
+    }
+
+    @RequestMapping(value="/api/doneMissions/{open_id}/date/{date}",method = RequestMethod.GET)
+    public int getDoneMissionToday(@PathVariable String open_id,@PathVariable String date){
+     return indexService.getDoneMissionToday(open_id,date);
+    }
 }
