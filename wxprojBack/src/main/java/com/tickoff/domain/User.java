@@ -1,6 +1,5 @@
 package com.tickoff.domain;
 
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;

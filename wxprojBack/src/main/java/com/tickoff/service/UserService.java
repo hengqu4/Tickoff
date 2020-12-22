@@ -5,4 +5,10 @@ import com.tickoff.domain.User;
 public interface UserService {
 
     public User getUserById(String userId);
+
+    boolean queryOpenIdIsExist(String openid);
+
+    User queryUserByOpenID(String openid);
+
+    User saveUser(User users);
 }

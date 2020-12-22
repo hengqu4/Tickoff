@@ -40,6 +40,7 @@
       </div>
       <!-- <div class="allLog"><a href="">show all contributions</a></div> -->
     </div>
+    <wux-button @click="callWxMSG()">ssss</wux-button>
   </div>
 </template>
 <script>
@@ -70,7 +71,8 @@ export default {
           },
         ],
       },
-      activityNum: 0,
+      missionNum: 0,
+      doneNum: 0,
       test1: [
         1,
         5,
@@ -155,17 +157,34 @@ export default {
       let day = new Date().getDay();
       this.dayNum = day + 133;
     },
+    callWxMSG(){
+      wx.requestSubscribeMessage({
+      tmplIds: ["IW9tcQJ8L1-9W6CqQysyh0PgruxfxjH-5HPHOuBdM1M"],
+      success(res) {
+        console.log("res of select", res);
+      },
+      });
+    },
     // async getActivity() {
-    // 	let res = await axios.get(config.api.getAllActivityUrl,{params:{
-    // 		count: this.dayNum
-    // 	}})
-    // 	console.log(res.data.data)
-    // 	this.activity =res.data.data
-    // 	this.activity.forEach((item, index)=>{
-    // 		// console.log(item)
-    // 		this.activityNum += parseInt(item.logLen)
-    // 	})
-    // 	this.colorful(this.activity)
+    //   this.$fly
+    //     .request({
+    //       method: "get",
+    //       url: "http:///history?UserID=" + store.state.openId,
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       console.log(res.data.data);
+    //       this.activity = res.data.data;
+    //       this.colorful(this.activity);
+    //       this.activity.forEach((item, index) => {
+    //         console.log(item);
+    //         this.missionNum += parseInt(item.mission);
+    //         this.doneNum += parseInt(item.done);
+    //       });
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
     // },
     //向前数dayNum-index天的日期 格式2020-12-18
     calDate(index) {
@@ -263,8 +282,8 @@ export default {
           box-sizing: border-box;
           background-color: #ebedf0;
           border-right: 2px solid #fff;
-		  border-bottom: 2px solid #fff;
-		  border-radius: 3px;
+          border-bottom: 2px solid #fff;
+          border-radius: 3px;
           cursor: pointer;
           .month {
             position: relative;
