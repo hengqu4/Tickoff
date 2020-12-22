@@ -76,9 +76,9 @@ export default {
     }).then(res => {
       console.log("res")
       console.log(res)
-      this.title=res.title
-      this.description=res.description
-      this.member=res.member
+      this.title=res.data.title
+      this.description=res.data.description
+      this.member=res.data.member
     }).catch(function (error) {
       console.log("error")
       console.log(error);
