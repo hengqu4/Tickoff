@@ -26,7 +26,7 @@
 
 <script>
 import '../../../static/wux/styles/index.wxss'
-
+import store from '../../store'
 export default {
   data(){
     return{
@@ -53,17 +53,18 @@ export default {
   },
   
   mounted() {
-    this.$fly.request({
-      method: 'get', 
-      url: 'api/getSetList',
-    }).then(res => {
-      console.log("res")
-      console.log(res)
-      this.dataList=res.dataList
-    }).catch(function (error) {
-      console.log("error")
-      console.log(error);
-    });
+    var oid=store.state.openid
+    // this.$fly.request({
+    //   method: 'get', 
+    //   url: '/tickoff/api/mission_set/openid/'+oid,
+    // }).then(res => {
+    //   console.log("res")
+    //   console.log(res)
+    //   this.dataList=res.data
+    // }).catch(function (error) {
+    //   console.log("error")
+    //   console.log(error);
+    // });
   },
 
   methods:{

@@ -112,5 +112,25 @@ public class Mission_setController {
         return RetrunJson.returnJsonSuccess(str);
     }
 
+    @RequestMapping(value="/api/mission_set/mset_info_list/{open_id}",method = RequestMethod.GET)
+    public JSONObject getMission_setInfList(@PathVariable String open_id){
+        List<User_mset> msets=user_msetService.getAllUser_mset(open_id);
+        List<Mission_setInfo> msetInfoList = null;
+        for (User_mset temp_msets:msets
+        ) {
+            Mission_set mission_set= mission_setService.getMissionSetById(temp_msets.getMset_id());
+            List<User_mset> user_msets=user_msetService.getMsetAllUser(temp_msets.getMset_id());
+            List<User> userList = null;
+            for (User_mset temp:user_msets
+            ) {
+                userList.add(userService.getUserById(temp.getOpenid()));
+            }
+            Mission_setInfo mission_setInfo=new Mission_setInfo(mission_set,userList);
+            msetInfoList.add(mission_setInfo);
+        }
+        String str=JSON.toJSONString(msetInfoList);
+        return RetrunJson.returnJsonSuccess(str);
+    }
+
 
 }

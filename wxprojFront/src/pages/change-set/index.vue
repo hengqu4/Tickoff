@@ -28,8 +28,8 @@
           </div>
           <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
             <view>
-              <wux-avatar :src="item.avater" />
-              <span>{{item.name}}</span>
+              <wux-avatar :src="item.avatar_url" />
+              <span>{{item.nickname}}</span>
             </view>
           </div>
         </wux-cell>
@@ -59,7 +59,7 @@ export default {
       setId:'',
       title: "",
       description: "",
-      memberNum:'',
+      create_date:"",
       member:[]
     };
   },
@@ -87,14 +87,15 @@ export default {
 
   mounted() {
     this.$fly.request({
-      method: 'get',
-      url: 'api/getSet?setId='+this.setId,
+      method: 'get', 
+      url: 'tickoff/api/mission_set/mset_info/'+this.setId,
     }).then(res => {
       console.log("res")
       console.log(res)
+      this.setId=res.mset_id
       this.title=res.title
+      this.create_date=res.create_date
       this.description=res.description
-      this.memberNum=res.memberNum
       this.member=res.member
     }).catch(function (error) {
       console.log("error")
@@ -116,15 +117,15 @@ export default {
       var subData={}
       subData.title=value.title
       subData.description=value.description
-      subData.member=value.member
 
       this.$fly.request({
-        method:"post", //post/get 请求方式
-        url:"api/changeSet?setId=1",
+        method:"put", //post/get 请求方式
+        url:"tickof/api/modifyMission_set",
         body:{
-          "title":subData.title,
+          "name":subData.title,
           "description":subData.description,
-          "member":subData.member,
+          "mset_id":this.mset_id,
+          "creat_date":this.create_date,
         }
       }).then(res =>{
         this.gotoDetail(1)

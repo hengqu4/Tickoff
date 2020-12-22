@@ -33,6 +33,8 @@
 
 <script>
 import { $wuxForm } from '../../../static/wux/index'
+import store from '../../store'
+import miment from 'miment';
 export default {
   computed: {
 
@@ -51,13 +53,16 @@ export default {
       var subData={}
       subData.title=value.title
       subData.description=value.description
+      var oid=store.state.openid
+      var createTime=miment().format('YYYY-MM-DD HH:mm')
 
       this.$fly.request({
         method:"post", //post/get 请求方式
-        url:"api/createSet",
+        url:"tickoff/api/mission_set/openid/"+oid,
         body:{
-          "title":subData.title,
+          "name":subData.title,
           "description":subData.description,
+          "create_date":createTime+":00"
         }
       }).then(res =>{
         console.log(subData.title)
