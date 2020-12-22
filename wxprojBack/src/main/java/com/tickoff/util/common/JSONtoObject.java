@@ -46,4 +46,12 @@ public class JSONtoObject {
     public String JSONtoMissionId(JSONObject json) throws ParseException{
         return json.getString("missionId");
     }
+
+    public String JSONtoUser(JSONObject json) throws ParseException{
+        return json.getString("open_id");
+    }
+
+    public String JSONtoDate(JSONObject json) throws ParseException{
+        return json.getString("date");
+    }
 }

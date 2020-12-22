@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     userInfo:{},
 
     token:'',
-    openId: 'open91cd84d64333821d73e2751f',
+    openId: 'aaaas123456',
     token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuaWQiOiJvcGVuOTFjZDg0ZDY0MzMzODIxZDczZTI3NTFmIiwiZXhwIjoxNjA4NjEwNjQyfQ.Aga9JN0ALFeNW3Oj8P4FpWiPJ2UGOChYMjvNIYJRxU8',
     sessionId_3rd: '2674983f429d11eb8ae1525400094d64',
     scene:'',

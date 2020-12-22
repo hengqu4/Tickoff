@@ -9,6 +9,7 @@
     "wux-avatar":"../../../static/wux/avatar",
     "van-collapse":"../../../static/vant/collapse",
     "van-collapse-item":"../../../static/vant/collapse-item",
-    "van-button":"../../../static/vant/button"
+    "van-button":"../../../static/vant/button",
+    "wux-popup":"../../../static/wux/popup/index"
   }
 }

@@ -18,4 +18,8 @@ public interface IndexService {
     public List<IndexMset> turnMsetToIndexMset(String open_id,String ddl);
 
     public Boolean tickOffMission(String missionId);
+
+    public Boolean addRecord(String open_id,String date);
+
+    public int getDoneMissionToday(String open_id,String date);
 }

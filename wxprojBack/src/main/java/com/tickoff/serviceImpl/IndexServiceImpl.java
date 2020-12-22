@@ -5,6 +5,7 @@ import com.tickoff.domain.IndexMission;
 import com.tickoff.domain.IndexMset;
 import com.tickoff.domain.Mission;
 import com.tickoff.domain.Mission_set;
+import com.tickoff.domain.Record;
 import com.tickoff.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,4 +64,20 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public Boolean tickOffMission(String missionId){return indexDao.tickOffMission(missionId);}
+
+    @Override
+    public Boolean addRecord(String open_id,String date){
+        List<Record> recordList=indexDao.getRecordList(open_id,date);
+        if(recordList.isEmpty()){
+            return indexDao.addRecord(open_id,date);
+        }
+        else{
+            return indexDao.changeRecord(open_id,date);
+        }
+    }
+
+    @Override
+    public int getDoneMissionToday(String open_id,String date){
+        return indexDao.getDoneMissionToday(open_id,date);
+    }
 }
