@@ -6,12 +6,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.tickoff.domain.Record;
 import com.tickoff.domain.ReturnRecord;
+import com.tickoff.service.IndexService;
 import com.tickoff.service.RecordService;
+import com.tickoff.util.common.JSONtoObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.*;
 
 @RestController
@@ -20,6 +21,9 @@ public class RecordController {
 
     @Autowired
     private RecordService recordService;
+
+    @Autowired
+    IndexService indexService;
 
     @RequestMapping(value = "/api/activeDays/UserID/{userid}")
     public JSONObject getActiveCount(@PathVariable String userid){
@@ -84,6 +88,20 @@ public class RecordController {
         returnJson.put("error_code",200);
         returnJson.put("data",json);
         return returnJson;
+    }
+
+
+    @RequestMapping(value = "/api/addRecord", method = RequestMethod.PUT)
+    public String addRecord(@RequestBody String requestJson) throws ParseException {
+        JSONtoObject jsontoObject = new JSONtoObject();
+        JSONObject json = JSONObject.parseObject(requestJson);
+        String open_id = jsontoObject.JSONtoUser(json);
+        String date=jsontoObject.JSONtoDate(json);
+        if (indexService.addRecord(open_id,date)) {
+            return "任务登记成功";
+        } else {
+            return "任务登记失败";
+        }
     }
 
 
