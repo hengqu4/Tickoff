@@ -153,14 +153,18 @@ export default {
       taskSetListFold: [] /*卡片堆叠样式*/,
       taskSetListFoldIcon: [],
       activeNames: [],
+      albumDisabled: true,
+      bindDisabled: false
     };
   },
   components: {
     Calendar,
   },
-  created() {},
+  onLoad:function(){
 
-  mounted() {
+  },
+
+  onShow:function() {
     this.userID = store.state.openId;
     console.log("this.userID", this.userID);
     var timestamp = Date.parse(new Date());
@@ -217,6 +221,73 @@ export default {
   },
   computed: {},
   methods: {
+    yourFunction() {
+      console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    },
+    getPromiseInfo:function(){
+      wx.getUserInfo({
+        success: (data) => {
+          console.log("getUserInfo()::", data);
+          store.commit("USERINFO_MUTATION", data.userInfo);
+          this.getOpenidAndToken();
+        },
+        fail: () => {
+          console.log("getUserInfo()失败");
+        },
+      })
+    },
+    getOpenidAndToken(){
+      wx.login({
+        success: function (r) {
+          console.log("pages/loading::onLaunch()::success::return", r); //r包含code
+          //通过code获得openid并存入store
+          var code = r.code;
+          var rawUrl = store.state.userInfo.avatarUrl;
+          var newUrl = rawUrl.replace("/", "-");
+          for (var i = 0; i < 100; i++) {
+            newUrl = newUrl.replace("/", "-");
+          }
+          if (code) {
+            //发送code到后台，分析openid
+            fly.request({
+                method: "post",
+                url:
+                  "login/regist/code/" +
+                  code +
+                  "/avatar/" +
+                  newUrl +
+                  "/nickname/" +
+                  store.state.userInfo.nickName,
+                header: {
+                  "content-type": "application/json",
+                },
+              })
+              .then((res) => {
+                console.log("oL,res:", res);
+                console.log("token:", res.token);
+                store.commit("TOKEN_MUTATION", res.token);
+                store.commit("OPENID_MUTATION", res.openid);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }        
+        },
+        fail: function (res) {
+          console.log("login()失败");
+        },
+        complete: function (res) {},
+      });
+    },
+    // randomNaviToView() {
+    //   var randomTime = Math.random;
+    //   wx.showLoading({
+    //     title: "加载中！",
+    //   });
+    //   setTimeout(function () {
+    //     wx.hideLoading();
+    //   }, 2000);
+    // },
     gotoChange(id) {
       console.log(id)
       wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+"&uId="+store.state.openId})

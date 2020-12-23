@@ -6,7 +6,7 @@ import store from "../../store";
 import fly from "../../utils/wx-request";
 export default {
   mounted() {
-        wx.login({
+    wx.login({
       success: function (r) {
         console.log("pages/loading::onLaunch()::success::return", r); //r包含code
         //通过code获得openid并存入store
@@ -72,7 +72,18 @@ export default {
       },
     });
   },
+  mounted(){
+    setTimeout(function(){
+     wx.switchTab({ 
+       url: '../view/main',
+       success:function(res){
+         console.log("跳转成功")
+       }
+     });  
+   },2000)
+  },
   methods: {
+    
     randomNaviToView() {
       var randomTime = Math.random;
       wx.showLoading({

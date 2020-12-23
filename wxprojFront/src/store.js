@@ -6,13 +6,12 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     userInfo:{},
-
     token:'',
-    openId: 'oDOTA4igrgNLq8PioHXpyVeXjzeY',
-    token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcGVuaWQiOiJvcGVuOTFjZDg0ZDY0MzMzODIxZDczZTI3NTFmIiwiZXhwIjoxNjA4NjEwNjQyfQ.Aga9JN0ALFeNW3Oj8P4FpWiPJ2UGOChYMjvNIYJRxU8',
-    sessionId_3rd: '2674983f429d11eb8ae1525400094d64',
-    scene:'',
-
+    openId: '',
+    token:'',
+    sessionId_3rd: '',
+    scene: '',
+    gData:''
   },
   mutations: {
     [mutationtypes.USERINFO_MUTATION](state, value) {
@@ -30,6 +29,9 @@ const store = new Vuex.Store({
     [mutationtypes.SENCE_MUTATION](state, value) {
       state.scene = value;
     },
+    [mutationtypes.GDATA_MUTATION](state, value) {
+      state.gData = value;
+    }
 
   },
   getters: {},

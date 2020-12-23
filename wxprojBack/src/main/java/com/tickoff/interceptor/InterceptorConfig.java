@@ -17,7 +17,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         InterceptorRegistration registration=registry.addInterceptor(authInterceptor);
 
         registration.addPathPatterns("/**");
-        registration.excludePathPatterns("/login/**");
+        registration.excludePathPatterns("/login/**").excludePathPatterns("tickoff/api/user/like/**");
     }
 
 }

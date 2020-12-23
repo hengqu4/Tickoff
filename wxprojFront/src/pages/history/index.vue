@@ -182,7 +182,7 @@ export default {
     this.handleGetUserInfo();
   },
   beforeMount(){
-    if(store.state.scene==1001){
+    if(store.state.scene==1036){
       this.scene=true
     }
     else{

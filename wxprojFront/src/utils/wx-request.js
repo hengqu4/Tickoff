@@ -1,22 +1,87 @@
 import Fly from 'flyio/dist/npm/wx'
-import Store from '../store'
+import store from '../store'
 const fly = new Fly()
 // const host = 'http://mock-api.com/vzMrDQgG.mock/'
 // const host = 'http://mock-api.com/6KLpmWKk.mock/'
 const host='http://localhost:8080/'
 // 添加请求拦截器
-fly.interceptors.request.use((request) => {
+
+function getInfo() {
+  if (store.state.token=='') {
+    wx.getUserInfo({
+      success: (data) => {
+        console.log("getUserInfo()::", data);
+        store.commit("USERINFO_MUTATION", data.userInfo);
+        getOpenidAndToken();
+      },
+      fail: () => {
+        console.log("getUserInfo()失败");
+      },
+    })
+  }
+  else {
+    
+  }
+
+}
+function getOpenidAndToken(){
+  wx.login({
+    success: function (r) {
+      console.log("pages/loading::onLaunch()::success::return", r); //r包含code
+      //通过code获得openid并存入store
+      var code = r.code;
+      var rawUrl = store.state.userInfo.avatarUrl;
+      var newUrl = rawUrl.replace("/", "-");
+      for (var i = 0; i < 100; i++) {
+        newUrl = newUrl.replace("/", "-");
+      }
+      if (code) {
+        //发送code到后台，分析openid
+        fly.request({
+            method: "post",
+            url:
+              "login/regist/code/" +
+              code +
+              "/avatar/" +
+              newUrl +
+              "/nickname/" +
+              store.state.userInfo.nickName,
+            header: {
+              "content-type": "application/json",
+            },
+          })
+          .then((res) => {
+            console.log("oL,res:", res);
+            console.log("token:", res.token);
+            store.commit("TOKEN_MUTATION", res.token);
+            store.commit("OPENID_MUTATION", res.openid);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }        
+    },
+    fail: function (res) {
+      console.log("login()失败");
+    },
+    complete: function (res) {},
+  });
+}
+
+
+
+fly.interceptors.request.use( (request) => {
   wx.showLoading({
     title: '加载中',
     mask: true
   })
+
+
   console.log(request)
-  // request.headers["X-Tag"] = "flyio";
-  // request.headers['content-type']= 'application/json';
   request.headers = {
     'X-Tag': 'flyio',
     'content-type': 'application/json',
-    'Authorization':Store.state.token
+    'Authorization':store.state.token
   }
  
   let authParams = {
