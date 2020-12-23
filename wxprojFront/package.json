@@ -23,6 +23,8 @@
     "build": "node build/build.js wx"
   },
   "dependencies": {
+    "@beautywe/plugin-event": "^1.0.1",
+    "@beautywe/plugin-status": "^1.0.0",
     "@vant/weapp": "^1.6.2",
     "flyio": "^0.6.14",
     "iview-mpvue": "^1.0.6",

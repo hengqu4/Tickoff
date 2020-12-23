@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 import fly from './utils/wx-request'
+import {Status} from '@beautywe/plugin-status';
 Vue.prototype.$fly = fly
 
 
