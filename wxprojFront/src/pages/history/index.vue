@@ -170,8 +170,7 @@ export default {
   onLoad:function(options) {
     console.log("onload")
     this.userId=options.uId
-    this.userId='open91cd84d64333821d73e2751f'
-    if(store.state.scene==1036){
+    if(store.state.scene==1007){
       this.userId=options.uId
     }
     else{
@@ -240,7 +239,7 @@ export default {
       this.$fly
         .request({
           method: "get",
-          url: "tickoff/api/record/HistoryRecord/UserID/" + store.state.openId,
+          url: "tickoff/api/record/HistoryRecord/UserID/" + this.userId,
         })
         .then((res) => {
           console.log(res);
