@@ -1,4 +1,4 @@
-package com.tickoff.constant;
+package com.tickoff.util.common;
 
 public class ReturnCodeConstant {
     public final static String OK="200";
