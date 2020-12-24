@@ -25,7 +25,7 @@ public class RecordController {
     @Autowired
     IndexService indexService;
 
-    @RequestMapping(value = "/api/activeDays/UserID/{userid}")
+    @RequestMapping(value = "/api/record/activeDays/UserID/{userid}",method = RequestMethod.GET)
     public JSONObject getActiveCount(@PathVariable String userid){
         int count=recordService.getActiveCount(userid);
         System.out.println("数量是："+count);
@@ -37,9 +37,8 @@ public class RecordController {
         return returnjson;
     }
 
-    @RequestMapping(value = "/api/HistoryRecord/UserID/{userid}")
+    @RequestMapping(value = "/api/record/HistoryRecord/UserID/{userid}",method = RequestMethod.GET)
     public JSONObject getHistoryRecord(@PathVariable String userid){
-
         int weekdays[]=new int[]{7,1,2,3,4,5,6};
         List<Record> list=recordService.getRecordList(userid);
         Calendar now=Calendar.getInstance();
@@ -49,7 +48,6 @@ public class RecordController {
         int day=now.get(Calendar.DAY_OF_MONTH);
         int week=now.get(Calendar.DAY_OF_WEEK);
         int total=133+weekdays[week-1];
-
         List<ReturnRecord> result=new ArrayList<>();
         for(int i=total-1;i>=0;i--){
             boolean flag=false;
@@ -90,17 +88,22 @@ public class RecordController {
         return returnJson;
     }
 
-
-    @RequestMapping(value = "/api/addRecord", method = RequestMethod.PUT)
-    public String addRecord(@RequestBody String requestJson) throws ParseException {
+    @RequestMapping(value = "/api/record", method = RequestMethod.PUT)
+    public JSONObject addRecord(@RequestBody String requestJson) throws ParseException {
         JSONtoObject jsontoObject = new JSONtoObject();
         JSONObject json = JSONObject.parseObject(requestJson);
         String open_id = jsontoObject.JSONtoUser(json);
         String date=jsontoObject.JSONtoDate(json);
         if (indexService.addRecord(open_id,date)) {
-            return "任务登记成功";
+            JSONObject returnJson=new JSONObject();
+            returnJson.put("error_code",200);
+            returnJson.put("data",json);
+            return returnJson;
         } else {
-            return "任务登记失败";
+            JSONObject returnJson=new JSONObject();
+            returnJson.put("error_code",500);
+            returnJson.put("data",json);
+            return returnJson;
         }
     }
 

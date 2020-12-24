@@ -240,7 +240,7 @@ export default {
       this.$fly
         .request({
           method: "get",
-          url: "tickoff/api/HistoryRecord/UserID/" + store.state.openId,
+          url: "tickoff/api/record/HistoryRecord/UserID/" + store.state.openId,
         })
         .then((res) => {
           console.log(res);

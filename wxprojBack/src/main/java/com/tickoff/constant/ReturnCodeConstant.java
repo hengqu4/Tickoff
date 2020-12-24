@@ -4,10 +4,16 @@ public class ReturnCodeConstant {
     public final static String OK="200";
     public final static String CREATED="201";
     public final static String ACCEPTED="202";
-    public final static String NonAuthoritative="203";
     public final static String NOCONTENT="204";
-    public final static String ResetContent="205";
-    public final static String PartialContent="206";
+
+    public final static String INVALIDREQUEST="400";
+    public final static String Unauthorized ="401";
+    public final static String FORBIDDEN ="403";
+    public final static String NOTFOUND="404";
+    public final static String NotAcceptable="406";
+    public final static String Gone ="410";
+    public final static String UNPROCESABLEENTITY="422 ";
+
 
     public final static String ServerError="500";
 

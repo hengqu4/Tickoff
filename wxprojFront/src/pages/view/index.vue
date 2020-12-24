@@ -473,7 +473,7 @@ export default {
       this.$fly
         .request({
           method: "put",
-          url: "tickoff/api/addRecord",
+          url: "tickoff/api/record",
           body: {
             open_id: this.userID,
             date: Y + "-" + M + "-" + D,

@@ -127,7 +127,7 @@ export default {
     });
     this.$fly.request({
       method: 'get',
-      url: 'tickoff/api/activeDays/UserID/'+store.state.openId,
+      url: 'tickoff/api/record/activeDays/UserID/'+store.state.openId,
     }).then(res => {
       console.log(res)
       this.activeDays=res.data.days
