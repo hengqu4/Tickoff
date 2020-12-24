@@ -1,4 +1,4 @@
-package com.tickoff.util.common;
+package com.tickoff.util.constant;
 
 public class BootConstants {
     public static final String AES_KEY = "填写你的AES_KEY";

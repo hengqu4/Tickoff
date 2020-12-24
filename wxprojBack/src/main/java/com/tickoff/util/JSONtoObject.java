@@ -1,14 +1,10 @@
-package com.tickoff.util.common;
+package com.tickoff.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tickoff.domain.Mission;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 public class JSONtoObject {
     public Mission JSONtoMission(JSONObject json) throws ParseException {

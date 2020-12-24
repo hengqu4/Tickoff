@@ -1,9 +1,8 @@
 package com.tickoff.dao;
 
 import com.tickoff.domain.Mission_set;
-import com.tickoff.util.common.Mission_setConstants;
+import com.tickoff.util.constant.Mission_setConstants;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

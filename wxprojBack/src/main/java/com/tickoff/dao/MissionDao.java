@@ -1,7 +1,7 @@
 package com.tickoff.dao;
 
 import com.tickoff.domain.Mission;
-import com.tickoff.util.common.MissionConstants;
+import com.tickoff.util.constant.MissionConstants;
 import org.apache.ibatis.annotations.*;
 
 @Mapper

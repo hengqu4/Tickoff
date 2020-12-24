@@ -1,4 +1,4 @@
-package com.tickoff.util.common;
+package com.tickoff.util.constant;
 
 public class Mission_setConstants {
     public static final String Mission_setTable="mission_mset";

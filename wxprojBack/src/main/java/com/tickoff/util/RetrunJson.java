@@ -3,7 +3,7 @@ package com.tickoff.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.tickoff.util.common.ReturnCodeConstant;
+import com.tickoff.util.constant.ReturnCodeConstant;
 
 public class RetrunJson {
     public static JSONObject returnJsonSuccess(String str){

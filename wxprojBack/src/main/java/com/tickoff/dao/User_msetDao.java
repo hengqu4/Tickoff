@@ -1,7 +1,7 @@
 package com.tickoff.dao;
 
 import com.tickoff.domain.User_mset;
-import com.tickoff.util.common.User_msetConstants;
+import com.tickoff.util.constant.User_msetConstants;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

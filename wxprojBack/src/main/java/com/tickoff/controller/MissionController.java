@@ -9,7 +9,7 @@ import com.tickoff.service.IndexService;
 import com.tickoff.service.MissionService;
 import com.tickoff.util.RetrunJson;
 import com.tickoff.util.UniqueId;
-import com.tickoff.util.common.JSONtoObject;
+import com.tickoff.util.JSONtoObject;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

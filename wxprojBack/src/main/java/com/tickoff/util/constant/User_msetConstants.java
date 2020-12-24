@@ -1,4 +1,4 @@
-package com.tickoff.util.common;
+package com.tickoff.util.constant;
 
 public class User_msetConstants {
     public static final String User_msetTable="user_mset";

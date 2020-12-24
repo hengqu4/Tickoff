@@ -3,7 +3,7 @@ package com.tickoff.dao;
 import com.tickoff.domain.Mission;
 import com.tickoff.domain.Mission_set;
 import com.tickoff.domain.Record;
-import com.tickoff.util.common.MissionConstants;
+import com.tickoff.util.constant.MissionConstants;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
