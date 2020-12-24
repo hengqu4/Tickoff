@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/tickoff")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
