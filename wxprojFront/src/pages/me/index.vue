@@ -59,7 +59,7 @@
       <wux-cell
         title="赞助"
         is-link
-        data-url="http://cdn.skyvow.cn/wxpay.jpg"
+        data-url=""
         @click="onPreview($event)"
       >
         <wux-icon wux-class="icon" slot="header" type="ios-create" size="22" />
