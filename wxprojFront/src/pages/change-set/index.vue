@@ -1,9 +1,9 @@
 <template>
   <div class="set-detail">
     <wux-form id="wux-form" @change="onChange">
-      <wux-cell-group title="任务集信息"></wux-cell-group>
+      <!-- <wux-cell-group title="任务集信息"></wux-cell-group> -->
 
-      <wux-cell-group title="标题">
+      <wux-cell-group prefixCls="cell-group" title="标题">
         <wux-cell hover-class="none">
           <wux-field name="title" :initialValue="title">
             <wux-textarea rows="1" />
@@ -11,7 +11,7 @@
         </wux-cell>
       </wux-cell-group>
 
-      <wux-cell-group title="描述">
+      <wux-cell-group prefixCls="cell-group" title="描述">
         <wux-cell hover-class="none">
           <wux-field name="description" :initialValue="description">
             <wux-textarea rows="3" />
@@ -19,7 +19,7 @@
         </wux-cell>
       </wux-cell-group>
 
-      <wux-cell-group title="成员">
+      <wux-cell-group prefixCls="cell-group" title="成员">
         <wux-cell hover-class="none">
           <div>
             <wux-button clear type="positive" open-type="share">
@@ -84,7 +84,25 @@ export default {
       complete: () => {},
     });
   },
-
+  onShareAppMessage: function (res) {
+    console.log(`/pages/invite/main?set-id=${this.setId}`)
+    return {
+      title: '快来Tickoff和我一起吧',
+      path: `/pages/invite/main?set-id=${this.setId}`,
+      // imageUrl:'../../../static/images/invite.jpg',//用户分享出去的自定义图片大小为5:4,
+      success: function (res) {
+	   // 转发成功
+	        wx.showToast({
+	          title: "分享成功",
+	          icon: 'success',
+	          duration: 2000
+	        })
+       },
+      fail: function (res) {
+        // 分享失败
+      },
+    }
+  },
   mounted() {
     this.$fly
       .request({
@@ -142,11 +160,18 @@ export default {
 };
 </script>
 
-<style>
-.set-edit-button {
+
+<style lang="less">
+@import "../../../static/wux/styles/mixins/index.less";
+@import "../../../static/wux/styles/themes/index.less";
+@import "../../style/group.less";
+@import "../../style/textarea.less";
+
+.set-edit-button{
   z-index: 1;
   position: fixed;
   left: 80%;
-  top: 85%;
+  top:85%
 }
+
 </style>

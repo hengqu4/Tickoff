@@ -2,7 +2,16 @@
   <div>
     <div v-for="(item, index) in dataList" :key="index" :style="{marginBottom: '5px'}">
       <wux-wing-blank size="default"  :key="index">
-        <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onAction($event,item.mset_id)">
+        <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onExit($event,item.mset_id)">
+          <view slot="extra">
+            <wux-button 
+                clear type="positive"
+                @click="onDetail($event,item.mset_id)"
+                :style="{height:'10px'}"
+              >
+                查看详情->
+            </wux-button>
+          </view>
           <view slot="body">
             <view class="wux-ellipsis">{{item.description}}</view>
           </view>
@@ -18,7 +27,7 @@
     <div :style="{height:'80px'}"/>
     <div class="set-create-button">
       <van-button round type="info" @click="onClick">
-          +
+        +
       </van-button>
     </div>
   </div>
@@ -33,7 +42,7 @@ export default {
       dataList:[],
       actions:[
         {
-          text:'详情',
+          text:'退出',
           type:'primary'
         }
       ]
@@ -84,8 +93,27 @@ export default {
         },
       })
     },
+    onExit(e, key){
+      console.log(e.mp.detail)
+      console.log(store.state.openId)
+      console.log(key)
+      this.$fly
+        .request({
+          method: "delete",
+          //   "tickoff/api/User_mset/openid/{openid}/mset_id/{mset_id}"
+          url:'tickoff/api/User_mset/openid/'+store.state.openId+'/mset_id/'+ key,
+        })
+        .then((res) => {
+          const pages = getCurrentPages();
+          const perpage = pages[pages.length - 1];
+          perpage.onShow();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
 
-    onAction(e, key){
+    onDetail(e, key){
       console.log(e.mp.detail)
       console.log(key)
       //const url='/pages/set-detail/main?setId='+id+"&uId="+this.userId

@@ -5,11 +5,13 @@
         <van-button
           class="floatBtn"
           round
-          type="info"
+          plain
+          type='info'
           size="large"
           @click="plusBtnClick"
-          ><wux-icon class="floatBtnIcon" type="ios-add" size="30"
-        /></van-button>
+          >
+          <wux-icon class="floatBtnIcon" type="ios-add" size="25" :style="{marginTop:'1.5px'}"/>
+        </van-button>
       </movable-view>
     </movable-area>
     <wux-popup

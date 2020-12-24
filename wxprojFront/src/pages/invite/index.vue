@@ -13,7 +13,7 @@
           </view>
         </wux-card>
         <view :style="{textAlign:'center',marginTop:'30px'}">
-          <wux-button outline type="positive" @click="onClick">
+          <wux-button outline type="positive" @click="onClick($event)">
             接受邀请
           </wux-button>
         </view>
@@ -23,32 +23,115 @@
 </template>
 
 <script>
+import store from '../../store'
 export default {
   data(){
-    return{
-      title:'任务集1',
-      description:'1111'
-    }
+    return {
+      userId: "",
+      // store.state.openId
+      setId: "",
+      title: "",
+      description: "",
+    };
   },
+  onLoad(){
+    console.log("load")
+  },
+  onShow(){
+    console.log("show")
+  },
+  onReady(){
+    console.log("ready")
+  },
+  // onShow(){
+  //   var pages = getCurrentPages() //获取加载的页面
+  //   var currentPage = pages[pages.length-1] //获取当前页面的对象
+  //   var url = currentPage.route //当前页面url
+  //   var options = currentPage.options //如果要获取url中所带的参数可以查看options
+  //   console.log(url)
+  //   console.log(options)
+    // this.$fly
+    //   .request({
+    //     // console.log(store.state.openId)
+    //     method: "get",
+    //     url: "tickoff/api/mission_set/mset_info/" + this.setId,
+    //   })
+    //   .then((res) => {
+    //     console.log("res");
+    //     console.log(res);
+    //     this.setId = res.data.mset_id;
+    //     this.title = res.data.title;
+    //     this.create_date = res.data.create_date;
+    //     this.description = res.data.description;
+    //     this.member = res.data.member;
+    //   })
+    //   .catch(function (error) {
+    //     console.log("error");
+    //     console.log(error);
+    //   });
+  // },
+  mounted() {
+    console.log("mounted")
+  },
+  // mounted() {
+  //   this.$fly
+  //     .request({
+  //       // console.log(store.state.openId)
+  //       method: "get",
+  //       url: "tickoff/api/mission_set/mset_info/" + this.setId,
+  //     })
+  //     .then((res) => {
+  //       console.log("res");
+  //       console.log(res);
+  //       this.setId = res.data.mset_id;
+  //       this.title = res.data.title;
+  //       this.create_date = res.data.create_date;
+  //       this.description = res.data.description;
+  //       this.member = res.data.member;
+  //     })
+  //     .catch(function (error) {
+  //       console.log("error");
+  //       console.log(error);
+  //     });
+  // },
 
   methods:{
     // 页面跳转失败。。
-    onClick () {
+    onClick (e) {
+      console.log(e.mp.detail)
       var pages = getCurrentPages()    //获取加载的页面
       var currentPage = pages[pages.length-1]    //获取当前页面的对象
       var currentUrl = currentPage.route
       console.log(currentUrl)
-      const url = '../set-detail/main'
-      wx.navigateTo({ 
-        url: url,
-        success: function(res){
-          console.log('跳转到页面成功')// success
-        },
-        fail: function() {
-        console.log('跳转到页面失败')  // fail
-        },
-      })
+      console.log("store.state.openId,"+store.state.openId)
+      console.log("mset_id,"+this.setId)
+      this.$fly
+        .request({
+          method: "post", //post/get 请求方式
+          url: "tickoff/api/mission_set/openid/" + store.state.openId,
+          body: {
+            name: subData.title,
+            description: subData.description,
+            create_date: createTime,
+          },
+        })
+        .then((res) => {
+          const url = '../set-view/main'
+          wx.navigateTo({ 
+            url: url,
+            success: function(res){
+              console.log('跳转到页面成功')// success
+            },
+            fail: function() {
+            console.log('跳转到页面失败')  // fail
+            },
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
+    
   }
 }
 </script>

@@ -1,24 +1,24 @@
 <template>
   <div class="set-detail">
-    <wux-cell-group title="任务集信息"></wux-cell-group>
+    <!-- <wux-cell-group title="任务集信息"></wux-cell-group> -->
 
-    <wux-cell-group title="标题">
+    <wux-cell-group prefixCls="title-cell-group">
       <wux-cell hover-class="none">
-        <wux-field name="title" :initialValue="title">
-          <wux-textarea disabled rows="1" />
+        <wux-field id="wux-field" name="title" :initialValue="title">
+          <wux-textarea prefixCls="title-disabled-textarea" disabled rows="1" />
         </wux-field>
       </wux-cell>
     </wux-cell-group>
 
-    <wux-cell-group title="描述">
+    <wux-cell-group prefixCls="cell-group" title="描述">
       <wux-cell hover-class="none">
-        <wux-field name="description" :initialValue="description">
-          <wux-textarea disabled rows="3" />
+        <wux-field id="wux-field" name="description" :initialValue="description">
+          <wux-textarea prefixCls="disabled-textarea" disabled rows="3" />
         </wux-field>
       </wux-cell>
     </wux-cell-group>
 
-    <wux-cell-group title="成员">
+    <wux-cell-group prefixCls="cell-group" title="成员">
       <wux-cell hover-class="none">
         <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
           <view>
@@ -104,7 +104,13 @@ export default {
 }
 </script>
 
-<style>
+
+<style lang="less">
+@import "../../../static/wux/styles/mixins/index.less";
+@import "../../../static/wux/styles/themes/index.less";
+@import "../../style/group.less";
+@import "../../style/textarea.less";
+
 .set-edit-button{
   z-index: 1;
   position: fixed;
