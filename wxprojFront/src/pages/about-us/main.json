@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "帮助",
+  "navigationBarTitleText": "关于我们",
   "usingComponents": {
       "wux-card": "../../../static/wux/card",
       "wux-wing-blank": "../../../static/wux/wing-blank",
