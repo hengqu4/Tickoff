@@ -514,6 +514,7 @@ li {
   pointer-events: none;
 }
 wux-button {
+  color: aqua;
   border-radius: 30%;
 }
 
@@ -535,7 +536,7 @@ wux-button {
 }
 .btnNav {
   height: 45px;
-  background: rgb(245, 245, 245);
+  background: #ffffff;
   margin-bottom: 10px;
 }
 .floatBtn {
@@ -590,6 +591,10 @@ wux-button {
   margin-left: 5%;
   z-index: 1;
   border-radius: 10px;
+  background-color:  #e4e2e2;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
 }
 .defaultSetCards {
   position: relative;

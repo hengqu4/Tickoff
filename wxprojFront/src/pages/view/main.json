@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Form",
+  "navigationBarTitleText": "任务",
   "usingComponents": {
     "wux-cell-group": "../../../static/wux/cell-group",
     "wux-cell": "../../../static/wux/cell",

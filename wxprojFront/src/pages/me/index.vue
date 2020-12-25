@@ -45,7 +45,7 @@
       >
         <wux-icon wux-class="icon" slot="header" type="ios-trending-up" size="22" />
       </wux-cell>
-      <wux-cell title="分享数据" is-link open-type="share">
+      <wux-cell title="分享数据" is-link >
         <wux-icon
           wux-class="icon"
           slot="header"
@@ -79,7 +79,7 @@
       >
         <wux-icon wux-class="icon" slot="header" type="ios-information-circle" size="22" />
       </wux-cell>
-      <wux-cell title="设置" is-link open-type="share">
+      <wux-cell title="设置" is-link >
         <wux-icon
           wux-class="icon"
           slot="header"

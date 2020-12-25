@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Card",
+  "navigationBarTitleText": "组集",
   "usingComponents": {
       "wux-card": "../../../static/wux/card",
       "wux-wing-blank": "../../../static/wux/wing-blank",
