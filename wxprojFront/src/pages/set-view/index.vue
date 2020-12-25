@@ -29,6 +29,7 @@
       <van-button round type="info" @click="onClick">
         +
       </van-button>
+      <!-- <button open-type="getUserInfo" @bindgetuserinfo="bindGetUserInfo($event)">点击授权</button> -->
     </div>
   </div>
 </template>
@@ -76,6 +77,15 @@ export default {
   },
 
   methods:{
+    // bindGetUserInfo(e) {
+    //   console.log(e.mp.detail);
+    //   consolo.log("授权")
+    //   if (res.detail.userInfo) {
+    //     console.log("点击了同意授权");
+    //   } else {
+    //     console.log("点击了拒绝授权");
+    //   }
+    // },
     // 页面跳转失败。。
     onClick () {
       var pages = getCurrentPages()    //获取加载的页面

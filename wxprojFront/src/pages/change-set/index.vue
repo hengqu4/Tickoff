@@ -22,7 +22,7 @@
       <wux-cell-group prefixCls="cell-group" title="成员">
         <wux-cell hover-class="none">
           <div>
-            <wux-button clear type="positive" open-type="share">
+            <wux-button  clear type="balanced"  open-type="share">
               邀请好友
             </wux-button>
           </div>
@@ -42,7 +42,7 @@
       <div :style="{ height: '80px' }" />
 
       <div class="set-edit-button">
-        <van-button round type="info" @click="onSubmit"> 保存 </van-button>
+        <van-button round type="primary" @click="onSubmit"> 保存 </van-button>
       </div>
     </wux-form>
   </div>
@@ -85,10 +85,10 @@ export default {
     });
   },
   onShareAppMessage: function (res) {
-    console.log(`/pages/invite/main?set-id=${this.setId}`)
+    console.log(`/pages/invite/main?setId=${this.setId}`)
     return {
       title: '快来Tickoff和我一起吧',
-      path: `/pages/invite/main?set-id=${this.setId}`,
+      path: `/pages/invite/main?setId=${this.setId}`,
       // imageUrl:'../../../static/images/invite.jpg',//用户分享出去的自定义图片大小为5:4,
       success: function (res) {
 	   // 转发成功
