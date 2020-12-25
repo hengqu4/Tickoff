@@ -4,6 +4,7 @@ const fly = new Fly()
 // const host = 'http://mock-api.com/vzMrDQgG.mock/'
 // const host = 'http://mock-api.com/6KLpmWKk.mock/'
 const host='http://121.4.69.102:8080/'
+//const host='http://localhost:8080/'
 // 添加请求拦截器
 
 function getInfo() {
