@@ -31,6 +31,7 @@
       </van-button>
       <!-- <button open-type="getUserInfo" @bindgetuserinfo="bindGetUserInfo($event)">点击授权</button> -->
     </div>
+    
   </div>
 </template>
 
@@ -152,6 +153,17 @@ export default {
   position: fixed;
   left: 80%;
   top:85%
+}
+.floatBtn {
+  position: relative;
+}
+.floatBtnIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 
 </style>

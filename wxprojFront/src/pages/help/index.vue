@@ -31,5 +31,9 @@
     margin-top: 30px 0;
     text-align: center;
 }
+.wux-card{
+  margin-top:20px;
+  margin-bottom: 20px;
+}
 
 </style>

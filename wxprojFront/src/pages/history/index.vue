@@ -12,7 +12,6 @@
       <wux-white-space size="small" />
       <p class="userName">微信名:{{ userInfo.nickname }}</p>
     </view>
-    <div class="title">{{ this.activityNum }} updates in the last year</div>
     <div v-if="scene">
       <div v-if="!haveLiked">
         <wux-icon @click="makelike" type="ios-heart-empty"/>
@@ -60,7 +59,7 @@
       </div>
       <!-- <div class="allLog"><a href="">show all contributions</a></div> -->
     </div>
-    <wux-button @click="callWxMSG()">ssss</wux-button>
+    <!-- <wux-button @click="callWxMSG()">ssss</wux-button> -->
   </div>
 </template>
 <script>
@@ -239,6 +238,7 @@ export default {
     }
   },
   onShow() {
+    this.getActivity();
     this.handleGetUserInfo();
   },
   beforeMount() {
@@ -281,31 +281,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-<<<<<<< HEAD
-
-        
-  },
-  onShareAppMessage: function() {
-    return{
-      title:'来看看我的历史记录',
-      path:'/pages/history/main?uid='+store.state.openId
-    }
-  },
-  methods: {
-    makelike(){
-      console.log("clike like")
-      this.haveLiked=true
-       this.$fly.request({
-      method: 'put', // post/get 请求方式
-      url: 'tickoff/api/user/like/openid/'+this.userId,
-    }).then(res => {
-      console.log("成功点赞了")
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-=======
->>>>>>> 4e5ed0594fa23d789cbfc0aae34c0abc55523223
     },
     handleGetUserInfo() {
       this.userInfo = store.state.userInfo;
@@ -388,6 +363,24 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.userinfo {
+  margin-top: 30px;
+  margin-bottom: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: rgba(0, 0, 0, 0.85);
+}
 .map {
   margin-bottom: 30px;
   margin-top: 20px;
