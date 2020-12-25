@@ -1,7 +1,7 @@
 <template>
   <div>
     <wux-form id="wux-form" @change="onChange">
-      <wux-cell-group title="标题">
+      <wux-cell-group prefixCls="cell-group" title="标题">
         <wux-cell hover-class="none">
           <wux-field name="title" initialValue="请输入任务集标题">
             <wux-textarea rows="1" />
@@ -9,28 +9,27 @@
         </wux-cell>
       </wux-cell-group>
 
-      <wux-cell-group title="描述">
+      <wux-cell-group prefixCls="cell-group" title="描述">
         <wux-cell hover-class="none">
           <wux-field name="description" initialValue="请输入任务集描述">
             <wux-textarea rows="3" />
           </wux-field>
         </wux-cell>
       </wux-cell-group>
-
+      <div :style="{height:'80px'}"/>
       <view class="create-set-submit-button">
-        <van-button
-          color="linear-gradient(to right, #4bb0ff, #6149f6)"
-          @click="onSubmit"
-        >
-          创建
-        </van-button>
-        <div />
-        <van-button
-          color="linear-gradient(to right, #4bb0ff, #6149f6)"
+        <wux-button 
+           outline type="positive"
           @click="onReset"
         >
           重置
-        </van-button>
+        </wux-button>
+        <wux-button 
+           outline type="positive"
+          @click="onSubmit"
+        >
+          创建
+        </wux-button>
       </view>
     </wux-form>
   </div>
@@ -45,7 +44,7 @@ export default {
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
-      console.log("onChange \n", changedValues, allValues);
+      // console.log("onChange \n", changedValues, allValues);
     },
 
     onSubmit() {
@@ -112,9 +111,46 @@ export default {
 };
 </script>
 
-<style>
-.create-set-submit-button {
-  padding-bottom: 10px;
-  text-align: center;
+<style lang="less" scoped>
+@import "../../../static/wux/styles/mixins/index.less";
+@import "../../../static/wux/styles/themes/index.less";
+// @import "../../style/group.less";
+
+#wux-form .title-cell-group{
+  /deep/ &__bd {
+      font-size: 25px !important;
+      // color: rgb(111, 145, 209) !important;
+      text-align: center;
+      font-family: "KaiTi";
+      margin-top: 30px;
+  }
 }
+
+#wux-form .cell-group {
+  /deep/ &__hd {
+      text-align: center;
+      font-size: 20px !important;
+      color: rgb(111, 145, 209) !important;
+      margin-top: 30px;
+  }
+
+  /deep/ &__bd {
+      border:5px solid rgb(111, 145, 209) !important;
+      border-radius:10px;;
+      background-color:#d9e6f3;
+      margin:0 10px;
+  }
+}
+
+.create-set-submit-button{
+  text-align: center;
+  z-index: 1;
+  position: fixed;
+  top:75%
+}
+wux-button{
+  border-radius:50%;
+  margin:0 60px;
+}
+
 </style>

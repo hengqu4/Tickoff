@@ -1,3 +1,16 @@
+<template>
+  <div>
+    <button 
+      open-type="getUserInfo" 
+      lang="zh_CN" 
+      @bindtap="onGotUserInfo($event)"
+      @bindgetuserinfo="bindGetUserInfo($event)"
+    >
+      获取用户信息
+    </button>
+  </div>
+</template>
+
 <script>
 import store from "./store";
 import * as mutationtypes from "./mutation-types";
@@ -65,8 +78,27 @@ export default {
         fail: () => {
           console.log("getUserInfo()失败");
         },
+        
+        // fail: () => {
+        //   console.log("ceshiweizhi")
+        //   console.log("getUserInfo()失败");
+        // //获取用户信息失败后。请跳转授权页面
+        //   wx.showModal({
+        //     title: '警告',
+        //     content: '尚未进行授权，请点击确定跳转到授权页面进行授权。',
+        //     success: function (res) {
+        //       if (res.confirm) {
+        //         console.log('用户点击确定')
+        //         const pages = getCurrentPages();
+        //         const perpage = pages[pages.length - 1];
+        //         perpage.onShow();
+        //       }
+        //     }
+        //   })
+        // }
       })
     },
+    
     getOpenidAndToken(){
       wx.login({
         success: function (r) {

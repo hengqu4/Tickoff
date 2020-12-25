@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Card",
+  "navigationBarTitleText": "邀请成员",
   "usingComponents": {
       "wux-cell-group": "../../../static/wux/cell-group",
       "wux-cell": "../../../static/wux/cell",

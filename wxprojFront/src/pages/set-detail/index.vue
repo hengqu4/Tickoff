@@ -1,25 +1,30 @@
 <template>
   <div class="set-detail">
-    <wux-cell-group title="任务集信息"></wux-cell-group>
+    <!-- <wux-cell-group title="任务集信息"></wux-cell-group> -->
 
-    <wux-cell-group title="标题">
+    <wux-cell-group prefixCls="title-cell-group">
       <wux-cell hover-class="none">
-        <wux-field name="title" :initialValue="title">
-          <wux-textarea disabled rows="1" />
+        <wux-field id="wux-field" name="title" :initialValue="title">
+          <wux-textarea prefixCls="title-disabled-textarea" disabled rows="1" />
         </wux-field>
       </wux-cell>
     </wux-cell-group>
 
-    <wux-cell-group title="描述">
+    <wux-cell-group prefixCls="cell-group" title="描述">
       <wux-cell hover-class="none">
-        <wux-field name="description" :initialValue="description">
-          <wux-textarea disabled rows="3" />
+        <wux-field id="wux-field" name="description" :initialValue="description">
+          <wux-textarea prefixCls="disabled-textarea" disabled rows="3" />
         </wux-field>
       </wux-cell>
     </wux-cell-group>
 
-    <wux-cell-group title="成员">
+    <wux-cell-group prefixCls="cell-group" title="成员">
       <wux-cell hover-class="none">
+        <div>
+          <wux-button clear type="balanced" open-type="share">
+            邀请好友
+          </wux-button>
+        </div>
         <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
           <view>
             <wux-avatar :src="item.avatar_url" />
@@ -30,15 +35,21 @@
     </wux-cell-group>
 
     <div :style="{height:'80px'}"/>
-    <div class="set-edit-button">
+    <view class="exit-button">
+      <van-button round plain type="danger" @click="onExit($event,setId)">
+          退出
+      </van-button>
+    </view>
+    <view class="set-edit-button">
       <van-button round type="info" @click="gotoChange(setId)">
           修改
       </van-button>
-    </div>
+    </view>
   </div>
 </template>
 
 <script>
+import store from '../../store'
 
 export default {
   data() {
@@ -55,6 +66,25 @@ export default {
     console.log(options)
     this.setId=options.setId
     this.userId=options.uId
+  },
+
+  onShareAppMessage: function (res) {
+    console.log(`/pages/invite/main?setId=${this.setId}`)
+    return {
+      title: '快来Tickoff和我一起吧',
+      path: `/pages/invite/main?setId=${this.setId}`,
+      success: function (res) {
+	   // 转发成功
+	        wx.showToast({
+	          title: "分享成功",
+	          icon: 'success',
+	          duration: 2000
+	        })
+       },
+      fail: function (res) {
+        // 分享失败
+      },
+    }
   },
 
   beforeMount() {
@@ -86,6 +116,32 @@ export default {
   },
 
   methods:{
+    onExit(e, key){
+      console.log(e.mp.detail)
+      console.log(store.state.openId)
+      console.log(key)
+      this.$fly
+        .request({
+          method: "delete",
+          //   "tickoff/api/User_mset/openid/{openid}/mset_id/{mset_id}"
+          url:'tickoff/api/User_mset/openid/'+store.state.openId+'/mset_id/'+ key,
+        })
+        .then((res) => {
+          wx.switchTab({  
+            url:'/pages/set-view/main',
+            success: function(res){
+              console.log('跳转到组集页面成功')// success
+            },
+            fail: function() {
+            console.log('跳转到组集页面失败')  // fail
+            },
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
      gotoChange(id) {
       console.log(id)
       const url='/pages/change-set/main?setId='+id+"&uId="+this.userId
@@ -104,7 +160,20 @@ export default {
 }
 </script>
 
-<style>
+
+<style lang="less">
+@import "../../../static/wux/styles/mixins/index.less";
+@import "../../../static/wux/styles/themes/index.less";
+@import "../../style/group.less";
+@import "../../style/textarea.less";
+
+.exit-button{
+  z-index: 1;
+  position: fixed;
+  left: 80%;
+  top:75%
+}
+
 .set-edit-button{
   z-index: 1;
   position: fixed;

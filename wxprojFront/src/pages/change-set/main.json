@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "修改任务信息",
+    "navigationBarTitleText": "修改组集信息",
     "usingComponents": {
         "wux-cell-group": "../../../static/wux/cell-group",
         "wux-cell": "../../../static/wux/cell",

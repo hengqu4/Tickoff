@@ -33,14 +33,14 @@
       {
         "text": "组集",
         "pagePath": "pages/set-view/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
+        "iconPath": "static/tabs/set.png",
+        "selectedIconPath": "static/tabs/set-active.png"
       },
       {
         "text": "任务",
         "pagePath": "pages/view/main",
-        "iconPath": "static/tabs/orders.png",
-        "selectedIconPath": "static/tabs/orders-active.png"
+        "iconPath": "static/tabs/view.png",
+        "selectedIconPath": "static/tabs/view-active.png"
       },
       {
         "text": "我",
@@ -53,14 +53,14 @@
       {
         "name": "组集",
         "pagePath": "pages/set-view/main",
-        "icon": "static/tabs/home.png",
-        "activeIcon": "static/tabs/home-active.png"
+        "icon": "static/tabs/set.png",
+        "activeIcon": "static/tabs/set-active.png"
       },
       {
         "name": "任务",
         "pagePath": "pages/view/main",
-        "icon": "static/tabs/orders.png",
-        "activeIcon": "static/tabs/orders-active.png"
+        "icon": "static/tabs/view.png",
+        "activeIcon": "static/tabs/view-active.png"
       },
       {
         "name": "我",
