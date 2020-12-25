@@ -74,8 +74,7 @@
       <wux-cell
         title="关于"
         is-link
-        data-clipboard="https://github.com/skyvow"
-        bind:click="clipboard"
+        @click="clipboard"
       >
         <wux-icon wux-class="icon" slot="header" type="ios-information-circle" size="22" />
       </wux-cell>
@@ -153,6 +152,9 @@ export default {
     },
     viewHelp () {
       mpvue.navigateTo({url:"../help/main"})
+    },
+    clipboard(){
+      mpvue.navigateTo({url:"../about-us/main"})
     }
   },
 };

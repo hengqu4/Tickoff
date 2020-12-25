@@ -2,18 +2,17 @@
   <div>
     <div class="container">
       <wux-wing-blank size="default">
-        <wux-card title="适用场景">
+        <wux-card title="说明">
           <view slot="body">
             <view class="wux-ellipsis">
-              ·朋友、家庭、情侣之间，及简单工作共享的需求。
-              如：工作计划日程、家庭日历、旅游行程、活动安排、资源时间预约、请假记录、课程表等。
+              Tickoff是一款基于微信小程序平台的在线任务管理系统，面向学生、上班族以及各年龄段、职业的对日程、任务有管理需求的用户，给用户提供一种自由的管理自己任务的体验，并给予用户物理世界完成任务的快乐以及完成任务的精神奖励。  
             </view>
           </view>
         </wux-card>
-        <wux-card title="未显示数据？">
+        <wux-card title="更多">
           <view slot="body">
             <view class="wux-ellipsis">
-              ·请确认您是否授权Tickoff获取您的微信个人信息
+              ·https://github.com/hengqu4/SEproject
             </view>
           </view>
         </wux-card>
@@ -28,8 +27,6 @@
 
 <style>
 .container {
-    margin-top: 30px 0;
     text-align: center;
 }
-
 </style>

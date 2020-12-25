@@ -44,7 +44,7 @@ export default {
   methods: {
     onChange(event) {
       const { form, changedValues, allValues } = event.mp.detail;
-      // console.log("onChange \n", changedValues, allValues);
+      console.log("onChange \n", changedValues, allValues);
     },
 
     onSubmit() {

@@ -16,7 +16,8 @@
     "pages/history/main",
     "pages/help/main",
     "pages/share/main",
-    "pages/loading/main"
+    "pages/loading/main",
+    "pages/about-us/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
