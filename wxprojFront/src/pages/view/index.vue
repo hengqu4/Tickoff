@@ -611,7 +611,7 @@ wux-button {
 
 .card_fold {
   height: 150px;
-  margin-bottom: -75px;
+  margin-bottom: -115px;
   width: 300px;
   border-radius: 10px;
   background: 0.4s linear;

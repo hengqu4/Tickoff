@@ -15,10 +15,10 @@
     <div class="title">{{ this.activityNum }} updates in the last year</div>
     <div v-if="scene">
       <div v-if="!haveLiked">
-        <wux-icon @click="makelike" type="ios-heart-empty" />
+        <wux-icon @click="makelike" type="ios-heart-empty" size='28' />
       </div>
       <div v-if="haveLiked">
-        <wux-icon type="ios-heart"/>
+        <wux-icon type="ios-heart" size='28'/>
       </div>
     </div>
     <div class="map-inner clearfix">
@@ -198,6 +198,8 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+
+        
   },
   onShareAppMessage: function() {
     return{
