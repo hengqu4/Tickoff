@@ -2,23 +2,23 @@
   <div class="map">
     <view class="userinfo">
       <wux-avatar
-          class="userAvatar"
-          :src="userInfo.avatarUrl"
-          alt="登陆失败"
-          size="large"
-          shape="square"
-          scale="true"
-        />
-        <wux-white-space size="small" />
-        <p class="userName">微信名:{{ userInfo.nickName }}</p>
+        class="userAvatar"
+        :src="userInfo.avatar_url"
+        alt="登陆失败"
+        size="large"
+        shape="square"
+        scale="true"
+      />
+      <wux-white-space size="small" />
+      <p class="userName">微信名:{{ userInfo.nickname }}</p>
     </view>
     <div class="title">{{ this.activityNum }} updates in the last year</div>
     <div v-if="scene">
       <div v-if="!haveLiked">
-        <wux-icon @click="makelike" type="ios-heart-empty" size='28' />
+        <wux-icon @click="makelike" type="ios-heart-empty"/>
       </div>
       <div v-if="haveLiked">
-        <wux-icon type="ios-heart" size='28'/>
+        <wux-icon type="ios-heart" />
       </div>
     </div>
     <div class="map-inner clearfix">
@@ -36,10 +36,10 @@
             v-for="i in dayNum"
             :key="i"
             v-bind:class="{
-              lvl1: 5 > activity[i].done && activity[i].done >= 1,
-              lvl2: 10 > activity[i].done && activity[i].done >= 5,
-              lvl3: 15 > activity[i].done && activity[i].done >= 10,
-              lvl4: activity[i].done && activity[i].done >= 15,
+              lvl1: 5 > activity[i] && activity[i] >= 1,
+              lvl2: 10 > activity[i] && activity[i] >= 5,
+              lvl3: 15 > activity[i] && activity[i] >= 10,
+              lvl4: activity[i] && activity[i] >= 15,
             }"
             @click="calDate(i)"
           >
@@ -64,12 +64,12 @@
   </div>
 </template>
 <script>
-import store from '../../store';
+import store from "../../store";
 import { formatTimeHash, monthStr } from "../../utils/index";
 export default {
   name: "activityMap",
   mounted() {
-    this.getActivity()
+    this.getActivity();
     //console.log("mounted", this.$refs.blockItem);
     console.log("mounted", this.dayNum);
     //console.log(this.calMonth(1));
@@ -81,37 +81,11 @@ export default {
   },
   data() {
     return {
-      haveLiked:false,
+      haveLiked: false,
       userInfo: {},
-      scene:false,
+      scene: false,
       dayNum: 100,
-      activity: [],
-      missionNum: 0,
-      doneNum: 0,
-      test1: [
-        1,
-        5,
-        10,
-        15,
-        20,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        10,
-        15,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        5,
+      activity: [
         0,
         0,
         0,
@@ -139,8 +113,6 @@ export default {
         0,
         0,
         0,
-        10,
-        15,
         0,
         0,
         0,
@@ -148,12 +120,100 @@ export default {
         0,
         0,
         0,
-        10,
-        15,
         0,
         0,
-        1,
-        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -165,39 +225,63 @@ export default {
         0,
         0,
       ],
+      missionNum: 0,
+      doneNum: 0,
     };
   },
-  onLoad:function(options) {
-    console.log("onload")
-    this.userId=options.uId
-    if(store.state.scene==1007){
-      this.userId=options.uId
-    }
-    else{
-      this.userId=store.state.openId
+  onLoad: function (options) {
+    console.log("onload");
+    this.userId = options.uId;
+    if (store.state.scene == 1007) {
+      this.userId = options.uId;
+    } else {
+      this.userId = store.state.openId;
     }
   },
-  onShow(){
+  onShow() {
     this.handleGetUserInfo();
   },
-  beforeMount(){
-    if(store.state.scene==1007){
-      this.scene=true
-    }
-    else{
-      this.scene=false
+  beforeMount() {
+    if (store.state.scene == 1007) {
+      this.scene = true;
+    } else {
+      this.scene = false;
     }
     this.$fly
+      .request({
+        method: "get",
+        url: "tickoff/api/user/UserID/" + this.userId,
+      })
+      .then((res) => {
+        console.log(res);
+        this.userInfo=res.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  onShareAppMessage: function () {
+    return {
+      title: "来看看我的历史记录",
+      path: "/pages/history/main?uid=" + store.state.openId,
+    };
+  },
+  methods: {
+    makelike() {
+      console.log("clike like");
+      this.haveLiked = true;
+      this.$fly
         .request({
-          method: "get",
-          url: "tickoff/api/user/UserID/" + this.userId,
+          method: "put", // post/get 请求方式
+          url: "tickoff/api/user/like/openid/" + this.userId,
         })
         .then((res) => {
-          console.log(res)
+          console.log("成功点赞了");
         })
         .catch(function (error) {
           console.log(error);
         });
+<<<<<<< HEAD
 
         
   },
@@ -220,6 +304,8 @@ export default {
         console.log(error);
     });
 
+=======
+>>>>>>> 4e5ed0594fa23d789cbfc0aae34c0abc55523223
     },
     handleGetUserInfo() {
       this.userInfo = store.state.userInfo;
@@ -227,14 +313,14 @@ export default {
     calDayNum() {
       let day = new Date().getDay();
       this.dayNum = day + 133;
-      console.log("dayNumUpdateNow:",this.dayNum)
+      console.log("dayNumUpdateNow:", this.dayNum);
     },
-    callWxMSG(){
+    callWxMSG() {
       wx.requestSubscribeMessage({
-      tmplIds: ["IW9tcQJ8L1-9W6CqQysyh0PgruxfxjH-5HPHOuBdM1M"],
-      success(res) {
-        console.log("res of select", res);
-      },
+        tmplIds: ["IW9tcQJ8L1-9W6CqQysyh0PgruxfxjH-5HPHOuBdM1M"],
+        success(res) {
+          console.log("res of select", res);
+        },
       });
     },
     getActivity() {
@@ -246,15 +332,9 @@ export default {
         .then((res) => {
           console.log(res);
           console.log(res.data);
-          this.activity = res.data;
-          for(var i=0;i<135;i++){
-            console.log(this.activity[i].done);
+          for (var i = 0; i < res.data.length; i++) {
+            this.activity[i] = res.data[i].done;
           }
-          // this.activity.forEach((item, index) => {
-          //   console.log(item);
-          //   this.missionNum += parseInt(item.mission);
-          //   this.doneNum += parseInt(item.done);
-          // });
         })
         .catch(function (error) {
           console.log(error);
