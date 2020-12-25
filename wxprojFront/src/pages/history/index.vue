@@ -281,31 +281,6 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
-<<<<<<< HEAD
-
-        
-  },
-  onShareAppMessage: function() {
-    return{
-      title:'来看看我的历史记录',
-      path:'/pages/history/main?uid='+store.state.openId
-    }
-  },
-  methods: {
-    makelike(){
-      console.log("clike like")
-      this.haveLiked=true
-       this.$fly.request({
-      method: 'put', // post/get 请求方式
-      url: 'tickoff/api/user/like/openid/'+this.userId,
-    }).then(res => {
-      console.log("成功点赞了")
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-=======
->>>>>>> 4e5ed0594fa23d789cbfc0aae34c0abc55523223
     },
     handleGetUserInfo() {
       this.userInfo = store.state.userInfo;
