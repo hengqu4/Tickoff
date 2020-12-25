@@ -3,14 +3,14 @@
     <view class="userinfo">
       <wux-avatar
         class="userAvatar"
-        :src="userInfo.avatarUrl"
+        :src="userInfo.avatar_url"
         alt="登陆失败"
         size="large"
         shape="square"
         scale="true"
       />
       <wux-white-space size="small" />
-      <p class="userName">微信名:{{ userInfo.nickName }}</p>
+      <p class="userName">微信名:{{ userInfo.nickname }}</p>
     </view>
     <div class="title">{{ this.activityNum }} updates in the last year</div>
     <div v-if="scene">
@@ -254,6 +254,7 @@ export default {
       })
       .then((res) => {
         console.log(res);
+        this.userInfo=res.data;
       })
       .catch(function (error) {
         console.log(error);
