@@ -2,20 +2,31 @@
   <div>
     <div v-for="(item, index) in dataList" :key="index" :style="{marginBottom: '5px'}">
       <wux-wing-blank size="default"  :key="index">
-        <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onExit($event,item.mset_id)">
+        <!-- <wux-card prefixCls="set-card" :title="item.title" :actions="actions" @action="onAction($event,item.mset_id)"> -->
+        <wux-card prefixCls="set-card" :title="item.title" @click="onDetail($event,item.mset_id)">
           <view slot="extra">
             <wux-button 
+                clear type="positive"
+                :data-id="item.mset_id"
+                @click.stop="onExit($event,item.mset_id)"
+                :style="{height:'10px'}"
+              >
+                退出
+            </wux-button>
+            <!-- open-type="share" -->
+            <!-- @click="onInvite($event,item.mset_id)" -->
+            <!-- <wux-button 
                 clear type="positive"
                 @click="onDetail($event,item.mset_id)"
                 :style="{height:'10px'}"
               >
                 查看详情->
-            </wux-button>
+            </wux-button> -->
           </view>
-          <view slot="body">
+          <view slot="body" >
             <view class="wux-ellipsis">{{item.description}}</view>
           </view>
-          <view slot="footer">
+          <view slot="footer" >
               <!-- 去掉成员，节省行高 -->
               <!-- <p>成员</p> -->
               <span v-for="(mem, aid) in item.member" :key="aid">
@@ -43,12 +54,17 @@ export default {
   data(){
     return{
       dataList:[],
-      actions:[
-        {
-          text:'退出',
-          type:'primary'
-        }
-      ]
+      // mset:" ",
+      // actions:[
+      //   {
+      //     text:'详情',
+      //     type:'primary'
+      //   },
+      //   {
+      //     text:'退出',
+      //     type:'primary'
+      //   }
+      // ]
     }
   },
 
@@ -88,6 +104,7 @@ export default {
     //     console.log("点击了拒绝授权");
     //   }
     // },
+
     onClick () {
       var pages = getCurrentPages()    //获取加载的页面
       var currentPage = pages[pages.length-1]    //获取当前页面的对象
@@ -104,11 +121,38 @@ export default {
         },
       })
     },
-    onExit(e, key){
+
+    onInvite(e,key) {
+      console.log("跳转分享函数")
+      //console.log(e.mp.detail)
+      console.log(key)
+      //console.log(e.target.dataset.id)
+      console.log(e.target)
+      this.mset=key
+      console.log(this.mset)
+    },
+
+    onAction(e, key){
       console.log(e.mp.detail)
       console.log(store.state.openId)
       console.log(key)
-      this.$fly
+      let index=e.mp.detail.index
+
+      if(index==0){
+        const url='/pages/set-detail/main?setId='+key
+        wx.navigateTo({ 
+          url: url,
+          success: function(res){
+            console.log('跳转到页面成功')// success
+          },
+          fail: function() {
+          console.log('跳转到页面失败')  // fail
+          },
+        })
+      }
+
+      if(index==1){
+        this.$fly
         .request({
           method: "delete",
           //   "tickoff/api/User_mset/openid/{openid}/mset_id/{mset_id}"
@@ -122,8 +166,9 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      }
     },
-
+        
     onDetail(e, key){
       console.log(e.mp.detail)
       console.log(key)
@@ -138,6 +183,27 @@ export default {
         console.log('跳转到页面失败')  // fail
         },
       })
+    },
+
+    onExit(e, key){
+      console.log(e.mp.detail)
+      console.log(store.state.openId)
+      console.log(key)
+      console.log("退出")
+      this.$fly
+        .request({
+          method: "delete",
+          //   "tickoff/api/User_mset/openid/{openid}/mset_id/{mset_id}"
+          url:'tickoff/api/User_mset/openid/'+store.state.openId+'/mset_id/'+ key,
+        })
+        .then((res) => {
+          const pages = getCurrentPages();
+          const perpage = pages[pages.length - 1];
+          perpage.onShow();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }
 }

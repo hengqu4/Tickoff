@@ -74,13 +74,13 @@ export default {
       title: '快来Tickoff和我一起吧',
       path: `/pages/invite/main?setId=${this.setId}`,
       success: function (res) {
-	   // 转发成功
-	        wx.showToast({
-	          title: "分享成功",
-	          icon: 'success',
-	          duration: 2000
-	        })
-       },
+        // 转发成功
+        wx.showToast({
+          title: "分享成功",
+          icon: 'success',
+          duration: 2000
+          })
+        },
       fail: function (res) {
         // 分享失败
       },
@@ -142,7 +142,7 @@ export default {
         });
     },
 
-     gotoChange(id) {
+    gotoChange(id) {
       console.log(id)
       const url='/pages/change-set/main?setId='+id+"&uId="+this.userId
       wx.navigateTo({
@@ -166,6 +166,10 @@ export default {
 @import "../../../static/wux/styles/themes/index.less";
 @import "../../style/group.less";
 @import "../../style/textarea.less";
+
+page {
+  background-color: rgb(245, 245, 245);
+}
 
 .exit-button{
   z-index: 1;
