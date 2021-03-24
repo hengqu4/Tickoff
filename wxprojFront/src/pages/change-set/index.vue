@@ -91,13 +91,13 @@ export default {
       path: `/pages/invite/main?setId=${this.setId}`,
       // imageUrl:'../../../static/images/invite.jpg',//用户分享出去的自定义图片大小为5:4,
       success: function (res) {
-	   // 转发成功
-	        wx.showToast({
-	          title: "分享成功",
-	          icon: 'success',
-	          duration: 2000
-	        })
-       },
+	      // 转发成功
+	      wx.showToast({
+	        title: "分享成功",
+	        icon: 'success',
+	        duration: 2000
+	      })
+      },
       fail: function (res) {
         // 分享失败
       },
@@ -166,7 +166,9 @@ export default {
 @import "../../../static/wux/styles/themes/index.less";
 @import "../../style/group.less";
 @import "../../style/textarea.less";
-
+page {
+  background-color: rgb(245, 245, 245);
+}
 .set-edit-button{
   z-index: 1;
   position: fixed;

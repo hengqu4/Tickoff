@@ -16,7 +16,8 @@
             <view class="wux-ellipsis">{{item.description}}</view>
           </view>
           <view slot="footer">
-              <p>成员</p>
+              <!-- 去掉成员，节省行高 -->
+              <!-- <p>成员</p> -->
               <span v-for="(mem, aid) in item.member" :key="aid">
                 <wux-avatar :src="mem.avatar_url" />
               </span>
@@ -26,8 +27,8 @@
     </div>
     <div :style="{height:'80px'}"/>
     <div class="set-create-button">
-      <van-button round type="info" @click="onClick">
-        +
+      <van-button round type="info" class="floatBtn" @click="onClick">
+        <van-icon name="plus" />
       </van-button>
       <!-- <button open-type="getUserInfo" @bindgetuserinfo="bindGetUserInfo($event)">点击授权</button> -->
     </div>
@@ -147,7 +148,9 @@ export default {
 @import "../../../static/wux/styles/mixins/index.less";
 @import "../../../static/wux/styles/themes/index.less";
 @import "./style.less";
-
+page {
+  background-color: rgb(245, 245, 245);
+}
 .set-create-button{
   z-index: 1;
   position: fixed;

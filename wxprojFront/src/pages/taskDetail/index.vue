@@ -63,7 +63,7 @@ export default {
     this.taskId=options.tId
     this.userId=options.uId
   },
-   onAction(e) {
+  onAction(e) {
         console.log('onAction', e.detail)
     },
   created(){
@@ -71,7 +71,7 @@ export default {
   },
 
   beforeMount() {
-   
+
   },
   onShow() {
     

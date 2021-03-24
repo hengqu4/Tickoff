@@ -155,6 +155,9 @@ export default {
 </script>
 
 <style>
+page {
+  background-color: rgb(245, 245, 245);
+}
 .container {
   display: flex;
   flex-direction: column;

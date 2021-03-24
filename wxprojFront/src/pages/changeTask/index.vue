@@ -189,20 +189,20 @@ export default {
   data() {
     return {
 
-           scrollTop: 0,
+      scrollTop: 0,
 
-     userId:'',      
-     taskId:'',
+      userId:'',      
+      taskId:'',
 
-     mset_id:'',
-    
-     visible1: false,
-     visible2: false,
-     visible3: false,
-     done:'',
+      mset_id:'',
+      
+      visible1: false,
+      visible2: false,
+      visible3: false,
+      done:'',
 
-     title:'',
-     description:'',
+      title:'',
+      description:'',
 
       startDate: [],
       startDatePicker: "",
@@ -471,8 +471,8 @@ export default {
     onRadioChange(e) {
         this.setData({ radio: e.detail.value })
     },
-     onDelayChange(e) {
-       this.isDelay=!this.isDelay
+    onDelayChange(e) {
+      this.isDelay=!this.isDelay
     },
     onRequireChange(e){
       this.isRequire=!this.isRequire
@@ -510,8 +510,13 @@ export default {
 };
 </script>
 
-
+<style>
+page {
+  background-color: rgb(245, 245, 245);
+}
+</style>
 <style scoped>
+
     .buttonObject {
         margin: auto;
         width: 70%;

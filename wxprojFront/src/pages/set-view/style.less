@@ -1,13 +1,17 @@
 .set-card {
     position: relative;
     min-height: @card-height;
-    padding-bottom: 6px;
+    //padding-bottom: 6px;
+    margin: 15px;
     display: flex;
     -webkit-box-orient: vertical;
     flex-direction: column;
     // background-color:color(#b6d5f3);
-    border:5px solid rgb(111, 145, 209);
+    //border:5px solid rgb(111, 145, 209);
 
+    //为了统一配色，修改
+    //border:5px solid rgb(46, 205, 255);
+    border:5px solid rgb(10, 196, 253);
     &--bordered {
         border-radius: @card-radius;
 
@@ -37,10 +41,14 @@
     &__hd {
         position: relative;
         display: flex;
-        font-size: 20px;
-        padding: @card-hd-padding;
+        font-size: 18px;
+        //修改标题行 高度
+        //padding: @card-hd-padding;
+        padding: 2px 10px;
         align-items: center;
-        background-color:color(#c5def7);
+        //background-color:color(#c5def7);
+        background-color:color(#d2ebf8);
+        //background-color:color(#dfe6e9);
         &::before {
             .setBottomLine(@border-color-split);
         }
@@ -66,7 +74,7 @@
     &__extra {
         flex: 1;
         text-align: right;
-        font-size: 17px;
+        font-size: 16px;
         color: @text-color-secondary;
     }
 
@@ -74,7 +82,8 @@
         position: relative;
         padding: @card-bd-padding;
         color: @heading-color;
-        font-size: 18px;
+        background-color:color(#fff);
+        font-size: 16px;
         min-height: 30px;
     }
 
@@ -82,6 +91,7 @@
         display: flex;
         font-size: @font-size-base;
         color: @text-color-secondary;
+        background-color:color(#fff);
         padding: @card-ft-padding;
     }
 
@@ -93,6 +103,7 @@
         justify-content: center;
         align-items: center;
         font-size: 15px;
+        background-color:color(#fff);
 
         &::before {
             .setTopLine(@border-color-split);

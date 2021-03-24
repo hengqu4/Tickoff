@@ -19,13 +19,13 @@
       <div :style="{height:'80px'}"/>
       <view class="create-set-submit-button">
         <wux-button 
-           outline type="positive"
+          outline type="positive"
           @click="onReset"
         >
           重置
         </wux-button>
         <wux-button 
-           outline type="positive"
+          outline type="positive"
           @click="onSubmit"
         >
           创建
@@ -111,6 +111,12 @@ export default {
 };
 </script>
 
+<style>
+page {
+  background-color: rgb(245, 245, 245);
+}
+</style>
+
 <style lang="less" scoped>
 @import "../../../static/wux/styles/mixins/index.less";
 @import "../../../static/wux/styles/themes/index.less";
@@ -152,5 +158,4 @@ wux-button{
   border-radius:50%;
   margin:0 60px;
 }
-
 </style>

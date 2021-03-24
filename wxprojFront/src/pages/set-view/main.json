@@ -9,6 +9,7 @@
       "wux-date-picker-view": "../../../static/wux/date-picker-view",
       "wux-icon": "../../../static/wux/icon",
       "wux-button": "../../../static/wux/button",
-      "van-button":"../../../static/vant/button"
+      "van-button":"../../../static/vant/button",
+      "van-icon":"../../../static/vant/icon"
   }
 }

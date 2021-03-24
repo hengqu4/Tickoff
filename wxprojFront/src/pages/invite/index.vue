@@ -130,8 +130,13 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style>
+page {
+  background-color: rgb(245, 245, 245);
+}
+</style>
 
+<style lang="less">
 @import "../../../static/wux/styles/mixins/index.less";
 @import "../../../static/wux/styles/themes/index.less";
 @import "./style.less";

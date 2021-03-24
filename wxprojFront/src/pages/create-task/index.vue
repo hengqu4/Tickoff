@@ -296,7 +296,7 @@ export default {
 
         console.log(error);
     });
-   
+  
   },
 
   computed: {},
@@ -507,7 +507,13 @@ export default {
 };
 </script>
 
+<style>
+page {
+  background-color: rgb(245, 245, 245);
+}
+</style>
 <style scoped>
+
     .buttonObject {
         margin: auto;
         width: 70%;

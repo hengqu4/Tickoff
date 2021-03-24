@@ -362,7 +362,15 @@ export default {
   computed: {},
 };
 </script>
+
+<style>
+/* page {
+  background-color: rgb(245, 245, 245);
+} */
+</style>
+
 <style lang="less" scoped>
+
 .userinfo {
   margin-top: 30px;
   margin-bottom: 140px;
@@ -397,6 +405,7 @@ export default {
     border-radius: 3px;
     margin: 0 auto;
     margin-top: 10px;
+    // background-color: #fff;
     .block-box {
       margin-top: 25px;
       margin: 0 auto;

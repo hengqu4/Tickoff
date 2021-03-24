@@ -1,19 +1,30 @@
 <template>
   <div>
-    <movable-area>
+      <!-- 统一button风格 -->
+    <!-- <movable-area>
       <movable-view direction="all" x="300" y="500">
         <van-button
           class="floatBtn"
           round
           plain
           type='info'
-          size="large"
+          size="middle"
           @click="plusBtnClick"
           >
           <wux-icon class="floatBtnIcon" type="ios-add" size="25" :style="{marginTop:'1.5px'}"/>
         </van-button>
-      </movable-view>
-    </movable-area>
+      </movable-view> 
+    </movable-area>-->
+      <div class="set-create-button">
+        <van-button
+          class="floatBtn"
+          round
+          type='info'
+          @click="plusBtnClick"
+          >
+          <van-icon name="plus" />
+        </van-button>
+      </div>
     <wux-popup
       :visible="visible"
       title="本日任务完成情况"
@@ -45,7 +56,7 @@
           :key="i"
           :id="task.missionId" @click="toTaskDetail($event)"
         >
-           <wux-wing-blank size="default">
+          <wux-wing-blank size="default">
             <wux-card :title="task.name"             >
               <view slot="body"
               :id="task.missionId"
@@ -91,8 +102,9 @@
           @click="plusTaskBtnClick"
           size="small"
           :id="item.id"
-          ><wux-icon type="ios-add" size="16"
-        /></wux-button>
+          >
+          <wux-icon type="ios-add" size="16"/>
+        </wux-button>
 
         <li
           :class="{
@@ -494,10 +506,16 @@ export default {
 </script>
 
 <style scope>
+
 page {
   background-color: rgb(245, 245, 245);
 }
-
+.set-create-button{
+  z-index: 1;
+  position: fixed;
+  left: 80%;
+  top:85%
+}
 /*浮动按钮组件*/
 movable-area {
   pointer-events: none;
@@ -539,7 +557,7 @@ wux-button {
 }
 .btnNav {
   height: 45px;
-  background: #ffffff;
+  /* background: #ffffff; */
   margin-bottom: 10px;
 }
 .floatBtn {
