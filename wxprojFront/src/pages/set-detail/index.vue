@@ -1,5 +1,5 @@
 <template>
-  <div class="set-detail">
+  <div class="wrapper">
     <!-- <wux-cell-group title="任务集信息"></wux-cell-group> -->
 
     <wux-cell-group prefixCls="title-cell-group">
@@ -20,11 +20,6 @@
 
     <wux-cell-group prefixCls="cell-group" title="成员">
       <wux-cell hover-class="none">
-        <div>
-          <wux-button clear type="balanced" open-type="share">
-            邀请好友
-          </wux-button>
-        </div>
         <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
           <view>
             <wux-avatar :src="item.avatar_url" />
@@ -33,18 +28,11 @@
         </div>
       </wux-cell>
     </wux-cell-group>
-
-    <div :style="{height:'80px'}"/>
-    <view class="exit-button">
-      <van-button round plain type="danger" @click="onExit($event,setId)">
-          退出
-      </van-button>
-    </view>
-    <view class="set-edit-button">
-      <van-button round type="info" @click="gotoChange(setId)">
-          修改
-      </van-button>
-    </view>
+    <div class="buttonObject">
+      <wux-button block outline type="balanced" open-type="share">邀请好友</wux-button>
+      <wux-button block outline type="positive" @click="onExit($event,setId)">退出</wux-button>
+      <wux-button block outline type="positive" @click="gotoChange(setId)">修改</wux-button>
+    </div>
   </div>
 </template>
 
@@ -170,19 +158,20 @@ export default {
 page {
   background-color: rgb(245, 245, 245);
 }
-
-.exit-button{
-  z-index: 1;
-  position: fixed;
-  left: 80%;
-  top:75%
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-.set-edit-button{
-  z-index: 1;
-  position: fixed;
-  left: 80%;
-  top:85%
+.buttonObject {
+  position:absolute;
+  bottom:20px;
+  left: 50%;
+  transform:translate(-50%,0);
+  margin: 0 auto;
+  width: 70%;
+  padding: 20px;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='wrapper'>
     <wux-form id="wux-form" @change="onChange">
       <wux-cell-group prefixCls="cell-group" title="标题">
         <wux-cell hover-class="none">
@@ -16,21 +16,10 @@
           </wux-field>
         </wux-cell>
       </wux-cell-group>
-      <div :style="{height:'80px'}"/>
-      <view class="create-set-submit-button">
-        <wux-button 
-          outline type="positive"
-          @click="onReset"
-        >
-          重置
-        </wux-button>
-        <wux-button 
-          outline type="positive"
-          @click="onSubmit"
-        >
-          创建
-        </wux-button>
-      </view>
+      <div class="buttonObject">
+        <wux-button block outline type="positive" @click="onReset">清空</wux-button>
+        <wux-button block outline type="positive" @click="onSubmit">创建</wux-button>
+      </div>
     </wux-form>
   </div>
 </template>
@@ -140,22 +129,27 @@ page {
       margin-top: 30px;
   }
 
-  /deep/ &__bd {
-      border:5px solid rgb(111, 145, 209) !important;
-      border-radius:10px;;
-      background-color:#d9e6f3;
-      margin:0 10px;
+  /deep/  &__bd {
+    border:5px solid rgb(10, 196, 253) !important;
+    border-radius:10px;;
+    background-color:#fff;
+    margin:0 25px;
   }
 }
-
-.create-set-submit-button{
-  text-align: center;
-  z-index: 1;
-  position: fixed;
-  top:75%
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
-wux-button{
-  border-radius:50%;
-  margin:0 60px;
+
+.buttonObject {
+  position:absolute;
+  bottom:20px;
+  left: 50%;
+  transform:translate(-50%,0);
+  margin: 0 auto;
+  width: 70%;
+  padding: 20px;
+  // padding: 5rpx;
 }
 </style>

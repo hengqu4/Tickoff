@@ -303,11 +303,13 @@ export default {
     //     wx.hideLoading();
     //   }, 2000);
     // },
-    gotoChange(id) {
-      console.log(id)
-      wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+"&uId="+store.state.openId})
-    },
+    // gotoChange(id) {
+    //   console.log("gotoChange")
+    //   console.log(id)
+    //   wx.navigateTo({url: '/pages/taskDetail/main?tId='+id+"&uId="+store.state.openId})
+    // },
     clickTodetail(event) {
+      console.log("clickTodetail")
       wx.navigateTo({url: '/pages/taskDetail/main?tId='+event.currentTarget.id+"&uId="+store.state.openId})
     },
     /*切换日历*/
@@ -511,7 +513,7 @@ page {
   background-color: rgb(245, 245, 245);
 }
 .set-create-button{
-  z-index: 1;
+  z-index: 10;
   position: fixed;
   left: 80%;
   top:85%
@@ -523,7 +525,7 @@ movable-area {
   width: 100%;
   position: fixed;
   left: 0px;
-  z-index: 100;
+  z-index: 3;
 }
 movable-view {
   pointer-events: auto;
@@ -659,6 +661,6 @@ wux-button {
 }
 .completeTaskBtn {
   pointer-events: auto;
-  z-index: 200;
+  z-index: 5;
 }
 </style>

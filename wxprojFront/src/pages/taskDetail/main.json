@@ -4,6 +4,7 @@
       "wux-card": "../../../static/wux/card/index",
       "wux-wing-blank": "../../../static/wux/wing-blank/index",
       "wux-cell-group": "../../../static/wux/cell-group/index",
-      "wux-cell": "../../../static/wux/cell/index"
+      "wux-cell": "../../../static/wux/cell/index",
+      "wux-button": "../../../static/wux/button/index"
     }
   }

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class='wrapper'>
     <div :style="{textAlign:'center',marginTop:'30px'}">
-      <p :style="{fontFamily:'Segoe Print',fontSize:'300%',color:'#341f97'}">
+      <p :style="{fontFamily:'Segoe Print',fontSize:'300%',color:'#0984e3'}">
         invitition
       </p>
     </div>
@@ -12,13 +12,11 @@
             <div :style="{height:'100px'}">{{description}}</div>
           </view>
         </wux-card>
-        <view :style="{height:'40px'}" />
-        <view class="invite-button">
-          <wux-button outline type="positive" @click="onClick($event)">
-            接受邀请
-          </wux-button>
-        </view>
       </wux-wing-blank>
+    </div>
+    
+    <div class="buttonObject">
+      <wux-button outline type="positive" @click="onClick($event)">接受邀请</wux-button>
     </div>
   </div>
 </template>
@@ -137,15 +135,26 @@ page {
 </style>
 
 <style lang="less">
+
 @import "../../../static/wux/styles/mixins/index.less";
 @import "../../../static/wux/styles/themes/index.less";
 @import "./style.less";
 
-.invite-button{
-  text-align:'center';
-  z-index: 1;
+// .wrapper{
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100%;
+// }
+
+
+.buttonObject {
   position: fixed;
-  top:80%;
-  left:40%
+  z-index:2;
+  // width: 70%;
+  bottom:50px;
+  left: 50%;
+  transform:translate(-50%,0);
+  margin: 0 auto;
+  padding: 20px;
 }
 </style>

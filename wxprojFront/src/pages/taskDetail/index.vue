@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class='wrapper'>
     <view class="page">
     <view class="page__bd">
         <wux-cell-group title="基本信息">
@@ -18,13 +18,15 @@
             <wux-cell title="拖延信息" :extra="delayText" ></wux-cell>
         </wux-cell-group>
 
-
-        <wux-cell-group title="信息修改">
+        <div class="buttonObject">
+          <wux-button block outline type="positive" @click="gotoChange(taskId)">编辑</wux-button>
+        </div>
+        
+        <!-- <wux-cell-group title="信息修改">
             <wux-cell title="修改信息" is-link @click="gotoChange(taskId)"></wux-cell>
-
-        </wux-cell-group>
+        </wux-cell-group> -->
     </view>
-</view>
+  </view>
   </div>
 </template>
 
@@ -173,3 +175,18 @@ export default {
 };
 </script>
 
+
+<style>
+page {
+  background-color: rgb(245, 245, 245);
+}
+</style>
+<style  lang="less" scoped>
+
+.buttonObject {
+  margin: auto;
+  width: 70%;
+  padding: 5rpx;
+}
+
+</style>

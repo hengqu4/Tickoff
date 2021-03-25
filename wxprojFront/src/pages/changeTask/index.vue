@@ -153,7 +153,7 @@
         </wux-cell-group>
         </div>
           </view>
-       </wux-sticky-item>
+      </wux-sticky-item>
       </wux-sticky>
 
 
@@ -163,13 +163,13 @@
 
 
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" @click="onSubmit($event)">修改</wux-button>
+          <wux-button block outline type="positive" @click="onSubmit($event)">保存</wux-button>
         </div>
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+          <wux-button block outline type="positive" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
         </div>
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+          <wux-button block outline type="positive" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
         </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>

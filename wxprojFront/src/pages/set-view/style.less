@@ -1,16 +1,10 @@
 .set-card {
     position: relative;
     min-height: @card-height;
-    //padding-bottom: 6px;
     margin: 15px;
     display: flex;
     -webkit-box-orient: vertical;
     flex-direction: column;
-    // background-color:color(#b6d5f3);
-    //border:5px solid rgb(111, 145, 209);
-
-    //为了统一配色，修改
-    //border:5px solid rgb(46, 205, 255);
     border:5px solid rgb(10, 196, 253);
     &--bordered {
         border-radius: @card-radius;
@@ -46,9 +40,7 @@
         //padding: @card-hd-padding;
         padding: 2px 10px;
         align-items: center;
-        //background-color:color(#c5def7);
         background-color:color(#d2ebf8);
-        //background-color:color(#dfe6e9);
         &::before {
             .setBottomLine(@border-color-split);
         }

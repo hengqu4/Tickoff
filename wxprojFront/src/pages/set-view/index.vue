@@ -13,15 +13,6 @@
               >
                 退出
             </wux-button>
-            <!-- open-type="share" -->
-            <!-- @click="onInvite($event,item.mset_id)" -->
-            <!-- <wux-button 
-                clear type="positive"
-                @click="onDetail($event,item.mset_id)"
-                :style="{height:'10px'}"
-              >
-                查看详情->
-            </wux-button> -->
           </view>
           <view slot="body" >
             <view class="wux-ellipsis">{{item.description}}</view>
@@ -54,17 +45,6 @@ export default {
   data(){
     return{
       dataList:[],
-      // mset:" ",
-      // actions:[
-      //   {
-      //     text:'详情',
-      //     type:'primary'
-      //   },
-      //   {
-      //     text:'退出',
-      //     type:'primary'
-      //   }
-      // ]
     }
   },
 
@@ -120,53 +100,6 @@ export default {
         console.log('跳转到页面失败')  // fail
         },
       })
-    },
-
-    onInvite(e,key) {
-      console.log("跳转分享函数")
-      //console.log(e.mp.detail)
-      console.log(key)
-      //console.log(e.target.dataset.id)
-      console.log(e.target)
-      this.mset=key
-      console.log(this.mset)
-    },
-
-    onAction(e, key){
-      console.log(e.mp.detail)
-      console.log(store.state.openId)
-      console.log(key)
-      let index=e.mp.detail.index
-
-      if(index==0){
-        const url='/pages/set-detail/main?setId='+key
-        wx.navigateTo({ 
-          url: url,
-          success: function(res){
-            console.log('跳转到页面成功')// success
-          },
-          fail: function() {
-          console.log('跳转到页面失败')  // fail
-          },
-        })
-      }
-
-      if(index==1){
-        this.$fly
-        .request({
-          method: "delete",
-          //   "tickoff/api/User_mset/openid/{openid}/mset_id/{mset_id}"
-          url:'tickoff/api/User_mset/openid/'+store.state.openId+'/mset_id/'+ key,
-        })
-        .then((res) => {
-          const pages = getCurrentPages();
-          const perpage = pages[pages.length - 1];
-          perpage.onShow();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      }
     },
         
     onDetail(e, key){

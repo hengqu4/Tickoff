@@ -1,8 +1,7 @@
 <template>
-  <div class="set-detail">
+  <div class="wrapper">
     <wux-form id="wux-form" @change="onChange">
       <!-- <wux-cell-group title="任务集信息"></wux-cell-group> -->
-
       <wux-cell-group prefixCls="cell-group" title="标题">
         <wux-cell hover-class="none">
           <wux-field name="title" :initialValue="title">
@@ -21,28 +20,17 @@
 
       <wux-cell-group prefixCls="cell-group" title="成员">
         <wux-cell hover-class="none">
-          <div>
-            <wux-button  clear type="balanced"  open-type="share">
-              邀请好友
-            </wux-button>
-          </div>
-          <div
-            v-for="(item, index) in member"
-            :key="index"
-            :style="{ marginBottom: '5px' }"
-          >
+          <div v-for="(item, index) in member" :key="index" :style="{marginBottom: '5px'}">
             <view>
               <wux-avatar :src="item.avatar_url" />
-              <span>{{ item.nickname }}</span>
+              <span>{{item.nickname}}</span>
             </view>
           </div>
         </wux-cell>
       </wux-cell-group>
 
-      <div :style="{ height: '80px' }" />
-
-      <div class="set-edit-button">
-        <van-button round type="primary" @click="onSubmit"> 保存 </van-button>
+      <div class="buttonObject">
+        <wux-button block outline type="positive" @click="onSubmit">保存</wux-button>
       </div>
     </wux-form>
   </div>
@@ -84,25 +72,7 @@ export default {
       complete: () => {},
     });
   },
-  onShareAppMessage: function (res) {
-    console.log(`/pages/invite/main?setId=${this.setId}`)
-    return {
-      title: '快来Tickoff和我一起吧',
-      path: `/pages/invite/main?setId=${this.setId}`,
-      // imageUrl:'../../../static/images/invite.jpg',//用户分享出去的自定义图片大小为5:4,
-      success: function (res) {
-	      // 转发成功
-	      wx.showToast({
-	        title: "分享成功",
-	        icon: 'success',
-	        duration: 2000
-	      })
-      },
-      fail: function (res) {
-        // 分享失败
-      },
-    }
-  },
+
   mounted() {
     this.$fly
       .request({
@@ -169,11 +139,20 @@ export default {
 page {
   background-color: rgb(245, 245, 245);
 }
-.set-edit-button{
-  z-index: 1;
-  position: fixed;
-  left: 80%;
-  top:85%
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
+.buttonObject {
+  position:absolute;
+  bottom:20px;
+  left: 50%;
+  transform:translate(-50%,0);
+  margin: 0 auto;
+  width: 70%;
+  padding: 20px;
+}
 </style>

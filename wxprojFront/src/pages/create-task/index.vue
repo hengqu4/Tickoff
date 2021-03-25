@@ -29,10 +29,10 @@
             </div>
           </wux-radio-group>
           <div class="buttonObject">
-            <wux-button block outline type="dark" @click="newTaskSet">新建任务集</wux-button>
+            <wux-button block outline type="positive" @click="newTaskSet">新建任务集</wux-button>
           </div>
         </wux-field>
- 
+
         <wux-cell-group title="开始时间">
           <wux-cell hover-class="none">
             <wux-field name="startTime" :initValue="startDatePicker">
@@ -67,7 +67,7 @@
 
       <div v-if="isAdvanced">
         <wux-sticky scrollTop="scrollTop">
-       <wux-sticky-item>
+        <wux-sticky-item>
 
         <view slot="title">高级选项</view>
 
@@ -148,23 +148,20 @@
               </wux-cell>
             </wux-cell-group>
         
-        
-       
-       
             </div>
           </view>
-       </wux-sticky-item>
+      </wux-sticky-item>
         </wux-sticky>
       </div>
       <view class="btn-area">
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" @click="onSubmit($event)">创建</wux-button>
+          <wux-button block outline type="positive" @click="onSubmit($event)">创建</wux-button>
         </div>
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
+          <wux-button block outline type="positive" v-if="!isAdvanced" @click="onAdvancedOptions($event)">显示高级选项</wux-button>
         </div>
         <div class="buttonObject"> 
-          <wux-button block outline type="dark" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
+          <wux-button block outline type="positive" v-if="isAdvanced" @click="onAdvancedOptions($event)">恢复默认选项</wux-button>
         </div>
         <!-- <button @click="onReset($event)">重设属性</button> -->
       </view>
@@ -185,14 +182,14 @@ export default {
   data() {
     return {
 
-     scrollTop: 0,
+      scrollTop: 0,
 
 
-     userId:'',
+      userId:'',
 
-     visible1: false,
-     visible2: false,
-     visible3: false,
+      visible1: false,
+      visible2: false,
+      visible3: false,
 
       startDate: [],
       startDatePicker: "选择开始时间",
@@ -443,8 +440,8 @@ export default {
     onRadioChange(e) {
         this.setData({ radio: e.detail.value })
     },
-     onDelayChange(e) {
-       this.isDelay=!this.isDelay
+    onDelayChange(e) {
+      this.isDelay=!this.isDelay
     },
     onRequireChange(e){
       this.isRequire=!this.isRequire
@@ -514,10 +511,10 @@ page {
 </style>
 <style scoped>
 
-    .buttonObject {
-        margin: auto;
-        width: 70%;
-        padding: 5rpx;
-    }
+.buttonObject {
+  margin: auto;
+  width: 70%;
+  padding: 5rpx;
+}
 
 </style>

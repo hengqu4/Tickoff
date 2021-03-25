@@ -13,12 +13,13 @@
     "pages/taskDetail/main",
     "pages/changeTask/main",
     "pages/invite/main",
+    "pages/loading/main",
     "pages/history/main",
     "pages/help/main",
     "pages/share/main",
-    "pages/loading/main",
     "pages/about-us/main"
   ],
+  
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
